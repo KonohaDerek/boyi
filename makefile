@@ -30,6 +30,9 @@ test.service:
 test.repository:
 	PROJ_DIR=$p go test -v bochat/pkg/repository/...
 
+gen.swagger:
+	swag init
+
 gen.graphql:
 	-gqlgen generate --verbose --config $(CURDIR)/platform_gqlgen.yml
 	make gen.graphql.format
