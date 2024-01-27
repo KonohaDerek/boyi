@@ -1,0 +1,184 @@
+input UserFilterInput {
+	user: UserInput
+	baseFilter: BaseFilterInput
+	tagIDs: [Uint64!]
+	roleIDs: [Uint64!]
+}
+
+input UserUpdateInput {
+	"""狀態"""
+	status: UserStatus
+	"""別名（聊天室顯示用）"""
+	aliasName: String 
+	"""居住地區"""
+	area: String
+	"""備註"""
+	notes: String
+	"""頭像鏈結"""
+	avatarContent: Upload
+	"""帳戶類型 使用者 / 員工 / 客服"""
+	accountType: AccountType
+}
+
+input UserWhitelistFilterInput {
+	userWhitelist: UserWhitelistInput
+	baseFilter: BaseFilterInput
+}
+
+input UserWhitelistUpdateInput {
+	ipAddress: String
+}
+
+input UserRoleFilterInput {
+	userRole: UserRoleInput
+	baseFilter: BaseFilterInput
+}
+
+input UserRoleUpdateInput {
+	roleID: Uint64
+}
+
+input UserTagFilterInput {
+	userTag: UserTagInput
+	baseFilter: BaseFilterInput
+}
+
+input UserTagUpdateInput {
+	tagID: Uint64
+}
+
+
+input UserRoleCreateInput {
+	"""
+	user id
+	"""
+	userID: Uint64!
+	"""
+	角色 id
+	"""
+	roleID: Uint64!
+	"""
+	是否為管理員
+	"""
+	isAdmin: YesNo!
+}
+
+input UserInput {
+	"""id"""
+	id: Uint64
+	"""帳號類型"""
+	accountType: AccountType
+	"""狀態"""
+	status: UserStatus
+	"""用户名"""
+	username: String
+	"""別名（聊天室顯示用）"""
+	aliasName: String
+	"""電子郵件"""
+	email: String
+	"""居住地區"""
+	area: String
+	"""備註"""
+	notes: String
+	"""頭像鏈結"""
+	avatarURL: String
+}
+
+input UserRoleInput {
+	"""
+	id
+	"""
+	id: Uint64
+	"""
+	user id
+	"""
+	userID: Uint64
+	"""
+	ip 地址
+	"""
+	roleID: Uint64
+	"""
+	是否為管理員
+	"""
+	isAdmin: YesNo
+}
+
+input UserWhitelistInput {
+	"""
+	id
+	"""
+	id: Uint64
+	"""
+	user id
+	"""
+	userID: Uint64
+	"""
+	ip 地址
+	"""
+	ipAddress: String
+}
+
+input UserWhitelistCreateInput {
+	userID: Uint64!
+	ipAddress: String!
+}
+
+input UserTagInput {
+	id: Uint64
+	userID: Uint64
+	tagID: Uint64
+}
+
+input UserTagCreateInput {
+	userID: Uint64!
+	tagID: Uint64!
+}
+
+type ListUserResp {
+	users:  [User!]!
+	meta: Meta!
+}
+
+type ListUserRoleResp {
+	userRoles: [UserRole!]!
+	meta: Meta!
+}
+
+type ListUserWhitelistResp {
+	userWhitelists: [UserWhitelist!]!
+	meta: Meta!
+}
+
+type ListUserTagResp {
+	userTags: [UserTag!]!
+	meta: Meta!
+}
+
+input UserLoginHistoryInput {
+	userID: Uint64
+}
+
+input UserLoginHistoryFilterInput {
+	baseFilter: BaseFilterInput
+	userLoginHistory: UserLoginHistoryInput
+}
+
+type ListUserLoginHistoryResp {
+	userLoginHistories: [UserLoginHistory!]!
+	meta: Meta
+}
+
+input CreateUserReqInput {
+	username: String!
+	password: String!
+	accountType: AccountType!
+	aliasName: String!
+}
+
+type CreateUserResp {
+	user: User!   
+}
+input UserUpdatePasswordInput {
+	userID: Uint64!
+	password: String!
+}

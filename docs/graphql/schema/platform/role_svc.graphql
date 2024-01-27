@@ -1,0 +1,14 @@
+extend type Query {
+	"""角色"""
+	getRole(filter: RoleFilterInput!): Role!
+	"""角色列表"""
+	listRole(filter: RoleFilterInput!, pagination: PaginationInput): ListRoleResp!
+}
+
+extend type Mutation {
+	createRole(in: RoleCreateInput!): Uint64!
+	"""更新角色"""
+	updateRole(filter: RoleFilterInput!, in: RoleUpdateInput!): Uint64!
+	"""刪除角色"""
+	deleteRole(filter: RoleFilterInput!): Uint64!
+}

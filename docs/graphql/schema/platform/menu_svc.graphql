@@ -1,0 +1,4 @@
+extend type Query {
+	"""所有列表"""
+	listMenu: [Menu!]!
+}

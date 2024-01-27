@@ -1,0 +1,7 @@
+extend type Query {
+	listHubClients: [HubClient!]!
+}
+
+extend type Subscription {
+	receiveMessage(userAuth: UserAuth!): String!
+}

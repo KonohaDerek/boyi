@@ -1,0 +1,27 @@
+input RoleCreateInput {
+	name: String!
+	supportAccountType: AccountType!
+	authority: [MenuInput!]!
+}
+
+input RoleInput {
+	id: Uint64
+	name: String
+	supportAccountType: AccountType
+}
+
+input RoleUpdateInput {
+	name: String
+	supportAccountType: AccountType
+	authority: [MenuInput!]
+}
+
+input RoleFilterInput {
+	role: RoleInput
+	baseFilter: BaseFilterInput
+}
+
+type ListRoleResp {
+	roles: [Role!]!
+	meta: Meta!
+}

@@ -1,0 +1,17 @@
+FROM debian:latest
+WORKDIR /app
+ENV CONFIG_PATH=/app
+EXPOSE 8080/tcp 8090/tcp
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y ca-certificates && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/* && \
+    useradd -u 1000 -ms /bin/bash app
+COPY boyi .
+COPY deployment/file ./file/
+COPY deployment/database ./deployment/database
+COPY deployment/config ./deployment/config
+RUN chown -R app /app
+USER app
+CMD ["./boyi", "server"]

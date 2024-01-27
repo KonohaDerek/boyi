@@ -1,0 +1,10 @@
+type Role {
+	id: Uint64!
+	name: String!
+	authority: [Menu!]!
+	supportAccountType: AccountType!
+	createdAt: Timestamp!
+	createUserID: Uint64!
+	updatedAt: Timestamp!
+	updateUserID: Uint64!
+}

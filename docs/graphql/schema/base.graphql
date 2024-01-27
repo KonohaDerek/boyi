@@ -1,0 +1,84 @@
+scalar Timestamp
+
+scalar Map
+
+scalar Upload
+
+scalar Any
+
+
+type Common {
+	creatorID: Uint64
+	creatorName: String
+	createdAt: Timestamp
+	updaterID: Uint64
+	updaterName: String
+	updatedAt: Timestamp
+}
+
+type ListMetadata {
+	count: Uint64
+}
+
+input BaseFilterInput {
+	IDs: [Uint64!]
+	searchIn: String
+	keyword: String
+	createdAtLT: Uint64
+	createdAtLTE: Uint64
+	createdAtGT: Uint64
+	createdAtGTE: Uint64
+	sortField: String
+	sortType: SortType
+	rangeField: String
+	rangeType: RangeType
+	lessThan: Int64
+	lessThanEqual: Int64
+	greaterThan: Int64
+	greaterThanEqual: Int64
+}
+
+input PaginationInput {
+	page: Uint64
+	perPage: Uint64
+	offsetType: OffsetType
+	offsetID: Uint64
+	limit: Uint64
+}
+
+enum SortType {
+	Unknown
+	ASC
+	DESC
+}
+
+enum OffsetType {
+	Unknown
+	Old
+	New
+}
+
+type File implements Data {
+	id: Uint64!
+	name: String!
+	content: String!
+	contentType: String!
+}
+
+enum YesNo {
+	Unknown
+	Yes
+	No
+}
+
+enum RangeType {
+	ByDateTime
+	ByNumber
+}
+
+enum Position {
+	Top
+	Bottom
+	Left
+	Right
+}

@@ -1,0 +1,30 @@
+schema:
+  - docs/graphql/schema/*.graphql
+  - docs/graphql/schema/platform/*.graphql
+
+exec:
+  filename: internal/graph/platform/generated/generated.go
+model:
+  filename: pkg/delivery/graph/view/platform_models_gen.go
+  package: view
+
+struct_tag: json
+
+omit_slice_element_pointers: false
+
+resolver:
+  layout: follow-schema
+  dir: pkg/delivery/graph/platform
+  type: Resolver
+  package: platform
+  filename_template: "{name}.resolvers.go"
+
+models:
+  Timestamp:
+    model: boyi/pkg/infra/graph/value.Timestamp
+  Int64:
+    model: github.com/99designs/gqlgen/graphql.Int64
+  Uint64:
+    model: boyi/pkg/infra/graph/value.Uint64
+  Decimal:
+    model: github.com/shopspring/decimal.Decimal

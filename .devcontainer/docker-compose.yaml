@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql/mysql-server:8.0.23
+    container_name: "boyi-mysql"
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "boyi"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "user"
+      TZ: "UTC"
+    networks:
+      - boyi
+  redis:
+    image: redis/redis-stack-server
+    container_name:  "boyi-redis"
+    ports:
+      - "6379"
+    restart: always
+    networks:
+      - boyi
+  minio:
+    image: minio/minio
+    container_name: "boyi-minio"
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ACCESS_KEY=minio
+      - MINIO_SECRET_KEY=minio123
+    volumes:
+      - ./minio/data:/data
+      - ./minio/config:/root/.minio
+    restart: always
+    privileged: true
+    networks:
+      - boyi
+networks:
+  boyi:
+    external: true
+    name: boyi    

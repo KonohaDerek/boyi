@@ -1,0 +1,14 @@
+extend type Query {
+	"""標籤"""
+	getTag(filter: TagFilterInput!): Tag!
+	"""標籤列表"""
+	listTag(filter: TagFilterInput!, pagination: PaginationInput): ListTagResp!
+}
+
+extend type Mutation {
+	createTag(in: TagCreateInput!): Uint64!
+	"""更新標籤"""
+	updateTag(filter: TagFilterInput!, in: TagUpdateInput!): Uint64!
+	"""刪除標籤"""
+	deleteTag(filter: TagFilterInput!): Uint64!
+}

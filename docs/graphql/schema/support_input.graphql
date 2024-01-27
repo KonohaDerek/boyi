@@ -1,0 +1,66 @@
+input CreateUploadURLInput {
+	expireSec: Int64
+	files: [FileInfoInput]!
+}
+
+input FileInfoInput {
+	fileName: String!
+	"""檔案大小"""
+	size: Int64!
+	"""檔案 MD5 The base64-encoded 128-bit MD5 digest"""
+	md5: String!
+}
+
+type FileInfo {
+	fileName: String!
+	uploadURL: String!
+}
+
+type CreateUploadURLResp {
+	files: [FileInfo]!
+}
+
+enum MoreInformationType {
+	Unknown
+	HTML
+	URL
+}
+
+# hosts_deny
+input HostsDenyInput {
+	"""id"""
+	id: Uint64
+	"""IP"""
+	ipAddress: String
+	"""是否啟用"""
+	isEnabled: YesNo
+}
+
+input HostsDenyFilterInput {
+	hostsDeny: HostsDenyInput
+	baseFilter: BaseFilterInput
+}
+
+
+input HostsDenyCreateInput {
+	"""IP"""
+	ipAddress: String!
+	"""是否啟用"""
+	isEnabled: YesNo!
+	"""備註"""
+	remark: String
+}
+
+input HostsDenyUpdateInput {
+	"""IP"""
+	ipAddress: String
+	"""是否啟用"""
+	isEnabled: YesNo
+	"""備註"""
+	remark: String
+}
+
+type ListHostsDenyResp {
+	hostsDenys: [HostsDeny!]!
+	meta: Meta!
+}

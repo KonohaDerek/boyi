@@ -1,0 +1,60 @@
+input LoginReqInput {
+	username: String!
+	password: String!
+}
+type LoginResp {
+	token: String!
+	deviceUID: String!
+	userAgent: String!
+}
+
+type Claims {
+	"""
+	id
+	"""
+	id: Uint64!
+	"""
+	帳號類型
+	"""
+	accountType: AccountType!
+	"""
+	狀態
+	"""
+	status: UserStatus!
+	"""
+	用户名
+	"""
+	username: String!
+	"""
+	別名（聊天室顯示用）
+	"""
+	aliasName: String!
+	"""
+	頭像鏈結
+	"""
+	avatarURL: String!
+	whitelists: [UserWhitelist!]!
+	menu: [Menu!]!
+}
+
+
+input UserAuth {
+	token: String!
+	deviceUID: String!
+}
+
+input CreateCommonUserReqInput {
+	username: String!
+	password: String!
+	accountType: AccountType!
+}
+
+type CreateCommonUserResp {
+	user: User!   
+}
+
+type RefreshTokenResp {
+	token: String!
+	expires: Timestamp! 
+}
+

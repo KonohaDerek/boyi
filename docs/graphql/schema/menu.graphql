@@ -1,0 +1,6 @@
+type Menu {
+	name: String!
+	key: String!
+	superKey: String!
+	next: [Menu!]!
+}

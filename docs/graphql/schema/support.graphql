@@ -1,0 +1,19 @@
+"""黑名單系統"""
+type HostsDeny {
+	"""id"""
+	id: Uint64!
+	"""ip"""
+	ipAddress: String!
+	"""是否啟用"""
+	isEnabled: YesNo!
+	"""備註"""
+	remark: String!
+	"""建立時間"""
+	createdAt: Timestamp!
+	"""建立者"""
+	createUserID: Uint64!
+	"""更新時間"""
+	updatedAt: Timestamp!
+	"""更新者"""
+	updateUserID: Uint64!
+}

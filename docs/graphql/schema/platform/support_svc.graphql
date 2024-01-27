@@ -1,0 +1,16 @@
+extend type Query {
+
+	"""黑名單IP"""
+	getHostsDeny(filter: HostsDenyFilterInput!): HostsDeny!
+	"""黑名單IP清單"""
+	listHostsDeny(filter: HostsDenyFilterInput, pagination:PaginationInput): ListHostsDenyResp!
+}
+
+extend type Mutation {
+	"""新增黑名單IP"""
+	createHostsDeny(in: HostsDenyCreateInput!): HostsDeny!
+	"""更新黑名單IP"""
+	updateHostsDeny(filter: HostsDenyFilterInput!, in: HostsDenyUpdateInput!): HostsDeny!
+	"""刪除黑名單IP"""
+	deleteHostsDeny(filter: HostsDenyFilterInput!): Uint64!
+}

@@ -1,0 +1,344 @@
+definitions:
+  claims.Claims:
+    properties:
+      account_type:
+        type: integer
+      alias_name:
+        type: string
+      competences:
+        additionalProperties:
+          type: boolean
+        type: object
+      device_uid:
+        type: string
+      expired_at:
+        type: integer
+      id:
+        type: integer
+      token:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.ManagerMenuKey:
+    enum:
+    - Manager_System
+    - Manager_Management
+    - API_Manager_Get
+    - API_Manager_Update
+    - API_Manager_Delete
+    - API_Manager_Create
+    - API_Manager_Password_Update
+    - CustomerService_Management
+    - API_CustomerService_Get
+    - API_CustomerService_Update
+    - API_CustomerService_Delete
+    - API_CustomerService_Create
+    - API_CustomerService_Password_Update
+    - Manager_Role_Management
+    - API_Manager_Role_Create
+    - API_Manager_Role_Get
+    - API_Manager_Role_Update
+    - API_Manager_Role_Delete
+    - Member_System
+    - Member_Management
+    - API_Member_Get
+    - API_Member_Update
+    - API_Member_Delete
+    - Member_Role_Management
+    - API_Member_Role_Create
+    - API_Member_Role_Get
+    - API_Member_Role_Update
+    - API_Member_Role_Delete
+    - Member_Tag_Management
+    - Member_Tag_Create
+    - API_Member_Tag_Create
+    - API_Member_Tag_Get
+    - API_Member_Tag_Update
+    - API_Member_Tag_Delete
+    - Member_Room_Management
+    - Member_Room_Get
+    - API_Member_Room_Get
+    - API_Member_Room_Delete
+    - Chatroom_System
+    - MyChatroom_Management
+    - API_MyChatroom_Get
+    - API_MyChatroom
+    - CustomerService_System
+    - ConsultationChat_Management
+    - API_ConsultationChat_Get
+    - API_JoinConsultingRoom
+    - API_PullInConsultingRoom
+    - API_UpdateMessage
+    - MothballConsultationChat
+    - ContactCustomerService_Management
+    - API_ContactCustomerService_Get
+    - API_ContactCustomerService_Update
+    - API_ContactCustomerService_Delete
+    - API_ContactCustomerService_Create
+    - Message_System
+    - Push_Management
+    - API_Push_Get
+    - API_Push_Create
+    - Operating_System
+    - FAQ_Management
+    - API_FAQ_Get
+    - API_FAQ_Create
+    - ConsultingRoomForm_Management
+    - API_ConsultingRoomForm_Get
+    - API_ConsultingRoomForm_Create
+    - API_ConsultingRoomForm_Update
+    - CannedResponse_Management
+    - API_CannedResponse_Get
+    - API_CannedResponse_Create
+    - API_CannedResponse_Update
+    - API_CannedResponseCategory_Get
+    - API_CannedResponseCategory_Create
+    - API_CannedResponseCategory_Update
+    - ConsultingGreeting_Management
+    - API_ConsultingGreeting_Get
+    - API_ConsultingGreeting_Update
+    - PlatformMoreInformation_Management
+    - API_PlatformMoreInformation_Get
+    - API_PlatformMoreInformation_Update
+    - PlatformSetting_Management
+    - API_ConsultingRoomSetting_Beep
+    - API_ConsultingRoomSetting_AutoDistribute
+    - API_ConsultingRoomSetting_RedirectVerify
+    - ConsultingRoomClient_Management
+    - API_ConsultingRoomClientSetting_Get
+    - API_ConsultingRoomClientSetting_Create
+    - API_ConsultingRoomClientSetting_Update
+    - API_ConsultingRoomClientSetting_Delete
+    - ConsultingRoomOrigin_Management
+    - API_SpinachPlatformSetting_ALL
+    - API_SpinachPlatformSetting_Create
+    - API_SpinachPlatformSetting_Update
+    - API_SpinachPlatformSetting_Delete
+    - API_ConsultingRoomOrigin_ALL
+    - API_ConsultingRoomOrigin_Create
+    - API_ConsultingRoomOrigin_Update
+    - API_ConsultingRoomOrigin_Delete
+    - ConsultingRoomQuestion_Management
+    - API_ConsultingRoomQuestion_Get
+    - API_ConsultingRoomQuestion_Create
+    - API_ConsultingRoomQuestion_Update
+    - API_ConsultingRoomQuestion_Delete
+    - Merchant_Management
+    - API_Merchant_Get
+    - API_Merchant_Create
+    - API_Merchant_Update
+    - API_Merchant_Delete
+    - HostsDeny_Management
+    - API_HostsDeny_Get
+    - API_HostsDeny_Create
+    - API_HostsDeny_Update
+    - API_HostsDeny_Delete
+    - AdTracking_Management
+    - API_AdTracking_Get
+    - API_AdTracking_Create
+    - API_AdTracking_Update
+    - API_AdTracking_Delete
+    - Report_System
+    - CommonUserReport_Management
+    - CustomerServiceReport_Management
+    - ConsultingRoomReport_Management
+    - Surveillance_System
+    - Surveillance_Management
+    - Dashboard
+    type: string
+    x-enum-varnames:
+    - Manager_System
+    - Manager_Management
+    - API_Manager_Get
+    - API_Manager_Update
+    - API_Manager_Delete
+    - API_Manager_Create
+    - API_Manager_Password_Update
+    - CustomerService_Management
+    - API_CustomerService_Get
+    - API_CustomerService_Update
+    - API_CustomerService_Delete
+    - API_CustomerService_Create
+    - API_CustomerService_Password_Update
+    - Manager_Role_Management
+    - API_Manager_Role_Create
+    - API_Manager_Role_Get
+    - API_Manager_Role_Update
+    - API_Manager_Role_Delete
+    - Member_System
+    - Member_Management
+    - API_Member_Get
+    - API_Member_Update
+    - API_Member_Delete
+    - Member_Role_Management
+    - API_Member_Role_Create
+    - API_Member_Role_Get
+    - API_Member_Role_Update
+    - API_Member_Role_Delete
+    - Member_Tag_Management
+    - Member_Tag_Create
+    - API_Member_Tag_Create
+    - API_Member_Tag_Get
+    - API_Member_Tag_Update
+    - API_Member_Tag_Delete
+    - Member_Room_Management
+    - Member_Room_Get
+    - API_Member_Room_Get
+    - API_Member_Room_Delete
+    - Chatroom_System
+    - MyChatroom_Management
+    - API_MyChatroom_Get
+    - API_MyChatroom
+    - CustomerService_System
+    - ConsultationChat_Management
+    - API_ConsultationChat_Get
+    - API_JoinConsultingRoom
+    - API_PullInConsultingRoom
+    - API_UpdateMessage
+    - MothballConsultationChat
+    - ContactCustomerService_Management
+    - API_ContactCustomerService_Get
+    - API_ContactCustomerService_Update
+    - API_ContactCustomerService_Delete
+    - API_ContactCustomerService_Create
+    - Message_System
+    - Push_Management
+    - API_Push_Get
+    - API_Push_Create
+    - Operating_System
+    - FAQ_Management
+    - API_FAQ_Get
+    - API_FAQ_Create
+    - ConsultingRoomForm_Management
+    - API_ConsultingRoomForm_Get
+    - API_ConsultingRoomForm_Create
+    - API_ConsultingRoomForm_Update
+    - CannedResponse_Management
+    - API_CannedResponse_Get
+    - API_CannedResponse_Create
+    - API_CannedResponse_Update
+    - API_CannedResponseCategory_Get
+    - API_CannedResponseCategory_Create
+    - API_CannedResponseCategory_Update
+    - ConsultingGreeting_Management
+    - API_ConsultingGreeting_Get
+    - API_ConsultingGreeting_Update
+    - PlatformMoreInformation_Management
+    - API_PlatformMoreInformation_Get
+    - API_PlatformMoreInformation_Update
+    - PlatformSetting_Management
+    - API_ConsultingRoomSetting_Beep
+    - API_ConsultingRoomSetting_AutoDistribute
+    - API_ConsultingRoomSetting_RedirectVerify
+    - ConsultingRoomClient_Management
+    - API_ConsultingRoomClientSetting_Get
+    - API_ConsultingRoomClientSetting_Create
+    - API_ConsultingRoomClientSetting_Update
+    - API_ConsultingRoomClientSetting_Delete
+    - ConsultingRoomOrigin_Management
+    - API_SpinachPlatformSetting_ALL
+    - API_SpinachPlatformSetting_Create
+    - API_SpinachPlatformSetting_Update
+    - API_SpinachPlatformSetting_Delete
+    - API_ConsultingRoomOrigin_ALL
+    - API_ConsultingRoomOrigin_Create
+    - API_ConsultingRoomOrigin_Update
+    - API_ConsultingRoomOrigin_Delete
+    - ConsultingRoomQuestion_Management
+    - API_ConsultingRoomQuestion_Get
+    - API_ConsultingRoomQuestion_Create
+    - API_ConsultingRoomQuestion_Update
+    - API_ConsultingRoomQuestion_Delete
+    - Merchant_Management
+    - API_Merchant_Get
+    - API_Merchant_Create
+    - API_Merchant_Update
+    - API_Merchant_Delete
+    - HostsDeny_Management
+    - API_HostsDeny_Get
+    - API_HostsDeny_Create
+    - API_HostsDeny_Update
+    - API_HostsDeny_Delete
+    - AdTracking_Management
+    - API_AdTracking_Get
+    - API_AdTracking_Create
+    - API_AdTracking_Update
+    - API_AdTracking_Delete
+    - Report_System
+    - CommonUserReport_Management
+    - CustomerServiceReport_Management
+    - ConsultingRoomReport_Management
+    - Surveillance_System
+    - Surveillance_Management
+    - Dashboard
+  dto.Menu:
+    properties:
+      key:
+        allOf:
+        - $ref: '#/definitions/dto.ManagerMenuKey'
+        description: 表單鍵值
+      name:
+        description: 表單名稱
+        type: string
+      next:
+        description: 下一層
+        items:
+          $ref: '#/definitions/dto.Menu'
+        type: array
+      publicAPI:
+        description: 是否為開放性接口（略過權限判定）
+        type: boolean
+      router:
+        description: Api路由
+        type: string
+      superKey:
+        allOf:
+        - $ref: '#/definitions/dto.ManagerMenuKey'
+        description: 父鍵值
+    type: object
+  vo.LoginReq:
+    properties:
+      origin:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /b/apis/v1/auth:
+    post:
+      description: loginUser.
+      parameters:
+      - description: Book JSON
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/vo.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/claims.Claims'
+      summary: 登入
+      tags:
+      - login
+  /b/menu/tree:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            items:
+              $ref: '#/definitions/dto.Menu'
+            type: array
+      summary: 提供所有Menu
+swagger: "2.0"

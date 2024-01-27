@@ -1,0 +1,4 @@
+input MenuInput {
+	key: String!
+	next: [MenuInput!]!
+}

@@ -1,0 +1,68 @@
+apiVersion: v1
+data:
+  app_dev.properties: |-
+    ## log 設定
+    log.local=false
+    log.level=5
+    log.environment=dev
+    log.app_name=boyi
+
+    ## HTTP
+    http.port = 8080
+    http.debug = true
+    http.mode = release
+
+    # Database config
+    databases.with_color = true
+    databases.with_caller = true
+    databases.read.debug = true
+    databases.read.type = mysql
+    databases.read.host = mysql.default.svc.cluster.local
+    databases.read.port = 3306
+    databases.read.username = user
+    databases.read.password = user
+    databases.read.dbname = boyi
+    databases.read.with_color = true
+    databases.read.max_idle_conns = 50
+    databases.read.max_open_conns = 100
+
+    databases.write.debug = true
+    databases.write.type = mysql
+    databases.write.host = mysql.default.svc.cluster.local
+    databases.write.port = 3306
+    databases.write.username = user
+    databases.write.password = user
+    databases.write.dbname = boyi
+    databases.write.with_color = true
+
+    # Redis config
+    redis.addresses=redis.default.svc.cluster.local:6379
+    redis.cluster_mode=false
+    redis.password=
+    redis.db=0
+    redis.subscript_name_prefix=boyi
+
+    # Storage Config
+    storage.access_key=
+    storage.secret_key=
+    storage.region=ap-east-1
+    storage.bucket=pre-boyi
+
+    # sentry Config
+    sentry.dsn=
+    sentry.debug=false
+    sentry.local=false
+    sentry.app_name=boyi
+    sentry.environment=dev
+
+    # app Config
+    app.menu_file_path = /app/file/menu.csv
+    app.menu_default_admin_file_path = /app/file/menu_default_admin.csv
+    app.menu_default_cs_file_path = /app/file/menu_default_cs.csv
+
+    # QQZeng Config
+    qqzeng.file_path = /app/file/qqzeng-ip.dat
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: boyi-server-config

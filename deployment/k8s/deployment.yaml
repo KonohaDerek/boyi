@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boyi-server
+spec:
+  replicas: 2
+  revisionHistoryLimit: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: boyi-server
+  template:
+    metadata:
+      labels:
+        app: boyi-server
+    spec:
+      containers:
+        - args:
+            - server
+            - --migrate_sql
+          command:
+            - ./boyi
+          env:
+            - name: CONFIG_PATH
+              value: /app/deployment/config/
+            - name: CONFIG_NAME
+              value: app_dev.properties
+          image: gcr.io/boyi/server:1.0.629
+          name: boyi-server
+          ports:
+            - containerPort: 8080
+            - containerPort: 8090
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: 256Mi
+            requests:
+              cpu: "0.1"
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /app/deployment/config/app_dev.properties
+              name: boyi-server-config
+              subPath: app_dev.properties
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 60
+      imagePullSecrets:
+        - name: acr
+      volumes:
+        - configMap:
+            items:
+              - key: app_dev.properties
+                path: app_dev.properties
+            name: boyi-server-config
+          name: boyi-server-config

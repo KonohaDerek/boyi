@@ -1,0 +1,11 @@
+extend type Query {
+	Me: Claims!
+}
+
+extend type Mutation {
+	CreateCommonUser(in: CreateCommonUserReqInput!): CreateCommonUserResp!
+	Login(in: LoginReqInput!): LoginResp!
+	Logout: Uint64!
+	FlushAllCache: Uint64!
+	RefreshToken: RefreshTokenResp!
+}

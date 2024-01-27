@@ -1,0 +1,161 @@
+enum UserStatus {
+	Unknown
+	"""未驗證"""
+	UnVerified
+	"""啟用中"""
+	Actived
+	"""鎖定"""
+	Locked
+	"""停用中"""
+	Disabled
+	"""已刪除"""
+	Deleted
+}
+
+enum AccountType {
+	Unknown
+	"""系統管理員"""
+	Admin
+	"""系統"""
+	System
+	"""管理員"""
+	Manager
+	"""客服"""
+	CustomerService
+	"""一般會員"""
+	Member
+	"""遊客"""
+	Tourist
+}
+
+enum DeviceOS {
+	Unknown
+	"""IOS"""
+	IOS
+	"""Android"""
+	Android
+	"""Windows"""
+	Windows
+	"""Mac"""
+	Mac
+	"""其他"""
+	Other
+}
+
+
+type User {
+	"""id"""
+	id: Uint64!
+	"""帳號類型"""
+	accountType: AccountType!
+	"""狀態"""
+	status: UserStatus!
+	"""用户名"""
+	username: String!
+	"""別名（聊天室顯示用)"""
+	aliasName: String!
+	"""電子郵件"""
+	email: String!
+	"""居住地區"""
+	area: String!
+	"""備註"""
+	notes: String!
+	"""頭像鏈結"""
+	avatarURL: String!
+	"""最後登陸時間"""
+	lastLoginAt: Timestamp!
+	"""最後登陸的IP"""
+	lastLoginIP: String!
+	"""是否已刪除"""
+	isDelete: YesNo!
+	"""建立时间"""
+	createdAt: Timestamp!
+	"""更新時間"""
+	updatedAt: Timestamp!
+	"""更新人"""
+	updateUserID: Uint64!
+	roles: [UserRole!]!
+	whitelists: [UserWhitelist!]!
+	tags: [UserTag!]!
+}
+
+
+type UserRole {
+	"""
+	id
+	"""
+	id: Uint64!
+	"""
+	user id
+	"""
+	userID: Uint64!
+	"""
+	角色 id
+	"""
+	roleID: Uint64!
+	"""
+	是否為管理員
+	"""
+	isAdmin: YesNo!
+	"""
+	創建 user id
+	"""
+	createUserID: Uint64!
+	"""
+	更新 user id
+	"""
+	updateUserID: Uint64!
+	"""
+	建立时间
+	"""
+	createdAt: Timestamp!
+	"""
+	建立时间
+	"""
+	updatedAt: Timestamp!
+	"""
+	角色
+	"""
+	role: Role!
+}
+
+type UserWhitelist {
+	"""
+	id
+	"""
+	id: Uint64!
+	"""
+	user id
+	"""
+	userID: Uint64!
+	"""
+	ip 地址
+	"""
+	ipAddress: String!
+	"""
+	建立时间
+	"""
+	createdAt: Timestamp!
+}
+
+type UserTag {
+	"""id"""
+	id: Uint64!
+	userID: Uint64!
+	tagID: Uint64!
+	createdAt: Timestamp!
+	updatedAt: Timestamp!
+	createUserID: Uint64!
+	updateUserID: Uint64!
+	tag: Tag!
+}
+
+type UserLoginHistory {
+	id: Uint64!
+	userID: Uint64!
+	ipAddress: String!
+	country: String!
+	administrativeArea: String!
+	deviceOS: DeviceOS!
+	createdAt: Timestamp!
+}

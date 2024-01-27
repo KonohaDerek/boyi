@@ -1,0 +1,45 @@
+image: golang:1.20
+
+definitions:
+  steps:
+    - step: &Go_Test
+        name: build
+        image: golangci/golangci-lint:v1.51.2-alpine
+        script:
+          - go mod tidy && go mod vendor
+          - golangci-lint run -v --tests=false --skip-dirs vendor,tools --timeout 4m
+          - PROJ_DIR=$(pwd) go test bochat/pkg/...
+pipelines:
+  default:
+    - step: *Go_Test
+  branches:
+    dev:
+      - step: *Go_Test
+      - step:
+          name: build and push image
+          script:
+            - if [ ! -d "vendor" ] || [ -z "$(ls -A vendor)" ]; then go mod vendor; fi
+            - go mod vendor
+            - go build .
+            - export IMAGE_NAME="gcr.io/boyi/server:${BITBUCKET_COMMIT::7}"
+            - docker login $DOCKER_REGISTRY --username $DOCKER_REGISTRY_USERNAME --password $DOCKER_REGISTRY_PASSWORD
+            - echo $IMAGE_NAME
+            - docker build --progress=plain -f deployment/docker/Dockerfile.dev -t $IMAGE_NAME .
+            - docker push $IMAGE_NAME
+          services:
+            - docker
+      - step:
+          name: sync to deployment branch
+          image: cnych/kustomize:v1.0
+          script:
+            - export IMAGE_NAME="gcr.io/boyi/server:${BITBUCKET_COMMIT::7}"
+            - git checkout -b deployment/developer
+            - cd deployment/k8s
+            - kustomize edit set image $IMAGE_NAME
+            - cat kustomization.yaml
+            - git status
+            - cd ../.. && git add . && git commit -m "Upgrade to $IMAGE_NAME [skip ci]"
+            - git push -v -u -f origin deployment/developer
+
+options:
+  docker: true

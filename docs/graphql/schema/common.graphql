@@ -1,0 +1,26 @@
+type Query
+
+type Mutation
+
+type Subscription
+
+scalar Uint64
+
+scalar Int64
+
+
+interface Data {
+	id: Uint64!
+}
+
+type Meta {
+	total: Uint64!
+	page: Uint64
+	perPage: Uint64
+	totalPage: Uint64
+}
+
+type DataList {
+	data: [Data]!
+	meta: Meta!
+}

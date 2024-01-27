@@ -1,0 +1,13 @@
+type Tag {
+	"""id"""
+	id: Uint64!
+	name: String!
+	"""色碼 # 000000 """
+	RGBHex: String!
+	"""是否啟用"""
+	isEnable: YesNo!
+	createdAt: Timestamp!
+	updatedAt: Timestamp!
+	createUserID: Uint64!
+	updateUserID: Uint64!
+}

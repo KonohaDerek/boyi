@@ -1,0 +1,10 @@
+type HubClient {
+	userID: Uint64!
+	devices: [HubDevice!]!
+}
+
+type HubDevice {
+	token: String!
+	deviceUID: String!
+	roomID: Uint64!
+}
