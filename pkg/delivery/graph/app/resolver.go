@@ -9,10 +9,10 @@ import (
 	"net/http"
 	"time"
 
-	"boyi/pkg/Infra/errors"
-	"boyi/pkg/Infra/graph"
-	"boyi/pkg/Infra/redis"
-	"boyi/pkg/Infra/zlog"
+	"boyi/pkg/infra/errors"
+	"boyi/pkg/infra/graph"
+	"boyi/pkg/infra/redis"
+	"boyi/pkg/infra/zlog"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/extension"

@@ -3,7 +3,7 @@ package mock
 import (
 	"testing"
 
-	"boyi/pkg/Infra/qqzeng_ip"
+	"boyi/pkg/infra/qqzeng_ip"
 
 	gomock "github.com/golang/mock/gomock"
 )

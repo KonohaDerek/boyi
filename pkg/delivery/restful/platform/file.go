@@ -1,8 +1,8 @@
 package platform
 
 import (
-	"boyi/pkg/Infra/errors"
-	internalGin "boyi/pkg/Infra/gin"
+	"boyi/pkg/infra/errors"
+	internalGin "boyi/pkg/infra/gin"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,7 +1,7 @@
 package lock
 
 import (
-	"boyi/pkg/Infra/redis"
+	"boyi/pkg/infra/redis"
 
 	"github.com/bsm/redislock"
 )

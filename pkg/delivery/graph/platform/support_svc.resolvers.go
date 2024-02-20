@@ -15,17 +15,73 @@ import (
 
 // CreateHostsDeny is the resolver for the createHostsDeny field.
 func (r *mutationResolver) CreateHostsDeny(ctx context.Context, in view.HostsDenyCreateInput) (*view.HostsDeny, error) {
-	panic(fmt.Errorf("not implemented: CreateHostsDeny - createHostsDeny"))
+	var (
+		result dto.HostsDeny
+		resp   view.HostsDeny
+	)
+	claims, err := claims.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := claims.VerifyRole(dto.API_HostsDeny_Create.String()); err != nil {
+		return nil, err
+	}
+
+	result = in.ConvertToDTO(claims)
+
+	err = r.supportSvc.CreateHostsDeny(ctx, &result)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.FromDTO(result), nil
 }
 
 // UpdateHostsDeny is the resolver for the updateHostsDeny field.
 func (r *mutationResolver) UpdateHostsDeny(ctx context.Context, filter view.HostsDenyFilterInput, in view.HostsDenyUpdateInput) (*view.HostsDeny, error) {
-	panic(fmt.Errorf("not implemented: UpdateHostsDeny - updateHostsDeny"))
+	var (
+		opt  option.HostsDenyWhereOption
+		cols option.HostsDenyUpdateColumn
+		resp view.HostsDeny
+	)
+
+	claims, err := claims.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := claims.VerifyRole(dto.API_HostsDeny_Update.String()); err != nil {
+		return nil, err
+	}
+
+	opt = filter.ConvertToOption()
+	cols = in.ConvertToOption(claims)
+
+	result, err := r.supportSvc.UpdateHostsDeny(ctx, &opt, &cols)
+	if err != nil {
+		return nil, err
+	}
+	return resp.FromDTO(result), nil
 }
 
 // DeleteHostsDeny is the resolver for the deleteHostsDeny field.
 func (r *mutationResolver) DeleteHostsDeny(ctx context.Context, filter view.HostsDenyFilterInput) (uint64, error) {
-	panic(fmt.Errorf("not implemented: DeleteHostsDeny - deleteHostsDeny"))
+	claims, err := claims.GetClaims(ctx)
+	if err != nil {
+		return 0, err
+	}
+
+	if err := claims.VerifyRole(dto.API_HostsDeny_Delete.String()); err != nil {
+		return 0, err
+	}
+
+	var opt = filter.ConvertToOption()
+	if err := r.supportSvc.DeleteHostsDeny(ctx, &opt); err != nil {
+		return 0, err
+	}
+
+	return 1, nil
 }
 
 // ConfigSms is the resolver for the configSms field.
@@ -127,12 +183,72 @@ func (r *mutationResolver) DeleteSecurityEvent(ctx context.Context, filter view.
 
 // GetHostsDeny is the resolver for the getHostsDeny field.
 func (r *queryResolver) GetHostsDeny(ctx context.Context, filter view.HostsDenyFilterInput) (*view.HostsDeny, error) {
-	panic(fmt.Errorf("not implemented: GetHostsDeny - getHostsDeny"))
+	var (
+		opt  option.HostsDenyWhereOption
+		resp view.HostsDeny
+	)
+
+	claims, err := claims.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := claims.VerifyRole(dto.API_HostsDeny_Get.String()); err != nil {
+		return nil, err
+	}
+
+	opt = filter.ConvertToOption()
+
+	result, err := r.supportSvc.GetHostsDeny(ctx, &opt)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.FromDTO(result), nil
 }
 
 // ListHostsDeny is the resolver for the listHostsDeny field.
 func (r *queryResolver) ListHostsDeny(ctx context.Context, filter *view.HostsDenyFilterInput, pagination *view.PaginationInput) (*view.ListHostsDenyResp, error) {
-	panic(fmt.Errorf("not implemented: ListHostsDeny - listHostsDeny"))
+	var (
+		opt  option.HostsDenyWhereOption
+		resp view.ListHostsDenyResp
+	)
+
+	claims, err := claims.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := claims.VerifyRole(dto.API_HostsDeny_Get.String()); err != nil {
+		return nil, err
+	}
+
+	if filter != nil {
+		opt = filter.ConvertToOption()
+	}
+
+	if pagination != nil {
+		opt.Pagination = pagination.ConvertToPagination()
+	}
+
+	result, total, err := r.supportSvc.ListHostsDeny(ctx, &opt)
+	if err != nil {
+		return nil, err
+	}
+
+	resp = view.ListHostsDenyResp{
+		Meta: &view.Meta{
+			Total: uint64(total),
+		},
+		HostsDenys: make([]*view.HostsDeny, 0, len(result)),
+	}
+
+	viewCSS := make([]view.HostsDeny, len(result))
+	for i := range result {
+		resp.HostsDenys = append(resp.HostsDenys, viewCSS[i].FromDTO(result[i]))
+	}
+
+	return &resp, nil
 }
 
 // ListTemplate is the resolver for the listTemplate field.

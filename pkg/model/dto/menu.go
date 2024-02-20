@@ -8,7 +8,7 @@ import (
 	"encoding/json"
 	"os"
 
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 	"boyi/pkg/model/enums/types"
 
 	"github.com/rs/zerolog/log"

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"time"
 
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 )
 
 func (repo *repository) GetUserByID(ctx context.Context, userID uint64) (dto.User, error) {

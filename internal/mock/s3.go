@@ -3,7 +3,7 @@ package mock
 import (
 	"testing"
 
-	"boyi/pkg/Infra/storage"
+	"boyi/pkg/infra/storage"
 
 	gomock "github.com/golang/mock/gomock"
 )

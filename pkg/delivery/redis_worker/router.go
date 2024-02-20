@@ -3,7 +3,7 @@ package redis_worker
 import (
 	"fmt"
 
-	"boyi/pkg/Infra/redis"
+	"boyi/pkg/infra/redis"
 )
 
 func RegisterHandler(srv *handler, config *redis.Config) map[redis.SubscriptName]redis.SubscriptionFunc {

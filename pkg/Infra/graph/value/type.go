@@ -5,7 +5,7 @@ import (
 	"io"
 	"strconv"
 
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/shopspring/decimal"

@@ -1,7 +1,7 @@
 package claims
 
 import (
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 	"boyi/pkg/model/enums/types"
 	"context"
 )

@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"boyi/pkg/Infra/ctxutil"
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/ctxutil"
+	"boyi/pkg/infra/errors"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

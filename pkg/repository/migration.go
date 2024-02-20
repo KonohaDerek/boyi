@@ -9,7 +9,7 @@ import (
 	"boyi/pkg/model/option/common"
 	"context"
 
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"gorm.io/gorm"

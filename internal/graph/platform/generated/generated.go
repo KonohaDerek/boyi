@@ -597,12 +597,14 @@ type ComplexityRoot struct {
 		GetUserRole                func(childComplexity int, filter view.UserRoleFilterInput) int
 		GetUserTag                 func(childComplexity int, filter view.UserTagFilterInput) int
 		GetUserWhitelist           func(childComplexity int, filter view.UserWhitelistFilterInput) int
+		ListAgent                  func(childComplexity int, filter *view.AgentFilterInput, pagination *view.PaginationInput) int
 		ListAuditLog               func(childComplexity int, filter view.AuditLogFilterInput, pagination *view.PaginationInput) int
 		ListEmailRecord            func(childComplexity int, filter view.EmailRecordFilterInput, pagination *view.PaginationInput) int
 		ListEvent                  func(childComplexity int, filter view.EventFilterInput, pagination *view.PaginationInput) int
 		ListGame                   func(childComplexity int, filter *view.GameFilterInput, pagination *view.PaginationInput) int
 		ListGamePlayer             func(childComplexity int, filter view.GamePlayerFilterInput, pagination *view.PaginationInput) int
 		ListGameTransferRecord     func(childComplexity int, filter view.GameTransferRecordFilterInput, pagination *view.PaginationInput) int
+		ListGeneralAgent           func(childComplexity int, filter *view.GeneralAgentFilterInput, pagination *view.PaginationInput) int
 		ListHistoryEvent           func(childComplexity int, filter view.EventFilterInput, pagination *view.PaginationInput) int
 		ListHostsDeny              func(childComplexity int, filter *view.HostsDenyFilterInput, pagination *view.PaginationInput) int
 		ListHubClients             func(childComplexity int) int
@@ -637,11 +639,6 @@ type ComplexityRoot struct {
 		UserDepositInfo            func(childComplexity int, filter view.UserFilterInput) int
 		UserScore                  func(childComplexity int, filter view.UserFilterInput) int
 		UserWithdrawInfo           func(childComplexity int, filter view.UserFilterInput) int
-	}
-
-	Qyery struct {
-		ListAgent        func(childComplexity int, filter *view.AgentFilterInput, pagination *view.PaginationInput) int
-		ListGeneralAgent func(childComplexity int, filter *view.GeneralAgentFilterInput, pagination *view.PaginationInput) int
 	}
 
 	RefreshTokenResp struct {
@@ -925,6 +922,8 @@ type MutationResolver interface {
 	ClaimVipReward(ctx context.Context, in view.ClaimVipRewardInput) (uint64, error)
 }
 type QueryResolver interface {
+	ListAgent(ctx context.Context, filter *view.AgentFilterInput, pagination *view.PaginationInput) (*view.ListAgentResp, error)
+	ListGeneralAgent(ctx context.Context, filter *view.GeneralAgentFilterInput, pagination *view.PaginationInput) (*view.ListGeneralAgentResp, error)
 	Me(ctx context.Context) (*view.Claims, error)
 	ListEvent(ctx context.Context, filter view.EventFilterInput, pagination *view.PaginationInput) (*view.ListEventResp, error)
 	ListHistoryEvent(ctx context.Context, filter view.EventFilterInput, pagination *view.PaginationInput) (*view.ListEventResp, error)
@@ -3716,6 +3715,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetUserWhitelist(childComplexity, args["filter"].(view.UserWhitelistFilterInput)), true
 
+	case "Query.listAgent":
+		if e.complexity.Query.ListAgent == nil {
+			break
+		}
+
+		args, err := ec.field_Query_listAgent_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.ListAgent(childComplexity, args["filter"].(*view.AgentFilterInput), args["pagination"].(*view.PaginationInput)), true
+
 	case "Query.listAuditLog":
 		if e.complexity.Query.ListAuditLog == nil {
 			break
@@ -3787,6 +3798,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.ListGameTransferRecord(childComplexity, args["filter"].(view.GameTransferRecordFilterInput), args["pagination"].(*view.PaginationInput)), true
+
+	case "Query.listGeneralAgent":
+		if e.complexity.Query.ListGeneralAgent == nil {
+			break
+		}
+
+		args, err := ec.field_Query_listGeneralAgent_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.ListGeneralAgent(childComplexity, args["filter"].(*view.GeneralAgentFilterInput), args["pagination"].(*view.PaginationInput)), true
 
 	case "Query.listHistoryEvent":
 		if e.complexity.Query.ListHistoryEvent == nil {
@@ -4180,30 +4203,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.UserWithdrawInfo(childComplexity, args["filter"].(view.UserFilterInput)), true
-
-	case "Qyery.listAgent":
-		if e.complexity.Qyery.ListAgent == nil {
-			break
-		}
-
-		args, err := ec.field_Qyery_listAgent_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Qyery.ListAgent(childComplexity, args["filter"].(*view.AgentFilterInput), args["pagination"].(*view.PaginationInput)), true
-
-	case "Qyery.listGeneralAgent":
-		if e.complexity.Qyery.ListGeneralAgent == nil {
-			break
-		}
-
-		args, err := ec.field_Qyery_listGeneralAgent_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Qyery.ListGeneralAgent(childComplexity, args["filter"].(*view.GeneralAgentFilterInput), args["pagination"].(*view.PaginationInput)), true
 
 	case "RefreshTokenResp.expires":
 		if e.complexity.RefreshTokenResp.Expires == nil {
@@ -7501,7 +7500,7 @@ input VipLevelInput {
     """VIP等級名稱"""
     name: String
 }`, BuiltIn: false},
-	{Name: "../../../../docs/graphql/schema/platform/agent_svc.graphql", Input: `extend type Qyery {
+	{Name: "../../../../docs/graphql/schema/platform/agent_svc.graphql", Input: `extend type Query {
     """代理列表"""
     listAgent(filter: AgentFilterInput, pagination: PaginationInput): ListAgentResp!
 
@@ -9325,6 +9324,30 @@ func (ec *executionContext) field_Query_getUser_args(ctx context.Context, rawArg
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_listAgent_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *view.AgentFilterInput
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalOAgentFilterInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐAgentFilterInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["filter"] = arg0
+	var arg1 *view.PaginationInput
+	if tmp, ok := rawArgs["pagination"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
+		arg1, err = ec.unmarshalOPaginationInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐPaginationInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["pagination"] = arg1
+	return args, nil
+}
+
 func (ec *executionContext) field_Query_listAuditLog_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -9452,6 +9475,30 @@ func (ec *executionContext) field_Query_listGame_args(ctx context.Context, rawAr
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
 		arg0, err = ec.unmarshalOGameFilterInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐGameFilterInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["filter"] = arg0
+	var arg1 *view.PaginationInput
+	if tmp, ok := rawArgs["pagination"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
+		arg1, err = ec.unmarshalOPaginationInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐPaginationInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["pagination"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_listGeneralAgent_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *view.GeneralAgentFilterInput
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalOGeneralAgentFilterInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐGeneralAgentFilterInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -10183,54 +10230,6 @@ func (ec *executionContext) field_Query_userWithdrawInfo_args(ctx context.Contex
 		}
 	}
 	args["filter"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Qyery_listAgent_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *view.AgentFilterInput
-	if tmp, ok := rawArgs["filter"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOAgentFilterInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐAgentFilterInput(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["filter"] = arg0
-	var arg1 *view.PaginationInput
-	if tmp, ok := rawArgs["pagination"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPaginationInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐPaginationInput(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["pagination"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_Qyery_listGeneralAgent_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *view.GeneralAgentFilterInput
-	if tmp, ok := rawArgs["filter"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOGeneralAgentFilterInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐGeneralAgentFilterInput(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["filter"] = arg0
-	var arg1 *view.PaginationInput
-	if tmp, ok := rawArgs["pagination"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPaginationInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐPaginationInput(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["pagination"] = arg1
 	return args, nil
 }
 
@@ -26067,6 +26066,128 @@ func (ec *executionContext) fieldContext_Mutation_claimVipReward(ctx context.Con
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_listAgent(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_listAgent(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().ListAgent(rctx, fc.Args["filter"].(*view.AgentFilterInput), fc.Args["pagination"].(*view.PaginationInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*view.ListAgentResp)
+	fc.Result = res
+	return ec.marshalNListAgentResp2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐListAgentResp(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_listAgent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "agents":
+				return ec.fieldContext_ListAgentResp_agents(ctx, field)
+			case "meta":
+				return ec.fieldContext_ListAgentResp_meta(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ListAgentResp", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_listAgent_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_listGeneralAgent(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_listGeneralAgent(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().ListGeneralAgent(rctx, fc.Args["filter"].(*view.GeneralAgentFilterInput), fc.Args["pagination"].(*view.PaginationInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*view.ListGeneralAgentResp)
+	fc.Result = res
+	return ec.marshalNListGeneralAgentResp2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐListGeneralAgentResp(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_listGeneralAgent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "generalAgents":
+				return ec.fieldContext_ListGeneralAgentResp_generalAgents(ctx, field)
+			case "meta":
+				return ec.fieldContext_ListGeneralAgentResp_meta(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ListGeneralAgentResp", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_listGeneralAgent_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_Me(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_Me(ctx, field)
 	if err != nil {
@@ -29290,128 +29411,6 @@ func (ec *executionContext) fieldContext_Query___schema(ctx context.Context, fie
 			}
 			return nil, fmt.Errorf("no field named %q was found under type __Schema", field.Name)
 		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Qyery_listAgent(ctx context.Context, field graphql.CollectedField, obj *view.Qyery) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Qyery_listAgent(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ListAgent, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*view.ListAgentResp)
-	fc.Result = res
-	return ec.marshalNListAgentResp2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐListAgentResp(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Qyery_listAgent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Qyery",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "agents":
-				return ec.fieldContext_ListAgentResp_agents(ctx, field)
-			case "meta":
-				return ec.fieldContext_ListAgentResp_meta(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ListAgentResp", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Qyery_listAgent_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Qyery_listGeneralAgent(ctx context.Context, field graphql.CollectedField, obj *view.Qyery) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Qyery_listGeneralAgent(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ListGeneralAgent, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*view.ListGeneralAgentResp)
-	fc.Result = res
-	return ec.marshalNListGeneralAgentResp2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐListGeneralAgentResp(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Qyery_listGeneralAgent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Qyery",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "generalAgents":
-				return ec.fieldContext_ListGeneralAgentResp_generalAgents(ctx, field)
-			case "meta":
-				return ec.fieldContext_ListGeneralAgentResp_meta(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ListGeneralAgentResp", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Qyery_listGeneralAgent_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
 	}
 	return fc, nil
 }
@@ -46749,6 +46748,50 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
+		case "listAgent":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_listAgent(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "listGeneralAgent":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_listGeneralAgent(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "Me":
 			field := field
 
@@ -47835,50 +47878,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Query___schema(ctx, field)
 			})
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var qyeryImplementors = []string{"Qyery"}
-
-func (ec *executionContext) _Qyery(ctx context.Context, sel ast.SelectionSet, obj *view.Qyery) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, qyeryImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("Qyery")
-		case "listAgent":
-			out.Values[i] = ec._Qyery_listAgent(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "listGeneralAgent":
-			out.Values[i] = ec._Qyery_listGeneralAgent(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -50697,6 +50696,10 @@ func (ec *executionContext) unmarshalNLineRentUpdateInput2boyiᚋpkgᚋdelivery�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) marshalNListAgentResp2boyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐListAgentResp(ctx context.Context, sel ast.SelectionSet, v view.ListAgentResp) graphql.Marshaler {
+	return ec._ListAgentResp(ctx, sel, &v)
+}
+
 func (ec *executionContext) marshalNListAgentResp2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐListAgentResp(ctx context.Context, sel ast.SelectionSet, v *view.ListAgentResp) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -50789,6 +50792,10 @@ func (ec *executionContext) marshalNListGameTransferRecordResp2ᚖboyiᚋpkgᚋd
 		return graphql.Null
 	}
 	return ec._ListGameTransferRecordResp(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNListGeneralAgentResp2boyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐListGeneralAgentResp(ctx context.Context, sel ast.SelectionSet, v view.ListGeneralAgentResp) graphql.Marshaler {
+	return ec._ListGeneralAgentResp(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNListGeneralAgentResp2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐListGeneralAgentResp(ctx context.Context, sel ast.SelectionSet, v *view.ListGeneralAgentResp) graphql.Marshaler {

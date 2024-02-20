@@ -1,7 +1,7 @@
 package db
 
 import (
-	"boyi/pkg/Infra/utils/crypto"
+	"boyi/pkg/infra/utils/crypto"
 	"database/sql/driver"
 	"encoding/base64"
 )

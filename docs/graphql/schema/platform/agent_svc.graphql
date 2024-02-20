@@ -1,4 +1,4 @@
-extend type Qyery {
+extend type Query {
     """代理列表"""
     listAgent(filter: AgentFilterInput, pagination: PaginationInput): ListAgentResp!
 

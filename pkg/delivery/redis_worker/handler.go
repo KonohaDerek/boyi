@@ -4,7 +4,7 @@ import (
 	"boyi/pkg/hub"
 	"boyi/pkg/iface"
 
-	"boyi/pkg/Infra/redis"
+	"boyi/pkg/infra/redis"
 
 	"github.com/bsm/redislock"
 

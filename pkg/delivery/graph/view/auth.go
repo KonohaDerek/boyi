@@ -9,7 +9,7 @@ import (
 
 	"context"
 
-	"boyi/pkg/Infra/ctxutil"
+	"boyi/pkg/infra/ctxutil"
 )
 
 func (in *RegisterReqInput) ConvertToVo(ctx context.Context) vo.RegisterReq {

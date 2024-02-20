@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"testing"
 
-	"boyi/pkg/Infra/ctxutil"
+	"boyi/pkg/infra/ctxutil"
 
 	"github.com/rs/zerolog/log"
 	"github.com/stretchr/testify/assert"

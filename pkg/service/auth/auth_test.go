@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	"boyi/pkg/Infra/ctxutil"
-	"boyi/pkg/Infra/errors"
-	"boyi/pkg/Infra/utils/rand"
+	"boyi/pkg/infra/ctxutil"
+	"boyi/pkg/infra/errors"
+	"boyi/pkg/infra/utils/rand"
 
 	"github.com/rs/zerolog/log"
 	"github.com/stretchr/testify/assert"

@@ -6,7 +6,7 @@ import (
 	"testing"
 	time "time"
 
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 
 	gomock "github.com/golang/mock/gomock"
 	redis "github.com/redis/go-redis/v9"

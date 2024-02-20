@@ -4,8 +4,8 @@ import (
 	"boyi/configuration"
 	"boyi/pkg/model/dto"
 
-	"boyi/pkg/Infra/db"
-	"boyi/pkg/Infra/zlog"
+	"boyi/pkg/infra/db"
+	"boyi/pkg/infra/zlog"
 
 	"context"
 	"errors"

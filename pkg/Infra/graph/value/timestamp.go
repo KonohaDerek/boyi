@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 
 	"github.com/99designs/gqlgen/graphql"
 )

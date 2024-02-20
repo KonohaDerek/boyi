@@ -3,8 +3,8 @@ package redis
 import (
 	"context"
 
-	"boyi/pkg/Infra/ctxutil"
-	"boyi/pkg/Infra/helper"
+	"boyi/pkg/infra/ctxutil"
+	"boyi/pkg/infra/helper"
 
 	"github.com/rs/zerolog/log"
 

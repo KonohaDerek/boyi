@@ -3,8 +3,8 @@ package user
 import (
 	"boyi/pkg/iface"
 
-	"boyi/pkg/Infra/qqzeng_ip"
-	"boyi/pkg/Infra/storage"
+	"boyi/pkg/infra/qqzeng_ip"
+	"boyi/pkg/infra/storage"
 
 	"github.com/bsm/redislock"
 

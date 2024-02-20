@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"boyi/pkg/Infra/db"
 	"boyi/pkg/iface"
+	"boyi/pkg/infra/db"
 	"context"
 	"database/sql"
 

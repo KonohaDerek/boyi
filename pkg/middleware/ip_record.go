@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"boyi/pkg/Infra/ctxutil"
-	"boyi/pkg/Infra/redis"
+	"boyi/pkg/infra/ctxutil"
+	"boyi/pkg/infra/redis"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/rs/zerolog/log"

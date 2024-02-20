@@ -3,7 +3,7 @@ package platform
 import (
 	"boyi/internal/claims"
 
-	internalGin "boyi/pkg/Infra/gin"
+	internalGin "boyi/pkg/infra/gin"
 
 	"github.com/gin-gonic/gin"
 )

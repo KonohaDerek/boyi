@@ -18,7 +18,7 @@ import (
 	"os"
 	"testing"
 
-	"boyi/pkg/Infra/zlog"
+	"boyi/pkg/infra/zlog"
 
 	"github.com/rs/zerolog/log"
 	"go.uber.org/fx"

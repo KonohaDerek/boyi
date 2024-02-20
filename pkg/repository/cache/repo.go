@@ -3,7 +3,7 @@ package cache
 import (
 	"boyi/pkg/iface"
 
-	"boyi/pkg/Infra/redis"
+	"boyi/pkg/infra/redis"
 
 	"go.uber.org/fx"
 )

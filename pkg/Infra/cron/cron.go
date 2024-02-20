@@ -1,7 +1,7 @@
 package cron
 
 import (
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 	"context"
 	"sync"
 	"time"

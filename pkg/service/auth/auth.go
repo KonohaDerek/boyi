@@ -13,10 +13,10 @@ import (
 	"strings"
 	"time"
 
-	"boyi/pkg/Infra/ctxutil"
-	"boyi/pkg/Infra/errors"
-	internalGin "boyi/pkg/Infra/gin"
-	"boyi/pkg/Infra/utils/hash"
+	"boyi/pkg/infra/ctxutil"
+	"boyi/pkg/infra/errors"
+	internalGin "boyi/pkg/infra/gin"
+	"boyi/pkg/infra/utils/hash"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"

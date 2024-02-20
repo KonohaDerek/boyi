@@ -4,8 +4,8 @@ import (
 	"boyi/pkg/model/enums/types"
 	"context"
 
-	"boyi/pkg/Infra/errors"
-	"boyi/pkg/Infra/helper"
+	"boyi/pkg/infra/errors"
+	"boyi/pkg/infra/helper"
 
 	"github.com/rs/zerolog/log"
 )

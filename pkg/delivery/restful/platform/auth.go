@@ -1,7 +1,7 @@
 package platform
 
 import (
-	internalGin "boyi/pkg/Infra/gin"
+	internalGin "boyi/pkg/infra/gin"
 	"boyi/pkg/model/vo"
 
 	"github.com/gin-gonic/gin"

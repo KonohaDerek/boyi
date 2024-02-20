@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 
 	"github.com/redis/go-redis/v9"
 )

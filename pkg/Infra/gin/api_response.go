@@ -3,8 +3,8 @@ package gin
 import (
 	"net/http"
 
-	"boyi/pkg/Infra/ctxutil"
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/ctxutil"
+	"boyi/pkg/infra/errors"
 
 	"github.com/rs/zerolog/log"
 

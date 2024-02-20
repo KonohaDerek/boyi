@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 
 	"github.com/pressly/goose/v3"
 )

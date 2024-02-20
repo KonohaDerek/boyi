@@ -5,7 +5,7 @@ import (
 	"boyi/pkg/hub"
 	"boyi/pkg/iface"
 
-	"boyi/pkg/Infra/storage"
+	"boyi/pkg/infra/storage"
 
 	"go.uber.org/fx"
 )

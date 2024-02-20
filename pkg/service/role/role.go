@@ -6,7 +6,7 @@ import (
 	"boyi/pkg/model/option/common"
 	"context"
 
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 
 	"gorm.io/gorm"
 )

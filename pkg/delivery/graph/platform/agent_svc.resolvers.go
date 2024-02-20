@@ -39,3 +39,13 @@ func (r *mutationResolver) UpdateGeneralAgent(ctx context.Context, filter view.G
 func (r *mutationResolver) DeleteGeneralAgent(ctx context.Context, filter view.GeneralAgentFilterInput) (uint64, error) {
 	panic(fmt.Errorf("not implemented: DeleteGeneralAgent - deleteGeneralAgent"))
 }
+
+// ListAgent is the resolver for the listAgent field.
+func (r *queryResolver) ListAgent(ctx context.Context, filter *view.AgentFilterInput, pagination *view.PaginationInput) (*view.ListAgentResp, error) {
+	panic(fmt.Errorf("not implemented: ListAgent - listAgent"))
+}
+
+// ListGeneralAgent is the resolver for the listGeneralAgent field.
+func (r *queryResolver) ListGeneralAgent(ctx context.Context, filter *view.GeneralAgentFilterInput, pagination *view.PaginationInput) (*view.ListGeneralAgentResp, error) {
+	panic(fmt.Errorf("not implemented: ListGeneralAgent - listGeneralAgent"))
+}

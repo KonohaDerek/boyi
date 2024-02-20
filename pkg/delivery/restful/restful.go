@@ -3,7 +3,7 @@ package restful
 import (
 	"boyi/pkg/iface"
 
-	gintool "boyi/pkg/Infra/gin"
+	gintool "boyi/pkg/infra/gin"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"

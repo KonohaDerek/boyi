@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"boyi/pkg/Infra/helper"
+	"boyi/pkg/infra/helper"
 
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"

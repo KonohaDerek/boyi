@@ -1,13 +1,13 @@
 package configuration
 
 import (
-	"boyi/pkg/Infra/db"
-	"boyi/pkg/Infra/errors"
-	"boyi/pkg/Infra/gin"
-	"boyi/pkg/Infra/qqzeng_ip"
-	"boyi/pkg/Infra/redis"
-	"boyi/pkg/Infra/storage"
-	"boyi/pkg/Infra/zlog"
+	"boyi/pkg/infra/db"
+	"boyi/pkg/infra/errors"
+	"boyi/pkg/infra/gin"
+	"boyi/pkg/infra/qqzeng_ip"
+	"boyi/pkg/infra/redis"
+	"boyi/pkg/infra/storage"
+	"boyi/pkg/infra/zlog"
 
 	"github.com/spf13/viper"
 	"go.uber.org/fx"

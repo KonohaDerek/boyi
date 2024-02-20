@@ -3,7 +3,7 @@ package db
 import (
 	"time"
 
-	"boyi/pkg/Infra/errors"
+	"boyi/pkg/infra/errors"
 
 	"github.com/rs/zerolog/log"
 
