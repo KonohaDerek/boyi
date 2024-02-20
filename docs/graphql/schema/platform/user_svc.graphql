@@ -1,56 +1,69 @@
 extend type Query {
-	"""用戶"""
+	"""會員"""
 	getUser(filter: UserFilterInput!): User!
-	"""用戶列表"""
+	"""會員列表"""
 	listUser(filter: UserFilterInput!, pagination: PaginationInput): ListUserResp!
-	"""用戶白名單"""
+	"""會員白名單"""
 	getUserWhitelist(filter: UserWhitelistFilterInput!): UserWhitelist!
-	"""用戶白名單列表"""
+	"""會員白名單列表"""
 	listUserWhitelist(filter: UserWhitelistFilterInput!, pagination: PaginationInput): ListUserWhitelistResp!
-	"""用戶角色"""
+	"""會員角色"""
 	getUserRole(filter: UserRoleFilterInput!): UserRole!
-	"""用戶角色列表"""
+	"""會員角色列表"""
 	listUserRole(filter: UserRoleFilterInput!, pagination: PaginationInput): ListUserRoleResp!
-	"""用戶標籤"""
+	"""會員標籤"""
 	getUserTag(filter: UserTagFilterInput!): UserTag!
-	"""用戶標籤列表"""
+	"""會員標籤列表"""
 	listUserTag(filter: UserTagFilterInput!, pagination: PaginationInput): ListUserTagResp!
-	
-	"""用戶登錄歷史列表"""
+	"""會員登錄歷史列表"""
 	listUserLoginHistory(filter: UserLoginHistoryFilterInput!, pagination: PaginationInput): ListUserLoginHistoryResp!
 
+
+
+    """會員出款資訊"""
+    userWithdrawInfo(filter: UserFilterInput!): UserWithdrawInfo!
+    """會員存款資訊"""
+    userDepositInfo(filter: UserFilterInput!): UserDepositInfo!
+    """會員評分"""
+    userScore(filter: UserFilterInput!): UserScore!
 }
 
 extend type Mutation {
-	"""建立登入用戶"""
+	"""建立登入會員"""
 	createUser(in: CreateUserReqInput!): CreateUserResp!
-	"""用戶更新"""
+	"""會員更新"""
 	updateUser(filter: UserFilterInput!, in: UserUpdateInput!): Uint64!
-	"""刪除用戶"""
+	"""刪除會員"""
 	deleteUser(filter: UserFilterInput!): Uint64!
 
-	"""更新用戶密碼"""
+	"""更新會員密碼"""
 	updateUserPassword(in: UserUpdatePasswordInput!): Uint64!
 
-	"""新增用戶白名單"""
+	"""新增會員白名單"""
 	createUserWhitelist(in: UserWhitelistCreateInput!): Uint64!
-	"""更新用戶白名單"""
+	"""更新會員白名單"""
 	updateUserWhitelist(filter: UserWhitelistFilterInput!, in: UserWhitelistUpdateInput!): Uint64!
-	"""刪除用戶白名單"""
+	"""刪除會員白名單"""
 	deleteUserWhitelist(filter: UserWhitelistFilterInput!): Uint64!
 
 
-	"""新增用戶角色"""
+	"""新增會員角色"""
 	createUserRole(in: UserRoleCreateInput!): Uint64!
-	"""更新用戶角色"""
+	"""更新會員角色"""
 	updateUserRole(filter: UserRoleFilterInput!, in: UserRoleUpdateInput!): Uint64!
-	"""刪除用戶角色"""
+	"""刪除會員角色"""
 	deleteUserRole(filter: UserRoleFilterInput!): Uint64!
 
-	"""新增用戶標籤"""
+	"""新增會員標籤"""
 	createUserTag(in: UserTagCreateInput!): Uint64!
-	"""更新用戶標籤"""
+	"""更新會員標籤"""
 	updateUserTag(filter: UserTagFilterInput!, in: UserTagUpdateInput!): Uint64!
-	"""刪除用戶標籤"""
+	"""刪除會員標籤"""
 	deleteUserTag(filter: UserTagFilterInput!): Uint64!
+
+
+	 """封禁會員"""
+	banUser(filter: UserFilterInput!): Uint64!
+    """解封會員"""
+    unbanUser(filter: UserFilterInput!): Uint64!
 }

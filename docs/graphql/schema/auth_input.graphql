@@ -1,0 +1,20 @@
+input UserAuth {
+	token: String!
+	deviceUID: String!
+}
+
+input CreateCommonUserReqInput {
+	username: String!
+	password: String!
+	accountType: AccountType!
+}
+
+input LoginReqInput {
+	username: String!
+	password: String!
+}
+
+input RegisterReqInput {
+	username: String!
+	password: String!
+}

@@ -1,0 +1,34 @@
+type ListGamePlayerResp {
+    players: [GamePlayer!]!
+    meta: Meta!
+}
+
+type GamePlayer {
+    id: Uint64!
+    username: String!
+    nickname: String!
+    balance: Decimal!
+    # status: GamePlayerStatus!
+    lastLoginTime: Timestamp!
+    lastLogoutTime: Timestamp!
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
+}
+
+type ListGameTransferRecordResp {
+    records: [GameTransferRecord!]!
+    meta: Meta!
+}
+
+type GameTransferRecord {
+    id: Uint64!
+    gamePlayerId: Uint64!
+    gameId: Uint64!
+    gameName: String!
+    # type: GameTransferType!
+    # status: GameTransferStatus!
+    amount: Decimal!
+    remark: String!
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
+}

@@ -1,0 +1,56 @@
+extend type Query  {
+    """商家列表"""
+    listMerchant(filter: MerchantFilterInput, pagination: PaginationInput): ListMerchantResp!
+    
+    """商家出款方式列表"""
+    listMerchantWithdrawMethod(filter: MerchantWithdrawMethodFilterInput, pagination: PaginationInput): ListMerchantWithdrawMethodResp!
+    """商家存款方式列表"""
+    listMerchantDepositMethod(filter: MerchantDepositMethodFilterInput, pagination: PaginationInput): ListMerchantDepositMethodResp!
+    """商家費率模式列表"""
+    listMerchantFeeMode(filter: MerchantFeeModeFilterInput, pagination: PaginationInput): ListMerchantFeeModeResp!
+    
+    """餘額異動紀錄"""
+    listMerchantBalanceLog(filter: MerchantBalanceLogFilterInput, pagination: PaginationInput): ListMerchantBalanceLogResp!
+    """商家提款紀錄"""
+    listMerchantWithdrawLog(filter: MerchantWithdrawLogFilterInput, pagination: PaginationInput): ListMerchantWithdrawLogResp!
+    """商家存款紀錄"""
+    listMerchantDepositLog(filter: MerchantDepositLogFilterInput, pagination: PaginationInput): ListMerchantDepositLogResp!
+    """商家登錄歷史列表"""
+    listMerchantLoginHistory(filter: MerchantLoginHistoryFilterInput, pagination: PaginationInput): ListMerchantLoginHistoryResp!
+}
+
+extend type Mutation {
+    """新增商家"""
+    createMerchant(in: MerchantCreateInput!): Uint64!
+    """更新商家"""
+    updateMerchant(filter: MerchantFilterInput!, in: MerchantUpdateInput!): Uint64!
+    """刪除商家"""
+    deleteMerchant(filter: MerchantFilterInput!): Uint64!
+
+    """新增商家出款方式"""
+    createMerchantWithdrawMethod(in: MerchantWithdrawMethodCreateInput!): Uint64!
+    """更新商家出款方式"""
+    updateMerchantWithdrawMethod(filter: MerchantWithdrawMethodFilterInput!, in: MerchantWithdrawMethodUpdateInput!): Uint64!
+    """刪除商家出款方式"""
+    deleteMerchantWithdrawMethod(filter: MerchantWithdrawMethodFilterInput!): Uint64!
+
+    """新增商家存款方式"""
+    createMerchantDepositMethod(in: MerchantDepositMethodCreateInput!): Uint64!
+    """更新商家存款方式"""
+    updateMerchantDepositMethod(filter: MerchantDepositMethodFilterInput!, in: MerchantDepositMethodUpdateInput!): Uint64!
+    """刪除商家存款方式"""
+    deleteMerchantDepositMethod(filter: MerchantDepositMethodFilterInput!): Uint64!
+
+    """新增商家費率模式"""
+    createMerchantFeeMode(in: MerchantFeeModeCreateInput!): Uint64!
+    """更新商家費率模式"""
+    updateMerchantFeeMode(filter: MerchantFeeModeFilterInput!, in: MerchantFeeModeUpdateInput!): Uint64!
+    """刪除商家費率模式"""
+    deleteMerchantFeeMode(filter: MerchantFeeModeFilterInput!): Uint64!
+
+
+    """商家餘額異動申請"""
+    applyMerchantBalance(in: MerchantBalanceApplyInput!): Uint64!
+    """商家餘額異動審核"""
+    auditMerchantBalance(filter: MerchantBalanceFilterInput!, in: MerchantBalanceAuditInput!): Uint64!
+}

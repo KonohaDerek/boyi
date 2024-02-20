@@ -8,7 +8,7 @@ import (
 
 	_ "boyi/pkg/infra/graph/value"
 
-	_ "boyi/docs"
+	_ "boyi/docs/restful"
 
 	_ "github.com/99designs/gqlgen/graphql/introspection"
 	_ "github.com/mailru/easyjson/gen"

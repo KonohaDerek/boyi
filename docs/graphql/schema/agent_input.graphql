@@ -1,0 +1,68 @@
+# 代理
+input AgentFilterInput {
+    agent: AgentInput
+    baseFilter: BaseFilterInput
+}
+
+input AgentInput {
+    id: Uint64
+    """代理名稱"""
+    name: String
+}
+
+input AgentCreateInput {
+    """代理名稱"""
+    name: String!
+    """代理帳號"""
+    account: String!
+    """代理密碼"""
+    password: String!
+    """代理備註"""
+    remark: String
+}
+
+input AgentUpdateInput {
+    """代理名稱"""
+    name: String
+    """代理帳號"""
+    account: String
+    """代理密碼"""
+    password: String
+    """代理備註"""
+    remark: String
+}
+
+
+# 全民代理
+input GeneralAgentFilterInput {
+    generalAgent: GeneralAgentInput
+    baseFilter: BaseFilterInput
+}
+
+input GeneralAgentInput {
+    id: Uint64
+    """全民代理名稱"""
+    name: String
+}
+
+input GeneralAgentCreateInput {
+    """全民代理名稱"""
+    name: String!
+    """全民代理帳號"""
+    account: String!
+    """全民代理密碼"""
+    password: String!
+    """全民代理備註"""
+    remark: String
+}
+
+input GeneralAgentUpdateInput {
+    """全民代理名稱"""
+    name: String
+    """全民代理帳號"""
+    account: String
+    """全民代理密碼"""
+    password: String
+    """全民代理備註"""
+    remark: String
+}

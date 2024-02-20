@@ -1,0 +1,115 @@
+type ListMerchantResp {
+    """商家列表"""
+    list: [Merchant!]!
+    """總數"""
+    total: Uint64!
+}
+
+type Merchant {
+    """商家ID"""
+    id: Uint64!
+    """商家名稱"""
+    name: String!
+    """商家描述"""
+    description: String!
+    """創建時間"""
+    createdAt: Timestamp!
+    """"更新時間"""
+    updatedAt: Timestamp!
+}
+
+type ListMerchantWithdrawMethodResp {
+    list: [MerchantWithdrawMethod!]!
+    total: Uint64!
+}
+
+type MerchantWithdrawMethod {
+    id: Uint64!
+    name: String!
+    description: String!
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
+}
+
+type ListMerchantDepositMethodResp {
+    list: [MerchantDepositMethod!]!
+    total: Uint64!
+}
+
+type MerchantDepositMethod {
+    id: Uint64!
+    name: String!
+    description: String!
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
+}
+
+type ListMerchantFeeModeResp {
+    list: [MerchantFeeMode!]!
+    total: Uint64!
+}
+
+type MerchantFeeMode {
+    id: Uint64!
+    name: String!
+    description: String!
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
+}
+
+type ListMerchantBalanceLogResp {
+    list: [MerchantBalanceLog!]!
+    total: Uint64!
+}
+
+type MerchantBalanceLog {
+    id: Uint64!
+    merchantId: Uint64!
+    # type: MerchantBalanceLogType!
+    amount: Decimal!
+    description: String!
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
+}
+
+type ListMerchantWithdrawLogResp {
+    list: [MerchantWithdrawLog!]!
+    total: Uint64!
+}
+
+type MerchantWithdrawLog {
+    id: Uint64!
+    merchantId: Uint64!
+    amount: Decimal!
+    description: String!
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
+}
+
+type ListMerchantDepositLogResp {
+    list: [MerchantDepositLog!]!
+    total: Uint64!
+}
+
+type MerchantDepositLog {
+    id: Uint64!
+    merchantId: Uint64!
+    amount: Decimal!
+    description: String!
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
+}
+
+type ListMerchantLoginHistoryResp {
+    list: [MerchantLoginHistory!]!
+    total: Uint64!
+}
+
+type MerchantLoginHistory {
+    id: Uint64!
+    merchantId: Uint64!
+    ip: String!
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
+}
+

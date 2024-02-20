@@ -1,0 +1,7 @@
+extend type Query {
+    """遊戲玩家列表"""
+    listGamePlayer(filter: GamePlayerFilterInput!, pagination: PaginationInput): ListGamePlayerResp!
+
+    """資金轉出入紀錄"""
+    listGameTransferRecord(filter: GameTransferRecordFilterInput!, pagination: PaginationInput): ListGameTransferRecordResp!
+}

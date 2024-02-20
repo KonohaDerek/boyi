@@ -1,0 +1,56 @@
+extend type Query{
+    """系統線路清單"""
+    listSystemLine(filter: SystemLineFilterInput, pagination: PaginationInput): ListSystemLineResp!
+
+    """商戶線路清單"""
+    listMerchantLine(filter: MerchantLineFilterInput, pagination: PaginationInput): ListMerchantLineResp!
+
+    """線路租借清單"""
+    listLineRent(filter: LineRentFilterInput, pagination: PaginationInput): ListLineRentResp!
+
+    """線路費率列表"""
+    listLineRate(filter: LineRateFilterInput, pagination: PaginationInput): ListLineRateResp!
+
+    """線路費率歷史列表"""
+    listLineRateHistory(filter: LineRateHistoryFilterInput, pagination: PaginationInput): ListLineRateHistoryResp!
+
+    """遊戲列表"""
+    listGame(filter: GameFilterInput, pagination: PaginationInput): ListGameResp!
+}
+
+extend type Mutation {
+    """新增系統線路"""
+    createSystemLine(in: SystemLineCreateInput!): Uint64!
+    """更新系統線路"""
+    updateSystemLine(filter: SystemLineFilterInput!, in: SystemLineUpdateInput!): Uint64!
+    """刪除系統線路"""
+    deleteSystemLine(filter: SystemLineFilterInput!): Uint64!
+
+    """新增商戶線路"""
+    createMerchantLine(in: MerchantLineCreateInput!): Uint64!
+    """更新商戶線路"""
+    updateMerchantLine(filter: MerchantLineFilterInput!, in: MerchantLineUpdateInput!): Uint64!
+    """刪除商戶線路"""
+    deleteMerchantLine(filter: MerchantLineFilterInput!): Uint64!
+
+    """新增線路租借"""
+    createLineRent(in: LineRentCreateInput!): Uint64!
+    """更新線路租借"""
+    updateLineRent(filter: LineRentFilterInput!, in: LineRentUpdateInput!): Uint64!
+    """刪除線路租借"""
+    deleteLineRent(filter: LineRentFilterInput!): Uint64!
+
+    """新增線路費率"""
+    createLineRate(in: LineRateCreateInput!): Uint64!
+    """更新線路費率"""
+    updateLineRate(filter: LineRateFilterInput!, in: LineRateUpdateInput!): Uint64!
+    """刪除線路費率"""
+    deleteLineRate(filter: LineRateFilterInput!): Uint64!
+
+    """新增遊戲"""
+    createGame(in: GameCreateInput!): Uint64!
+    """更新遊戲"""
+    updateGame(filter: GameFilterInput!, in: GameUpdateInput!): Uint64!
+    """刪除遊戲"""
+    deleteGame(filter: GameFilterInput!): Uint64!
+}

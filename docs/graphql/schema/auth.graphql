@@ -1,7 +1,3 @@
-input LoginReqInput {
-	username: String!
-	password: String!
-}
 type LoginResp {
 	token: String!
 	deviceUID: String!
@@ -35,18 +31,6 @@ type Claims {
 	avatarURL: String!
 	whitelists: [UserWhitelist!]!
 	menu: [Menu!]!
-}
-
-
-input UserAuth {
-	token: String!
-	deviceUID: String!
-}
-
-input CreateCommonUserReqInput {
-	username: String!
-	password: String!
-	accountType: AccountType!
 }
 
 type CreateCommonUserResp {

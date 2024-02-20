@@ -36,7 +36,9 @@
 			"extensions": [
 				"cipchk.zh-hans-tt-hant-vscode",
 				"mquandalle.graphql",
-				"GitHub.copilot"
+				"GitHub.copilot",
+				"jebbs.plantuml",
+				"well-ar.plantuml"
 			]
 		}
 	}

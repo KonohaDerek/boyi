@@ -1,0 +1,19 @@
+extend type Query {
+    """升級日誌"""
+    listVipUpgradeLog(filter: VipUpgradeLogFilterInput!, pagination: PaginationInput): ListVipUpgradeLogResp!
+    """領取日誌"""
+    listVipClaimLog(filter: VipClaimLogFilterInput!, pagination: PaginationInput): ListVipClaimLogResp!
+    """VIP等級"""
+    listVipLevel(filter: VipLevelFilterInput!, pagination: PaginationInput): ListVipLevelResp!
+}
+
+extend type Mutation {
+    """新增VIP等級"""
+    createVipLevel(in: VipLevelCreateInput!): Uint64!
+    """更新VIP等級"""
+    updateVipLevel(filter: VipLevelFilterInput!, in: VipLevelUpdateInput!): Uint64!
+    """刪除VIP等級"""
+    deleteVipLevel(filter: VipLevelFilterInput!): Uint64!
+    """領取VIP獎勵"""
+    claimVipReward(in: ClaimVipRewardInput!): Uint64!
+}

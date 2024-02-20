@@ -1,0 +1,24 @@
+extend type Qyery {
+    """代理列表"""
+    listAgent(filter: AgentFilterInput, pagination: PaginationInput): ListAgentResp!
+
+    """全民代理列表"""
+    listGeneralAgent(filter: GeneralAgentFilterInput, pagination: PaginationInput): ListGeneralAgentResp!
+}
+
+extend type Mutation {
+    """新增代理"""
+    createAgent(in: AgentCreateInput!): Uint64!
+    """更新代理"""
+    updateAgent(filter: AgentFilterInput!, in: AgentUpdateInput!): Uint64!
+    """刪除代理"""
+    deleteAgent(filter: AgentFilterInput!): Uint64!
+
+
+    """新增全民代理"""
+    createGeneralAgent(in: GeneralAgentCreateInput!): Uint64!
+    """更新全民代理"""
+    updateGeneralAgent(filter: GeneralAgentFilterInput!, in: GeneralAgentUpdateInput!): Uint64!
+    """刪除全民代理"""
+    deleteGeneralAgent(filter: GeneralAgentFilterInput!): Uint64!
+}

@@ -75,6 +75,16 @@ func (r *mutationResolver) DeleteUserTag(ctx context.Context, filter view.UserTa
 	panic(fmt.Errorf("not implemented: DeleteUserTag - deleteUserTag"))
 }
 
+// BanUser is the resolver for the banUser field.
+func (r *mutationResolver) BanUser(ctx context.Context, filter view.UserFilterInput) (uint64, error) {
+	panic(fmt.Errorf("not implemented: BanUser - banUser"))
+}
+
+// UnbanUser is the resolver for the unbanUser field.
+func (r *mutationResolver) UnbanUser(ctx context.Context, filter view.UserFilterInput) (uint64, error) {
+	panic(fmt.Errorf("not implemented: UnbanUser - unbanUser"))
+}
+
 // GetUser is the resolver for the getUser field.
 func (r *queryResolver) GetUser(ctx context.Context, filter view.UserFilterInput) (*view.User, error) {
 	panic(fmt.Errorf("not implemented: GetUser - getUser"))
@@ -118,4 +128,19 @@ func (r *queryResolver) ListUserTag(ctx context.Context, filter view.UserTagFilt
 // ListUserLoginHistory is the resolver for the listUserLoginHistory field.
 func (r *queryResolver) ListUserLoginHistory(ctx context.Context, filter view.UserLoginHistoryFilterInput, pagination *view.PaginationInput) (*view.ListUserLoginHistoryResp, error) {
 	panic(fmt.Errorf("not implemented: ListUserLoginHistory - listUserLoginHistory"))
+}
+
+// UserWithdrawInfo is the resolver for the userWithdrawInfo field.
+func (r *queryResolver) UserWithdrawInfo(ctx context.Context, filter view.UserFilterInput) (*view.UserWithdrawInfo, error) {
+	panic(fmt.Errorf("not implemented: UserWithdrawInfo - userWithdrawInfo"))
+}
+
+// UserDepositInfo is the resolver for the userDepositInfo field.
+func (r *queryResolver) UserDepositInfo(ctx context.Context, filter view.UserFilterInput) (*view.UserDepositInfo, error) {
+	panic(fmt.Errorf("not implemented: UserDepositInfo - userDepositInfo"))
+}
+
+// UserScore is the resolver for the userScore field.
+func (r *queryResolver) UserScore(ctx context.Context, filter view.UserFilterInput) (*view.UserScore, error) {
+	panic(fmt.Errorf("not implemented: UserScore - userScore"))
 }

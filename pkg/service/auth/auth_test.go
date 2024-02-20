@@ -42,10 +42,10 @@ func Test_Register(t *testing.T) {
 			},
 			fields: &service{
 				jwtConfig: &configuration.Jwt{
-					Issure:         "localhost",
+					Issuer:         "localhost",
 					Audience:       "localhost",
 					SignKey:        "1234567890",
-					ExpiresMiubtes: 60,
+					ExpiresMinutes: 60,
 				},
 				userSvc:    mock.NewUserSvc(t),
 				supportSvc: mock.NewSupportSvc(t),
@@ -63,10 +63,10 @@ func Test_Register(t *testing.T) {
 			},
 			fields: &service{
 				jwtConfig: &configuration.Jwt{
-					Issure:         "localhost",
+					Issuer:         "localhost",
 					Audience:       "localhost",
 					SignKey:        "1234567890",
-					ExpiresMiubtes: 60,
+					ExpiresMinutes: 60,
 				},
 				userSvc:    mock.NewUserSvc(t),
 				supportSvc: mock.NewSupportSvc(t),
@@ -120,10 +120,10 @@ func Test_Login(t *testing.T) {
 			},
 			fields: &service{
 				jwtConfig: &configuration.Jwt{
-					Issure:         "localhost",
+					Issuer:         "localhost",
 					Audience:       "localhost",
 					SignKey:        "1234567890",
-					ExpiresMiubtes: 60,
+					ExpiresMinutes: 60,
 				},
 				userSvc:    mock.NewUserSvc(t),
 				supportSvc: mock.NewSupportSvc(t),
@@ -180,10 +180,10 @@ func Test_RefreshToken(t *testing.T) {
 			},
 			fields: &service{
 				jwtConfig: &configuration.Jwt{
-					Issure:         "localhost",
+					Issuer:         "localhost",
 					Audience:       "localhost",
 					SignKey:        "1234567890",
-					ExpiresMiubtes: 60,
+					ExpiresMinutes: 60,
 				},
 				userSvc:    mock.NewUserSvc(t),
 				supportSvc: mock.NewSupportSvc(t),
@@ -222,10 +222,10 @@ func Test_service_ValidateHostDeny(t *testing.T) {
 			},
 			fields: &service{
 				jwtConfig: &configuration.Jwt{
-					Issure:         "localhost",
+					Issuer:         "localhost",
 					Audience:       "localhost",
 					SignKey:        "1234567890",
-					ExpiresMiubtes: 60,
+					ExpiresMinutes: 60,
 				},
 				userSvc:    mock.NewUserSvc(t),
 				supportSvc: mock.NewSupportSvc(t),
@@ -240,10 +240,10 @@ func Test_service_ValidateHostDeny(t *testing.T) {
 			},
 			fields: &service{
 				jwtConfig: &configuration.Jwt{
-					Issure:         "localhost",
+					Issuer:         "localhost",
 					Audience:       "localhost",
 					SignKey:        "1234567890",
-					ExpiresMiubtes: 60,
+					ExpiresMinutes: 60,
 				},
 				userSvc:    mock.NewUserSvc(t),
 				supportSvc: mock.NewSupportSvc(t),

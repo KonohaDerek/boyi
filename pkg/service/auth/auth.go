@@ -104,7 +104,7 @@ func (s *service) Login(ctx context.Context, in vo.LoginReq) (claims.Claims, err
 
 func (s *service) CreateClaimsCache(ctx context.Context, cert *claims.Claims, token string) error {
 	// set jwt to cache
-	if err := s.cacheRepo.SetEX(ctx, token, cert, time.Duration(s.jwtConfig.ExpiresMiubtes)*time.Minute); err != nil {
+	if err := s.cacheRepo.SetEX(ctx, token, cert, time.Duration(s.jwtConfig.ExpiresMinutes)*time.Minute); err != nil {
 		return errors.ConvertRedisError(err)
 	}
 	return nil
@@ -209,7 +209,7 @@ func (s *service) RefreshToken(ctx context.Context, claims *claims.Claims) error
 
 	// 使用 golang-jwt 重新產生 token
 	// 重新產生 jwt
-	expiresAt := time.Now().Add(time.Duration(s.jwtConfig.ExpiresMiubtes) * time.Minute).Unix()
+	expiresAt := time.Now().Add(time.Duration(s.jwtConfig.ExpiresMinutes) * time.Minute).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS512, authClaims{
 		StandardClaims: jwt.StandardClaims{
 			Subject:   claims.Username,

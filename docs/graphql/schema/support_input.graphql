@@ -11,20 +11,6 @@ input FileInfoInput {
 	md5: String!
 }
 
-type FileInfo {
-	fileName: String!
-	uploadURL: String!
-}
-
-type CreateUploadURLResp {
-	files: [FileInfo]!
-}
-
-enum MoreInformationType {
-	Unknown
-	HTML
-	URL
-}
 
 # hosts_deny
 input HostsDenyInput {
@@ -60,7 +46,151 @@ input HostsDenyUpdateInput {
 	remark: String
 }
 
-type ListHostsDenyResp {
-	hostsDenys: [HostsDeny!]!
-	meta: Meta!
+
+# 審計日誌
+input AuditLogFilterInput {
+	auditLog: AuditLogInput
+	baseFilter: BaseFilterInput
 }
+
+input AuditLogInput {
+	id: Uint64
+	userID: Uint64
+	method: String
+	requestInput: String
+}
+
+# 標籤
+input TagCreateInput {
+	name: String!
+	"""色碼 # 000000 """
+	RGBHex: String!
+}
+
+input TagInput {
+	id: Uint64
+	name: String
+	isEnable: YesNo
+}
+
+input TagUpdateInput {
+	name: String
+	RGBHex: String
+	isEnable: YesNo
+}
+
+input TagFilterInput {
+	tag: TagInput
+	baseFilter: BaseFilterInput
+}
+
+# 模板
+input TemplateFilterInput {
+	template: TemplateInput
+	baseFilter: BaseFilterInput
+}
+
+input TemplateInput {
+	id: Uint64
+	name: String
+}
+
+input TemplateCreateInput {
+	"""模板名稱"""
+	name: String!
+	"""模板內容"""
+	content: String!
+	# """模板類型"""
+	# type: TemplateType!
+	"""模板描述"""
+	description: String
+}
+
+input TemplateUpdateInput {
+	"""模板名稱"""
+	name: String
+	"""模板內容"""
+	content: String
+	# """模板類型"""
+	# type: TemplateType
+	"""模板描述"""
+	description: String
+}
+
+# 安全事件
+input SecurityEventFilterInput {
+	securityEvent: SecurityEventInput
+	baseFilter: BaseFilterInput
+}
+
+input SecurityEventInput {
+	id: Uint64
+	"""事件名稱"""
+	name: String
+}
+
+input SecurityEventCreateInput {
+	"""事件名稱"""
+	name: String!
+	"""事件描述"""
+	description: String
+}
+
+input SecurityEventUpdateInput {
+	"""事件名稱"""
+	name: String
+	"""事件描述"""
+	description: String
+}
+
+# Config 管理
+input SmsRecordFilterInput {
+	smsRecord: SmsRecordInput
+	baseFilter: BaseFilterInput
+}
+
+input SmsRecordInput {
+	"""短信發送紀錄ID"""
+	id: Uint64
+	"""短信收信電話"""
+	phoneNumber: String 
+}
+
+input EmailRecordFilterInput {
+	emailRecord: EmailRecordInput
+	baseFilter: BaseFilterInput
+}
+
+input EmailRecordInput {
+	"""Email發送紀錄ID"""
+	id: Uint64
+	"""Email收信地址"""
+	email: String
+}
+
+input SmsConfigInput {
+	"""短信發送帳號"""
+	account: String!
+	"""短信發送密碼"""
+	password: String!
+	"""短信發送網址"""
+	url: String!
+}
+
+input EmailConfigInput {
+	"""SMTP Server"""
+	smtpServer: String!
+	"""SMTP Port"""
+	smtpPort: Int64!
+	"""SMTP User"""
+	smtpUser: String!
+	"""SMTP Password"""
+	smtpPassword: String!
+	"""SMTP From"""
+	smtpFrom: String!
+	"""SMTP From Name"""
+	smtpFromName: String!
+	"""SMTP SSL"""
+	smtpSSL: YesNo!
+}
+

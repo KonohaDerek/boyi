@@ -12,6 +12,17 @@ import (
 	"boyi/pkg/Infra/ctxutil"
 )
 
+func (in *RegisterReqInput) ConvertToVo(ctx context.Context) vo.RegisterReq {
+	in.Username = strings.TrimSpace(in.Username)
+	in.Password = strings.TrimSpace(in.Password)
+
+	return vo.RegisterReq{
+		Username:    in.Username,
+		Password:    in.Password,
+		AccountType: types.AccountType__Member,
+	}
+}
+
 func (in *LoginReqInput) ConvertToVo(ctx context.Context) vo.LoginReq {
 	in.Username = strings.TrimSpace(in.Username)
 	in.Password = strings.TrimSpace(in.Password)

@@ -1,0 +1,184 @@
+# 系統線路
+input SystemLineFilterInput {
+    systemLine: SystemLineInput
+    baseFilter: BaseFilterInput
+}
+
+input SystemLineInput {
+    id: Uint64
+    """系統線路名稱"""
+    name: String
+}
+
+input SystemLineCreateInput {
+    """系統線路名稱"""
+    name: String!
+    """系統線路描述"""
+    description: String!
+    # """系統線路狀態"""
+    # status: SystemLineStatus!
+    """系統線路備註"""
+    remark: String
+}
+
+input SystemLineUpdateInput {
+    """系統線路名稱"""
+    name: String
+    """系統線路描述"""
+    description: String
+    # """系統線路狀態"""
+    # status: SystemLineStatus
+    """系統線路備註"""
+    remark: String
+}
+
+
+# 商戶線路
+input MerchantLineFilterInput {
+    merchantLine: MerchantLineInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantLineInput {
+    id: Uint64
+    """商戶線路名稱"""
+    name: String
+}
+
+input MerchantLineCreateInput {
+    """商戶線路名稱"""
+    name: String!
+    """商戶線路描述"""
+    description: String!
+    # """商戶線路狀態"""
+    # status: MerchantLineStatus!
+    """商戶線路備註"""
+    remark: String
+}
+
+input MerchantLineUpdateInput {
+    """商戶線路名稱"""
+    name: String
+    """商戶線路描述"""
+    description: String
+    # """商戶線路狀態"""
+    # status: MerchantLineStatus
+    """商戶線路備註"""
+    remark: String
+}
+
+# 線路租借
+input LineRentFilterInput {
+    lineRent: LineRentInput
+    baseFilter: BaseFilterInput
+}
+
+input LineRentInput {
+    id: Uint64
+    """線路租借名稱"""
+    name: String
+}
+
+input LineRentCreateInput {
+    """線路租借名稱"""
+    name: String!
+    """線路租借描述"""
+    description: String!
+    # """線路租借狀態"""
+    # status: LineRentStatus!
+    """線路租借備註"""
+    remark: String
+}
+
+input LineRentUpdateInput {
+    """線路租借名稱"""
+    name: String
+    """線路租借描述"""
+    description: String
+    # """線路租借狀態"""
+    # status: LineRentStatus
+    """線路租借備註"""
+    remark: String
+}
+
+
+# 線路費率
+input LineRateFilterInput {
+    lineRate: LineRateInput
+    baseFilter: BaseFilterInput
+}
+
+input LineRateInput {
+    id: Uint64
+    """線路費率名稱"""
+    name: String
+}
+
+input LineRateCreateInput {
+    """線路費率名稱"""
+    name: String!
+    """線路費率描述"""
+    description: String!
+    # """線路費率狀態"""
+    # status: LineRateStatus!
+    """線路費率備註"""
+    remark: String
+}
+
+input LineRateUpdateInput {
+    """線路費率名稱"""
+    name: String
+    """線路費率描述"""
+    description: String
+    # """線路費率狀態"""
+    # status: LineRateStatus
+    """線路費率備註"""
+    remark: String
+}
+
+input LineRateHistoryFilterInput {
+    lineRateHistory: LineRateHistoryInput
+    baseFilter: BaseFilterInput
+}
+
+input LineRateHistoryInput {
+    id: Uint64
+    """線路費率ID"""
+    lineRateId: Uint64
+    """線路費率名稱"""
+    name: String
+}
+
+# 遊戲線路
+input GameFilterInput {
+    game: GameInput
+    baseFilter: BaseFilterInput
+}
+
+input GameInput {
+    id: Uint64
+    """遊戲名稱"""
+    name: String
+}
+
+input GameCreateInput {
+    """遊戲名稱"""
+    name: String!
+    """遊戲描述"""
+    description: String!
+    # """遊戲狀態"""
+    # status: GameStatus!
+    """遊戲備註"""
+    remark: String
+}
+
+input GameUpdateInput {
+    """遊戲名稱"""
+    name: String
+    """遊戲描述"""
+    description: String
+    # """遊戲狀態"""
+    # status: GameStatus
+    """遊戲備註"""
+    remark: String
+}

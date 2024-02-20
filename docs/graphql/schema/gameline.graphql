@@ -1,0 +1,126 @@
+type ListSystemLineResp {
+    """系統線路列表"""
+    list: [SystemLine!]!
+    """總數"""
+    total: Uint64!
+}
+
+type SystemLine {
+    """系統線路ID"""
+    id: Uint64!
+    """系統線路名稱"""
+    name: String!
+    # """系統線路狀態"""
+    # status: SystemLineStatus!
+    """系統線路描述"""
+    description: String!
+    """創建時間"""
+    createdAt: Timestamp!
+    """更新時間"""
+    updatedAt: Timestamp!
+}
+
+type ListMerchantLineResp {
+    """商戶線路列表"""
+    list: [MerchantLine!]!
+    """總數"""
+    total: Uint64!
+}
+
+type MerchantLine {
+    """商戶線路ID"""
+    id: Uint64!
+    """商戶線路名稱"""
+    name: String!
+    """商戶線路描述"""
+    description: String!
+    """創建時間"""
+    createdAt: Timestamp!
+    """更新時間"""
+    updatedAt: Timestamp!
+}
+
+type ListLineRentResp {
+    """線路租借列表"""
+    list: [LineRent!]!
+    """總數"""
+    total: Uint64!
+}
+
+type LineRent {
+    """線路租借ID"""
+    id: Uint64!
+    """線路租借名稱"""
+    name: String!
+    """線路租借描述"""
+    description: String!
+    """創建時間"""
+    createdAt: Timestamp!
+    """更新時間"""
+    updatedAt: Timestamp!
+}
+
+type ListLineRateResp {
+    """線路費率列表"""
+    list: [LineRate!]!
+    """總數"""
+    total: Uint64!
+}
+
+
+type LineRate {
+    """線路費率ID"""
+    id: Uint64!
+    """線路費率名稱"""
+    name: String!
+    """線路費率描述"""
+    description: String!
+    """線路費率"""
+    rate: Decimal!
+    """創建時間"""
+    createdAt: Timestamp!
+    """更新時間"""
+    updatedAt: Timestamp!
+}
+
+type ListLineRateHistoryResp {
+    """線路費率歷史列表"""
+    list: [LineRateHistory!]!
+    """總數"""
+    total: Uint64!
+}
+
+type LineRateHistory {
+    """線路費率歷史ID"""
+    id: Uint64!
+    """線路費率歷史名稱"""
+    name: String!
+    """線路費率歷史描述"""
+    description: String!
+     """線路費率"""
+    rate: Decimal!
+    """創建時間"""
+    createdAt: Timestamp!
+    """更新時間"""
+    updatedAt: Timestamp!
+}
+
+type ListGameResp {
+    """遊戲列表"""
+    list: [Game!]!
+    """總數"""
+    total: Uint64!
+}
+
+type Game {
+    """遊戲ID"""
+    id: Uint64!
+    """遊戲名稱"""
+    name: String!
+    """遊戲描述"""
+    description: String!
+    """創建時間"""
+    createdAt: Timestamp!
+    """更新時間"""
+    updatedAt: Timestamp!
+}

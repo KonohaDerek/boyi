@@ -1,0 +1,69 @@
+type ListVipUpgradeLogResp {
+    """升級日誌列表"""
+    list: [VipUpgradeLog!]!
+    """總數"""
+    total: Uint64!
+}
+
+type VipUpgradeLog {
+    """升級日誌ID"""
+    id: Uint64!
+    """用戶ID"""
+    userID: Uint64!
+    """VIP等級ID"""
+    vipLevelID: Uint64!
+    """升級時間"""
+    upgradeAt: Timestamp!
+    """創建時間"""
+    createdAt: Timestamp!
+    """更新時間"""
+    updatedAt: Timestamp!
+}
+
+type ListVipClaimLogResp {
+    """領取日誌列表"""
+    list: [VipClaimLog!]!
+    """總數"""
+    total: Uint64!
+}
+
+type VipClaimLog {
+    """領取日誌ID"""
+    id: Uint64!
+    """用戶ID"""
+    userID: Uint64!
+    """VIP等級ID"""
+    vipLevelID: Uint64!
+    """領取時間"""
+    claimAt: Timestamp!
+    """創建時間"""
+    createdAt: Timestamp!
+    """更新時間"""
+    updatedAt: Timestamp!
+}
+
+type ListVipLevelResp {
+    """VIP等級列表"""
+    list: [VipLevel!]!
+    """總數"""
+    total: Uint64!
+}
+
+type VipLevel {
+    """VIP等級ID"""
+    id: Uint64!
+    """VIP等級名稱"""
+    name: String!
+    """VIP等級描述"""
+    description: String!
+    """VIP等級圖標"""
+    icon: String
+    """VIP等級排序"""
+    sort: Uint64
+    # """VIP等級狀態"""
+    # status: VipLevelStatus
+    """創建時間"""
+    createdAt: Timestamp!
+    """更新時間"""
+    updatedAt: Timestamp!
+}

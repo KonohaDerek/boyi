@@ -159,3 +159,70 @@ type UserLoginHistory {
 	deviceOS: DeviceOS!
 	createdAt: Timestamp!
 }
+
+type UserWithdrawInfo {
+	id: Uint64!
+	userID: Uint64!
+	bankName: String!
+	bankBranch: String!
+	bankAccount: String!
+	bankAccountName: String!
+	createdAt: Timestamp!
+	updatedAt: Timestamp!
+	createUserID: Uint64!
+	updateUserID: Uint64!
+}
+
+type UserDepositInfo {
+	id: Uint64!
+	userID: Uint64!
+	bankName: String!
+	bankBranch: String!
+	bankAccount: String!
+	bankAccountName: String!
+	createdAt: Timestamp!
+	updatedAt: Timestamp!
+	createUserID: Uint64!
+	updateUserID: Uint64!
+}
+
+
+type UserScore {
+	id: Uint64!
+	userID: Uint64!
+	score: Decimal!
+	createdAt: Timestamp!
+	updatedAt: Timestamp!
+	createUserID: Uint64!
+	updateUserID: Uint64!
+}
+
+
+type ListUserResp {
+	users:  [User!]!
+	meta: Meta!
+}
+
+type ListUserRoleResp {
+	userRoles: [UserRole!]!
+	meta: Meta!
+}
+
+type ListUserWhitelistResp {
+	userWhitelists: [UserWhitelist!]!
+	meta: Meta!
+}
+
+type ListUserTagResp {
+	userTags: [UserTag!]!
+	meta: Meta!
+}
+
+type ListUserLoginHistoryResp {
+	userLoginHistories: [UserLoginHistory!]!
+	meta: Meta
+}
+
+type CreateUserResp {
+	user: User!   
+}

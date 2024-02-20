@@ -8,3 +8,8 @@ type Role {
 	updatedAt: Timestamp!
 	updateUserID: Uint64!
 }
+
+type ListRoleResp {
+	roles: [Role!]!
+	meta: Meta!
+}

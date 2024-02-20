@@ -27,4 +27,4 @@ models:
   Uint64:
     model: boyi/pkg/infra/graph/value.Uint64
   Decimal:
-    model: github.com/shopspring/decimal.Decimal
+    model: boyi/pkg/infra/graph/value.Decimal

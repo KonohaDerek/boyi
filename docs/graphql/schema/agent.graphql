@@ -1,0 +1,32 @@
+# 代理
+type ListAgentResp {
+    agents: [Agent!]!
+    meta: Meta!
+}
+
+type Agent {
+    """代理ID"""
+    id: Uint64!
+    """代理名稱"""
+    name: String!
+    """代理帳號"""
+    account: String!
+}
+
+
+# 全民代理
+type ListGeneralAgentResp {
+    generalAgents: [GeneralAgent!]!
+    meta: Meta!
+}
+
+
+type GeneralAgent {
+    """全民代理ID"""
+    id: Uint64!
+    """全民代理名稱"""
+    name: String!
+    """全民代理帳號"""
+    account: String!
+}
+

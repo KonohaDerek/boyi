@@ -8,6 +8,7 @@ scalar Uint64
 
 scalar Int64
 
+scalar Decimal
 
 interface Data {
 	id: Uint64!

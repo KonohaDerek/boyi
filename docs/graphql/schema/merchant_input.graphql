@@ -1,0 +1,194 @@
+input MerchantFilterInput {
+    merchant: MerchantInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantInput {
+    id: Uint64
+    """商戶名稱"""
+    name: String
+    # """商戶狀態"""
+    # status: MerchantStatus
+    """商戶備註"""
+    remark: String
+}
+
+input MerchantWithdrawMethodFilterInput {
+    merchantWithdrawMethod: MerchantWithdrawMethodInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantWithdrawMethodInput {
+    id: Uint64
+    """商戶出款方式名稱"""
+    name: String
+    """商戶出款方式描述"""
+    description: String
+}
+
+input MerchantDepositMethodFilterInput {
+    merchantDepositMethod: MerchantDepositMethodInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantDepositMethodInput {
+    id: Uint64
+    """商戶存款方式名稱"""
+    name: String
+    """商戶存款方式描述"""
+    description: String
+}
+
+input MerchantFeeModeFilterInput {
+    merchantFeeMode: MerchantFeeModeInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantFeeModeInput {
+    id: Uint64
+    """商戶費率模式名稱"""
+    name: String
+    """商戶費率模式描述"""
+    description: String
+}
+
+input MerchantBalanceLogFilterInput {
+    merchantBalanceLog: MerchantBalanceLogInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantBalanceLogInput {
+    id: Uint64
+    # """商戶餘額異動類型"""
+    # type: MerchantBalanceLogType
+    # """商戶餘額異動金額"""
+    # amount: Decimal
+    # """商戶餘額異動前餘額"""
+    # beforeBalance: Decimal
+    # """商戶餘額異動後餘額"""
+    # afterBalance: Decimal
+    # """商戶餘額異動描述"""
+    # description: String
+}
+
+
+input MerchantWithdrawLogFilterInput {
+    merchantWithdrawLog: MerchantWithdrawLogInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantWithdrawLogInput {
+    id: Uint64
+}
+
+input MerchantDepositLogFilterInput {
+    merchantDepositLog: MerchantDepositLogInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantDepositLogInput {
+    id: Uint64
+}
+
+input MerchantLoginHistoryFilterInput {
+    merchantLoginHistory: MerchantLoginHistoryInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantLoginHistoryInput {
+    id: Uint64
+}
+
+input MerchantCreateInput {
+    """商戶名稱"""
+    name: String!
+    # """商戶狀態"""
+    # status: MerchantStatus!
+    """商戶備註"""
+    remark: String
+}
+
+
+input MerchantUpdateInput {
+    """商戶名稱"""
+    name: String
+    # """商戶狀態"""
+    # status: MerchantStatus
+    """商戶備註"""
+    remark: String
+}
+
+input MerchantWithdrawMethodCreateInput {
+    """商戶出款方式名稱"""
+    name: String!
+    """商戶出款方式描述"""
+    description: String
+}
+
+input MerchantWithdrawMethodUpdateInput {
+    """商戶出款方式名稱"""
+    name: String
+    """商戶出款方式描述"""
+    description: String
+}
+
+input MerchantDepositMethodCreateInput {
+    """商戶存款方式名稱"""
+    name: String!
+    """商戶存款方式描述"""
+    description: String
+}
+
+input MerchantDepositMethodUpdateInput {
+    """商戶存款方式名稱"""
+    name: String
+    """商戶存款方式描述"""
+    description: String
+}
+
+input MerchantFeeModeCreateInput {
+    """商戶費率模式名稱"""
+    name: String!
+    """商戶費率模式描述"""
+    description: String
+}
+
+input MerchantFeeModeUpdateInput {
+    """商戶費率模式名稱"""
+    name: String
+    """商戶費率模式描述"""
+    description: String
+}
+
+input MerchantBalanceApplyInput {
+    """商戶餘額異動金額"""
+    amount: Decimal!
+    """商戶餘額異動描述"""
+    description: String
+}
+
+input MerchantBalanceFilterInput {
+    merchantBalance: MerchantBalanceInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantBalanceInput {
+    id: Uint64
+    # """商戶餘額異動類型"""
+    # type: MerchantBalanceLogType
+    # """商戶餘額異動金額"""
+    # amount: Decimal
+    # """商戶餘額異動前餘額"""
+    # beforeBalance: Decimal
+    # """商戶餘額異動後餘額"""
+    # afterBalance: Decimal
+    # """商戶餘額異動描述"""
+    # description: String
+}
+
+input MerchantBalanceAuditInput {
+    # """商戶餘額異動審核結果"""
+    # result: MerchantBalanceAuditResult!
+    """商戶餘額異動審核意見"""
+    opinion: String
+}

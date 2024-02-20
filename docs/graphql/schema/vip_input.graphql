@@ -1,0 +1,87 @@
+input VipUpgradeLogFilterInput {
+    """升級日誌"""
+    vipUpgradeLog: VipUpgradeLogInput
+    baseFilter: BaseFilterInput
+}
+
+input VipUpgradeLogInput {
+    id: Uint64
+    """用戶ID"""
+    userID: Uint64
+    """升級前VIP等級"""
+    vipLevelFrom: Uint64
+    """升級後VIP等級"""
+    vipLevelTo: Uint64
+    """升級時間"""
+    upgradeTime: Timestamp
+}
+
+
+
+input VipClaimLogFilterInput {
+    """領取日誌"""
+    vipClaimLog: VipClaimLogInput
+    baseFilter: BaseFilterInput
+}
+
+input VipClaimLogInput {
+    id: Uint64
+    """用戶ID"""
+    userID: Uint64
+    """VIP等級"""
+    vipLevel: Uint64
+    """領取時間"""
+    claimTime: Timestamp
+}
+
+input VipLevelCreateInput {
+    """VIP等級"""
+    level: Uint64!
+    """VIP等級名稱"""
+    name: String!
+    """VIP等級描述"""
+    description: String
+    """VIP等級圖標"""
+    icon: String
+    """VIP等級排序"""
+    sort: Uint64
+    # """VIP等級狀態"""
+    # status: VipLevelStatus
+}
+
+input VipLevelUpdateInput {
+    """VIP等級"""
+    level: Uint64
+    """VIP等級名稱"""
+    name: String
+    """VIP等級描述"""
+    description: String
+    """VIP等級圖標"""
+    icon: String
+    """VIP等級排序"""
+    sort: Uint64
+    # """VIP等級狀態"""
+    # status: VipLevelStatus
+}
+
+input ClaimVipRewardInput {
+    """VIP等級"""
+    vipLevel: Uint64!
+    # """領取類型"""
+    # claimType: VipClaimType!
+}
+
+
+input VipLevelFilterInput {
+    """VIP等級"""
+    vipLevel: VipLevelInput
+    baseFilter: BaseFilterInput
+}
+
+input VipLevelInput {
+    id: Uint64
+    """VIP等級"""
+    level: Uint64
+    """VIP等級名稱"""
+    name: String
+}

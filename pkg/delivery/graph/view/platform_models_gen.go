@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/99designs/gqlgen/graphql"
+	"github.com/shopspring/decimal"
 )
 
 type Data interface {
@@ -16,6 +17,49 @@ type Data interface {
 	GetID() uint64
 }
 
+type Agent struct {
+	// 代理ID
+	ID uint64 `json:"id"`
+	// 代理名稱
+	Name string `json:"name"`
+	// 代理帳號
+	Account string `json:"account"`
+}
+
+type AgentCreateInput struct {
+	// 代理名稱
+	Name string `json:"name"`
+	// 代理帳號
+	Account string `json:"account"`
+	// 代理密碼
+	Password string `json:"password"`
+	// 代理備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type AgentFilterInput struct {
+	Agent      *AgentInput      `json:"agent,omitempty"`
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type AgentInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 代理名稱
+	Name *string `json:"name,omitempty"`
+}
+
+type AgentUpdateInput struct {
+	// 代理名稱
+	Name *string `json:"name,omitempty"`
+	// 代理帳號
+	Account *string `json:"account,omitempty"`
+	// 代理密碼
+	Password *string `json:"password,omitempty"`
+	// 代理備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+// 審計日誌
 type AuditLog struct {
 	ID           uint64    `json:"id"`
 	UserID       uint64    `json:"userID"`
@@ -24,21 +68,16 @@ type AuditLog struct {
 	CreatedAt    time.Time `json:"createdAt"`
 }
 
-type AuditLogCreateInput struct {
-	Method       string `json:"method"`
-	UserID       uint64 `json:"userID"`
-	RequestInput string `json:"requestInput"`
-}
-
 type AuditLogFilterInput struct {
 	AuditLog   *AuditLogInput   `json:"auditLog,omitempty"`
 	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
 }
 
 type AuditLogInput struct {
-	ID     *uint64 `json:"id,omitempty"`
-	Method *string `json:"method,omitempty"`
-	UserID *uint64 `json:"userID,omitempty"`
+	ID           *uint64 `json:"id,omitempty"`
+	UserID       *uint64 `json:"userID,omitempty"`
+	Method       *string `json:"method,omitempty"`
+	RequestInput *string `json:"requestInput,omitempty"`
 }
 
 type BaseFilterInput struct {
@@ -57,6 +96,11 @@ type BaseFilterInput struct {
 	LessThanEqual    *int64     `json:"lessThanEqual,omitempty"`
 	GreaterThan      *int64     `json:"greaterThan,omitempty"`
 	GreaterThanEqual *int64     `json:"greaterThanEqual,omitempty"`
+}
+
+type ClaimVipRewardInput struct {
+	// VIP等級
+	VipLevel uint64 `json:"vipLevel"`
 }
 
 type Claims struct {
@@ -120,6 +164,135 @@ type DataList struct {
 	Meta *Meta  `json:"meta"`
 }
 
+type EmailConfig struct {
+	// SMTP Server
+	SMTPServer string `json:"smtpServer"`
+	// SMTP Port
+	SMTPPort int64 `json:"smtpPort"`
+	// SMTP User
+	SMTPUser string `json:"smtpUser"`
+	// SMTP From
+	SMTPFrom string `json:"smtpFrom"`
+	// SMTP From Name
+	SMTPFromName string `json:"smtpFromName"`
+	// SMTP SSL
+	SMTPSsl YesNo `json:"smtpSSL"`
+}
+
+type EmailConfigInput struct {
+	// SMTP Server
+	SMTPServer string `json:"smtpServer"`
+	// SMTP Port
+	SMTPPort int64 `json:"smtpPort"`
+	// SMTP User
+	SMTPUser string `json:"smtpUser"`
+	// SMTP Password
+	SMTPPassword string `json:"smtpPassword"`
+	// SMTP From
+	SMTPFrom string `json:"smtpFrom"`
+	// SMTP From Name
+	SMTPFromName string `json:"smtpFromName"`
+	// SMTP SSL
+	SMTPSsl YesNo `json:"smtpSSL"`
+}
+
+type EmailRecord struct {
+	// id
+	ID uint64 `json:"id"`
+	// Email收信地址
+	Email string `json:"email"`
+	// Email主旨
+	Subject string `json:"subject"`
+	// Email內容
+	Content string `json:"content"`
+	// Email發送時間
+	SendTime time.Time `json:"sendTime"`
+	// SMTP Server
+	SMTPServer string `json:"smtpServer"`
+	// SMTP Port
+	SMTPPort int64 `json:"smtpPort"`
+	// SMTP User
+	SMTPUser string `json:"smtpUser"`
+	// SMTP From
+	SMTPFrom string `json:"smtpFrom"`
+	// SMTP From Name
+	SMTPFromName string `json:"smtpFromName"`
+	// SMTP SSL
+	SMTPSsl YesNo `json:"smtpSSL"`
+	// 建立時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 建立者
+	CreateUserID uint64 `json:"createUserID"`
+}
+
+type EmailRecordFilterInput struct {
+	EmailRecord *EmailRecordInput `json:"emailRecord,omitempty"`
+	BaseFilter  *BaseFilterInput  `json:"baseFilter,omitempty"`
+}
+
+type EmailRecordInput struct {
+	// Email發送紀錄ID
+	ID *uint64 `json:"id,omitempty"`
+	// Email收信地址
+	Email *string `json:"email,omitempty"`
+}
+
+type Event struct {
+	// 活動ID
+	ID uint64 `json:"id"`
+	// 活動名稱
+	Name string `json:"name"`
+	// 活動描述
+	Description string `json:"description"`
+	// 活動開始時間
+	StartTime time.Time `json:"startTime"`
+	// 活動結束時間
+	EndTime time.Time `json:"endTime"`
+	// 活動備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type EventCreateInput struct {
+	// 活動名稱
+	Name string `json:"name"`
+	// 活動描述
+	Description string `json:"description"`
+	// 活動開始時間
+	StartTime time.Time `json:"startTime"`
+	// 活動結束時間
+	EndTime time.Time `json:"endTime"`
+	// 活動備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type EventFilterInput struct {
+	Event      *EventInput      `json:"event,omitempty"`
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type EventInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 活動名稱
+	Name *string `json:"name,omitempty"`
+	// 活動開始時間
+	StartTime *time.Time `json:"startTime,omitempty"`
+	// 活動結束時間
+	EndTime *time.Time `json:"endTime,omitempty"`
+}
+
+type EventUpdateInput struct {
+	// 活動名稱
+	Name *string `json:"name,omitempty"`
+	// 活動描述
+	Description *string `json:"description,omitempty"`
+	// 活動開始時間
+	StartTime *time.Time `json:"startTime,omitempty"`
+	// 活動結束時間
+	EndTime *time.Time `json:"endTime,omitempty"`
+	// 活動備註
+	Remark *string `json:"remark,omitempty"`
+}
+
 type File struct {
 	ID          uint64 `json:"id"`
 	Name        string `json:"name"`
@@ -130,6 +303,7 @@ type File struct {
 func (File) IsData()            {}
 func (this File) GetID() uint64 { return this.ID }
 
+// 檔案資訊
 type FileInfo struct {
 	FileName  string `json:"fileName"`
 	UploadURL string `json:"uploadURL"`
@@ -141,6 +315,150 @@ type FileInfoInput struct {
 	Size int64 `json:"size"`
 	// 檔案 MD5 The base64-encoded 128-bit MD5 digest
 	Md5 string `json:"md5"`
+}
+
+type Game struct {
+	// 遊戲ID
+	ID uint64 `json:"id"`
+	// 遊戲名稱
+	Name string `json:"name"`
+	// 遊戲描述
+	Description string `json:"description"`
+	// 創建時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+type GameCreateInput struct {
+	// 遊戲名稱
+	Name string `json:"name"`
+	// 遊戲描述
+	Description string `json:"description"`
+	// 遊戲備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type GameFilterInput struct {
+	Game       *GameInput       `json:"game,omitempty"`
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type GameInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 遊戲名稱
+	Name *string `json:"name,omitempty"`
+}
+
+type GamePlayer struct {
+	ID             uint64          `json:"id"`
+	Username       string          `json:"username"`
+	Nickname       string          `json:"nickname"`
+	Balance        decimal.Decimal `json:"balance"`
+	LastLoginTime  time.Time       `json:"lastLoginTime"`
+	LastLogoutTime time.Time       `json:"lastLogoutTime"`
+	CreatedAt      time.Time       `json:"createdAt"`
+	UpdatedAt      time.Time       `json:"updatedAt"`
+}
+
+type GamePlayerFilterInput struct {
+	// 遊戲玩家
+	GamePlayer *GamePlayerInput `json:"gamePlayer,omitempty"`
+	// 基本過濾條件
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type GamePlayerInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 遊戲玩家名稱
+	Name *string `json:"name,omitempty"`
+	// 遊戲玩家帳號
+	Account *string `json:"account,omitempty"`
+	// 遊戲玩家備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type GameTransferRecord struct {
+	ID           uint64          `json:"id"`
+	GamePlayerID uint64          `json:"gamePlayerId"`
+	GameID       uint64          `json:"gameId"`
+	GameName     string          `json:"gameName"`
+	Amount       decimal.Decimal `json:"amount"`
+	Remark       string          `json:"remark"`
+	CreatedAt    time.Time       `json:"createdAt"`
+	UpdatedAt    time.Time       `json:"updatedAt"`
+}
+
+type GameTransferRecordFilterInput struct {
+	// 遊戲轉帳記錄
+	GameTransferRecord *GameTransferRecordInput `json:"gameTransferRecord,omitempty"`
+	// 基本過濾條件
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type GameTransferRecordInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 遊戲玩家ID
+	GamePlayerID *uint64 `json:"gamePlayerId,omitempty"`
+	// 遊戲ID
+	GameID *uint64 `json:"gameId,omitempty"`
+	// 遊戲名稱
+	GameName *string `json:"gameName,omitempty"`
+	// 遊戲轉帳金額
+	Amount *decimal.Decimal `json:"amount,omitempty"`
+	// 遊戲轉帳備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type GameUpdateInput struct {
+	// 遊戲名稱
+	Name *string `json:"name,omitempty"`
+	// 遊戲描述
+	Description *string `json:"description,omitempty"`
+	// 遊戲備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type GeneralAgent struct {
+	// 全民代理ID
+	ID uint64 `json:"id"`
+	// 全民代理名稱
+	Name string `json:"name"`
+	// 全民代理帳號
+	Account string `json:"account"`
+}
+
+type GeneralAgentCreateInput struct {
+	// 全民代理名稱
+	Name string `json:"name"`
+	// 全民代理帳號
+	Account string `json:"account"`
+	// 全民代理密碼
+	Password string `json:"password"`
+	// 全民代理備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type GeneralAgentFilterInput struct {
+	GeneralAgent *GeneralAgentInput `json:"generalAgent,omitempty"`
+	BaseFilter   *BaseFilterInput   `json:"baseFilter,omitempty"`
+}
+
+type GeneralAgentInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 全民代理名稱
+	Name *string `json:"name,omitempty"`
+}
+
+type GeneralAgentUpdateInput struct {
+	// 全民代理名稱
+	Name *string `json:"name,omitempty"`
+	// 全民代理帳號
+	Account *string `json:"account,omitempty"`
+	// 全民代理密碼
+	Password *string `json:"password,omitempty"`
+	// 全民代理備註
+	Remark *string `json:"remark,omitempty"`
 }
 
 // 黑名單系統
@@ -206,14 +524,237 @@ type HubDevice struct {
 	RoomID    uint64 `json:"roomID"`
 }
 
+type LineRate struct {
+	// 線路費率ID
+	ID uint64 `json:"id"`
+	// 線路費率名稱
+	Name string `json:"name"`
+	// 線路費率描述
+	Description string `json:"description"`
+	// 線路費率
+	Rate decimal.Decimal `json:"rate"`
+	// 創建時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+type LineRateCreateInput struct {
+	// 線路費率名稱
+	Name string `json:"name"`
+	// 線路費率描述
+	Description string `json:"description"`
+	// 線路費率備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type LineRateFilterInput struct {
+	LineRate   *LineRateInput   `json:"lineRate,omitempty"`
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type LineRateHistory struct {
+	// 線路費率歷史ID
+	ID uint64 `json:"id"`
+	// 線路費率歷史名稱
+	Name string `json:"name"`
+	// 線路費率歷史描述
+	Description string `json:"description"`
+	// 線路費率
+	Rate decimal.Decimal `json:"rate"`
+	// 創建時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+type LineRateHistoryFilterInput struct {
+	LineRateHistory *LineRateHistoryInput `json:"lineRateHistory,omitempty"`
+	BaseFilter      *BaseFilterInput      `json:"baseFilter,omitempty"`
+}
+
+type LineRateHistoryInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 線路費率ID
+	LineRateID *uint64 `json:"lineRateId,omitempty"`
+	// 線路費率名稱
+	Name *string `json:"name,omitempty"`
+}
+
+type LineRateInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 線路費率名稱
+	Name *string `json:"name,omitempty"`
+}
+
+type LineRateUpdateInput struct {
+	// 線路費率名稱
+	Name *string `json:"name,omitempty"`
+	// 線路費率描述
+	Description *string `json:"description,omitempty"`
+	// 線路費率備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type LineRent struct {
+	// 線路租借ID
+	ID uint64 `json:"id"`
+	// 線路租借名稱
+	Name string `json:"name"`
+	// 線路租借描述
+	Description string `json:"description"`
+	// 創建時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+type LineRentCreateInput struct {
+	// 線路租借名稱
+	Name string `json:"name"`
+	// 線路租借描述
+	Description string `json:"description"`
+	// 線路租借備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type LineRentFilterInput struct {
+	LineRent   *LineRentInput   `json:"lineRent,omitempty"`
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type LineRentInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 線路租借名稱
+	Name *string `json:"name,omitempty"`
+}
+
+type LineRentUpdateInput struct {
+	// 線路租借名稱
+	Name *string `json:"name,omitempty"`
+	// 線路租借描述
+	Description *string `json:"description,omitempty"`
+	// 線路租借備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type ListAgentResp struct {
+	Agents []*Agent `json:"agents"`
+	Meta   *Meta    `json:"meta"`
+}
+
+// 審計日誌查詢
 type ListAuditLogResp struct {
 	AuditLogs []*AuditLog `json:"auditLogs"`
 	Meta      *Meta       `json:"meta"`
 }
 
+type ListEmailRecordResp struct {
+	EmailRecords []*EmailRecord `json:"emailRecords"`
+	Meta         *Meta          `json:"meta"`
+}
+
+type ListEventResp struct {
+	Events []*Event `json:"events"`
+	Meta   *Meta    `json:"meta"`
+}
+
+type ListGamePlayerResp struct {
+	Players []*GamePlayer `json:"players"`
+	Meta    *Meta         `json:"meta"`
+}
+
+type ListGameResp struct {
+	// 遊戲列表
+	List []*Game `json:"list"`
+	// 總數
+	Total uint64 `json:"total"`
+}
+
+type ListGameTransferRecordResp struct {
+	Records []*GameTransferRecord `json:"records"`
+	Meta    *Meta                 `json:"meta"`
+}
+
+type ListGeneralAgentResp struct {
+	GeneralAgents []*GeneralAgent `json:"generalAgents"`
+	Meta          *Meta           `json:"meta"`
+}
+
+// 黑名單列表
 type ListHostsDenyResp struct {
 	HostsDenys []*HostsDeny `json:"hostsDenys"`
 	Meta       *Meta        `json:"meta"`
+}
+
+type ListLineRateHistoryResp struct {
+	// 線路費率歷史列表
+	List []*LineRateHistory `json:"list"`
+	// 總數
+	Total uint64 `json:"total"`
+}
+
+type ListLineRateResp struct {
+	// 線路費率列表
+	List []*LineRate `json:"list"`
+	// 總數
+	Total uint64 `json:"total"`
+}
+
+type ListLineRentResp struct {
+	// 線路租借列表
+	List []*LineRent `json:"list"`
+	// 總數
+	Total uint64 `json:"total"`
+}
+
+type ListMerchantBalanceLogResp struct {
+	List  []*MerchantBalanceLog `json:"list"`
+	Total uint64                `json:"total"`
+}
+
+type ListMerchantDepositLogResp struct {
+	List  []*MerchantDepositLog `json:"list"`
+	Total uint64                `json:"total"`
+}
+
+type ListMerchantDepositMethodResp struct {
+	List  []*MerchantDepositMethod `json:"list"`
+	Total uint64                   `json:"total"`
+}
+
+type ListMerchantFeeModeResp struct {
+	List  []*MerchantFeeMode `json:"list"`
+	Total uint64             `json:"total"`
+}
+
+type ListMerchantLineResp struct {
+	// 商戶線路列表
+	List []*MerchantLine `json:"list"`
+	// 總數
+	Total uint64 `json:"total"`
+}
+
+type ListMerchantLoginHistoryResp struct {
+	List  []*MerchantLoginHistory `json:"list"`
+	Total uint64                  `json:"total"`
+}
+
+type ListMerchantResp struct {
+	// 商家列表
+	List []*Merchant `json:"list"`
+	// 總數
+	Total uint64 `json:"total"`
+}
+
+type ListMerchantWithdrawLogResp struct {
+	List  []*MerchantWithdrawLog `json:"list"`
+	Total uint64                 `json:"total"`
+}
+
+type ListMerchantWithdrawMethodResp struct {
+	List  []*MerchantWithdrawMethod `json:"list"`
+	Total uint64                    `json:"total"`
 }
 
 type ListMetadata struct {
@@ -225,9 +766,34 @@ type ListRoleResp struct {
 	Meta  *Meta   `json:"meta"`
 }
 
+// 安全設定列表
+type ListSecurityEventResp struct {
+	SecurityEvents []*SecurityEvent `json:"securityEvents"`
+	Meta           *Meta            `json:"meta"`
+}
+
+type ListSmsRecordResp struct {
+	SmsRecords []*SmsRecord `json:"smsRecords"`
+	Meta       *Meta        `json:"meta"`
+}
+
+type ListSystemLineResp struct {
+	// 系統線路列表
+	List []*SystemLine `json:"list"`
+	// 總數
+	Total uint64 `json:"total"`
+}
+
+// 標籤列表
 type ListTagResp struct {
 	Tags []*Tag `json:"tags"`
 	Meta *Meta  `json:"meta"`
+}
+
+// 模板列表
+type ListTemplateResp struct {
+	Templates []*Template `json:"templates"`
+	Meta      *Meta       `json:"meta"`
 }
 
 type ListUserLoginHistoryResp struct {
@@ -255,6 +821,27 @@ type ListUserWhitelistResp struct {
 	Meta           *Meta            `json:"meta"`
 }
 
+type ListVipClaimLogResp struct {
+	// 領取日誌列表
+	List []*VipClaimLog `json:"list"`
+	// 總數
+	Total uint64 `json:"total"`
+}
+
+type ListVipLevelResp struct {
+	// VIP等級列表
+	List []*VipLevel `json:"list"`
+	// 總數
+	Total uint64 `json:"total"`
+}
+
+type ListVipUpgradeLogResp struct {
+	// 升級日誌列表
+	List []*VipUpgradeLog `json:"list"`
+	// 總數
+	Total uint64 `json:"total"`
+}
+
 type LoginReqInput struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -276,6 +863,285 @@ type Menu struct {
 type MenuInput struct {
 	Key  string       `json:"key"`
 	Next []*MenuInput `json:"next"`
+}
+
+type Merchant struct {
+	// 商家ID
+	ID uint64 `json:"id"`
+	// 商家名稱
+	Name string `json:"name"`
+	// 商家描述
+	Description string `json:"description"`
+	// 創建時間
+	CreatedAt time.Time `json:"createdAt"`
+	// "更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+type MerchantBalanceApplyInput struct {
+	// 商戶餘額異動金額
+	Amount decimal.Decimal `json:"amount"`
+	// 商戶餘額異動描述
+	Description *string `json:"description,omitempty"`
+}
+
+type MerchantBalanceAuditInput struct {
+	// 商戶餘額異動審核意見
+	Opinion *string `json:"opinion,omitempty"`
+}
+
+type MerchantBalanceFilterInput struct {
+	MerchantBalance *MerchantBalanceInput `json:"merchantBalance,omitempty"`
+	BaseFilter      *BaseFilterInput      `json:"baseFilter,omitempty"`
+}
+
+type MerchantBalanceInput struct {
+	ID *uint64 `json:"id,omitempty"`
+}
+
+type MerchantBalanceLog struct {
+	ID          uint64          `json:"id"`
+	MerchantID  uint64          `json:"merchantId"`
+	Amount      decimal.Decimal `json:"amount"`
+	Description string          `json:"description"`
+	CreatedAt   time.Time       `json:"createdAt"`
+	UpdatedAt   time.Time       `json:"updatedAt"`
+}
+
+type MerchantBalanceLogFilterInput struct {
+	MerchantBalanceLog *MerchantBalanceLogInput `json:"merchantBalanceLog,omitempty"`
+	BaseFilter         *BaseFilterInput         `json:"baseFilter,omitempty"`
+}
+
+type MerchantBalanceLogInput struct {
+	ID *uint64 `json:"id,omitempty"`
+}
+
+type MerchantCreateInput struct {
+	// 商戶名稱
+	Name string `json:"name"`
+	// 商戶備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type MerchantDepositLog struct {
+	ID          uint64          `json:"id"`
+	MerchantID  uint64          `json:"merchantId"`
+	Amount      decimal.Decimal `json:"amount"`
+	Description string          `json:"description"`
+	CreatedAt   time.Time       `json:"createdAt"`
+	UpdatedAt   time.Time       `json:"updatedAt"`
+}
+
+type MerchantDepositLogFilterInput struct {
+	MerchantDepositLog *MerchantDepositLogInput `json:"merchantDepositLog,omitempty"`
+	BaseFilter         *BaseFilterInput         `json:"baseFilter,omitempty"`
+}
+
+type MerchantDepositLogInput struct {
+	ID *uint64 `json:"id,omitempty"`
+}
+
+type MerchantDepositMethod struct {
+	ID          uint64    `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
+}
+
+type MerchantDepositMethodCreateInput struct {
+	// 商戶存款方式名稱
+	Name string `json:"name"`
+	// 商戶存款方式描述
+	Description *string `json:"description,omitempty"`
+}
+
+type MerchantDepositMethodFilterInput struct {
+	MerchantDepositMethod *MerchantDepositMethodInput `json:"merchantDepositMethod,omitempty"`
+	BaseFilter            *BaseFilterInput            `json:"baseFilter,omitempty"`
+}
+
+type MerchantDepositMethodInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 商戶存款方式名稱
+	Name *string `json:"name,omitempty"`
+	// 商戶存款方式描述
+	Description *string `json:"description,omitempty"`
+}
+
+type MerchantDepositMethodUpdateInput struct {
+	// 商戶存款方式名稱
+	Name *string `json:"name,omitempty"`
+	// 商戶存款方式描述
+	Description *string `json:"description,omitempty"`
+}
+
+type MerchantFeeMode struct {
+	ID          uint64    `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
+}
+
+type MerchantFeeModeCreateInput struct {
+	// 商戶費率模式名稱
+	Name string `json:"name"`
+	// 商戶費率模式描述
+	Description *string `json:"description,omitempty"`
+}
+
+type MerchantFeeModeFilterInput struct {
+	MerchantFeeMode *MerchantFeeModeInput `json:"merchantFeeMode,omitempty"`
+	BaseFilter      *BaseFilterInput      `json:"baseFilter,omitempty"`
+}
+
+type MerchantFeeModeInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 商戶費率模式名稱
+	Name *string `json:"name,omitempty"`
+	// 商戶費率模式描述
+	Description *string `json:"description,omitempty"`
+}
+
+type MerchantFeeModeUpdateInput struct {
+	// 商戶費率模式名稱
+	Name *string `json:"name,omitempty"`
+	// 商戶費率模式描述
+	Description *string `json:"description,omitempty"`
+}
+
+type MerchantFilterInput struct {
+	Merchant   *MerchantInput   `json:"merchant,omitempty"`
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type MerchantInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 商戶名稱
+	Name *string `json:"name,omitempty"`
+	// 商戶備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type MerchantLine struct {
+	// 商戶線路ID
+	ID uint64 `json:"id"`
+	// 商戶線路名稱
+	Name string `json:"name"`
+	// 商戶線路描述
+	Description string `json:"description"`
+	// 創建時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+type MerchantLineCreateInput struct {
+	// 商戶線路名稱
+	Name string `json:"name"`
+	// 商戶線路描述
+	Description string `json:"description"`
+	// 商戶線路備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type MerchantLineFilterInput struct {
+	MerchantLine *MerchantLineInput `json:"merchantLine,omitempty"`
+	BaseFilter   *BaseFilterInput   `json:"baseFilter,omitempty"`
+}
+
+type MerchantLineInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 商戶線路名稱
+	Name *string `json:"name,omitempty"`
+}
+
+type MerchantLineUpdateInput struct {
+	// 商戶線路名稱
+	Name *string `json:"name,omitempty"`
+	// 商戶線路描述
+	Description *string `json:"description,omitempty"`
+	// 商戶線路備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type MerchantLoginHistory struct {
+	ID         uint64    `json:"id"`
+	MerchantID uint64    `json:"merchantId"`
+	IP         string    `json:"ip"`
+	CreatedAt  time.Time `json:"createdAt"`
+	UpdatedAt  time.Time `json:"updatedAt"`
+}
+
+type MerchantLoginHistoryFilterInput struct {
+	MerchantLoginHistory *MerchantLoginHistoryInput `json:"merchantLoginHistory,omitempty"`
+	BaseFilter           *BaseFilterInput           `json:"baseFilter,omitempty"`
+}
+
+type MerchantLoginHistoryInput struct {
+	ID *uint64 `json:"id,omitempty"`
+}
+
+type MerchantUpdateInput struct {
+	// 商戶名稱
+	Name *string `json:"name,omitempty"`
+	// 商戶備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type MerchantWithdrawLog struct {
+	ID          uint64          `json:"id"`
+	MerchantID  uint64          `json:"merchantId"`
+	Amount      decimal.Decimal `json:"amount"`
+	Description string          `json:"description"`
+	CreatedAt   time.Time       `json:"createdAt"`
+	UpdatedAt   time.Time       `json:"updatedAt"`
+}
+
+type MerchantWithdrawLogFilterInput struct {
+	MerchantWithdrawLog *MerchantWithdrawLogInput `json:"merchantWithdrawLog,omitempty"`
+	BaseFilter          *BaseFilterInput          `json:"baseFilter,omitempty"`
+}
+
+type MerchantWithdrawLogInput struct {
+	ID *uint64 `json:"id,omitempty"`
+}
+
+type MerchantWithdrawMethod struct {
+	ID          uint64    `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
+}
+
+type MerchantWithdrawMethodCreateInput struct {
+	// 商戶出款方式名稱
+	Name string `json:"name"`
+	// 商戶出款方式描述
+	Description *string `json:"description,omitempty"`
+}
+
+type MerchantWithdrawMethodFilterInput struct {
+	MerchantWithdrawMethod *MerchantWithdrawMethodInput `json:"merchantWithdrawMethod,omitempty"`
+	BaseFilter             *BaseFilterInput             `json:"baseFilter,omitempty"`
+}
+
+type MerchantWithdrawMethodInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 商戶出款方式名稱
+	Name *string `json:"name,omitempty"`
+	// 商戶出款方式描述
+	Description *string `json:"description,omitempty"`
+}
+
+type MerchantWithdrawMethodUpdateInput struct {
+	// 商戶出款方式名稱
+	Name *string `json:"name,omitempty"`
+	// 商戶出款方式描述
+	Description *string `json:"description,omitempty"`
 }
 
 type Meta struct {
@@ -302,6 +1168,11 @@ type Query struct {
 type RefreshTokenResp struct {
 	Token   string    `json:"token"`
 	Expires time.Time `json:"expires"`
+}
+
+type RegisterReqInput struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 type Role struct {
@@ -338,9 +1209,144 @@ type RoleUpdateInput struct {
 	Authority          []*MenuInput `json:"authority,omitempty"`
 }
 
+// 安全設定
+type SecurityEvent struct {
+	// id
+	ID uint64 `json:"id"`
+	// 事件名稱
+	Name string `json:"name"`
+	// 事件描述
+	Description string `json:"description"`
+	// 是否啟用
+	IsEnable YesNo `json:"isEnable"`
+	// 建立時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+	// 建立者
+	CreateUserID uint64 `json:"createUserID"`
+	// 更新者
+	UpdateUserID uint64 `json:"updateUserID"`
+}
+
+type SecurityEventCreateInput struct {
+	// 事件名稱
+	Name string `json:"name"`
+	// 事件描述
+	Description *string `json:"description,omitempty"`
+}
+
+type SecurityEventFilterInput struct {
+	SecurityEvent *SecurityEventInput `json:"securityEvent,omitempty"`
+	BaseFilter    *BaseFilterInput    `json:"baseFilter,omitempty"`
+}
+
+type SecurityEventInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 事件名稱
+	Name *string `json:"name,omitempty"`
+}
+
+type SecurityEventUpdateInput struct {
+	// 事件名稱
+	Name *string `json:"name,omitempty"`
+	// 事件描述
+	Description *string `json:"description,omitempty"`
+}
+
+type SmsConfig struct {
+	// 短信發送帳號
+	Account string `json:"account"`
+	// 短信發送網址
+	URL string `json:"url"`
+}
+
+type SmsConfigInput struct {
+	// 短信發送帳號
+	Account string `json:"account"`
+	// 短信發送密碼
+	Password string `json:"password"`
+	// 短信發送網址
+	URL string `json:"url"`
+}
+
+type SmsRecord struct {
+	// id
+	ID uint64 `json:"id"`
+	// 短信收信電話
+	PhoneNumber string `json:"phoneNumber"`
+	// 短信內容
+	Content string `json:"content"`
+	// 短信發送時間
+	SendTime time.Time `json:"sendTime"`
+	// 短信發送帳號
+	Account string `json:"account"`
+	// 短信發送網址
+	URL string `json:"url"`
+	// 建立時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 建立者
+	CreateUserID uint64 `json:"createUserID"`
+}
+
+type SmsRecordFilterInput struct {
+	SmsRecord  *SmsRecordInput  `json:"smsRecord,omitempty"`
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type SmsRecordInput struct {
+	// 短信發送紀錄ID
+	ID *uint64 `json:"id,omitempty"`
+	// 短信收信電話
+	PhoneNumber *string `json:"phoneNumber,omitempty"`
+}
+
 type Subscription struct {
 }
 
+type SystemLine struct {
+	// 系統線路ID
+	ID uint64 `json:"id"`
+	// 系統線路名稱
+	Name string `json:"name"`
+	// 系統線路描述
+	Description string `json:"description"`
+	// 創建時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+type SystemLineCreateInput struct {
+	// 系統線路名稱
+	Name string `json:"name"`
+	// 系統線路描述
+	Description string `json:"description"`
+	// 系統線路備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+type SystemLineFilterInput struct {
+	SystemLine *SystemLineInput `json:"systemLine,omitempty"`
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type SystemLineInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 系統線路名稱
+	Name *string `json:"name,omitempty"`
+}
+
+type SystemLineUpdateInput struct {
+	// 系統線路名稱
+	Name *string `json:"name,omitempty"`
+	// 系統線路描述
+	Description *string `json:"description,omitempty"`
+	// 系統線路備註
+	Remark *string `json:"remark,omitempty"`
+}
+
+// 標籤
 type Tag struct {
 	// id
 	ID   uint64 `json:"id"`
@@ -376,6 +1382,47 @@ type TagUpdateInput struct {
 	Name     *string `json:"name,omitempty"`
 	RGBHex   *string `json:"RGBHex,omitempty"`
 	IsEnable *YesNo  `json:"isEnable,omitempty"`
+}
+
+// 模板
+type Template struct {
+	ID uint64 `json:"id"`
+	// 模板名稱
+	Name string `json:"name"`
+	// 模板內容
+	Content string `json:"content"`
+	// 建立時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+type TemplateCreateInput struct {
+	// 模板名稱
+	Name string `json:"name"`
+	// 模板內容
+	Content string `json:"content"`
+	// 模板描述
+	Description *string `json:"description,omitempty"`
+}
+
+type TemplateFilterInput struct {
+	Template   *TemplateInput   `json:"template,omitempty"`
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type TemplateInput struct {
+	ID   *uint64 `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
+}
+
+type TemplateUpdateInput struct {
+	// 模板名稱
+	Name *string `json:"name,omitempty"`
+	// 模板內容
+	Content *string `json:"content,omitempty"`
+	// 模板描述
+	Description *string `json:"description,omitempty"`
 }
 
 type User struct {
@@ -417,6 +1464,19 @@ type User struct {
 type UserAuth struct {
 	Token     string `json:"token"`
 	DeviceUID string `json:"deviceUID"`
+}
+
+type UserDepositInfo struct {
+	ID              uint64    `json:"id"`
+	UserID          uint64    `json:"userID"`
+	BankName        string    `json:"bankName"`
+	BankBranch      string    `json:"bankBranch"`
+	BankAccount     string    `json:"bankAccount"`
+	BankAccountName string    `json:"bankAccountName"`
+	CreatedAt       time.Time `json:"createdAt"`
+	UpdatedAt       time.Time `json:"updatedAt"`
+	CreateUserID    uint64    `json:"createUserID"`
+	UpdateUserID    uint64    `json:"updateUserID"`
 }
 
 type UserFilterInput struct {
@@ -516,6 +1576,16 @@ type UserRoleUpdateInput struct {
 	RoleID *uint64 `json:"roleID,omitempty"`
 }
 
+type UserScore struct {
+	ID           uint64          `json:"id"`
+	UserID       uint64          `json:"userID"`
+	Score        decimal.Decimal `json:"score"`
+	CreatedAt    time.Time       `json:"createdAt"`
+	UpdatedAt    time.Time       `json:"updatedAt"`
+	CreateUserID uint64          `json:"createUserID"`
+	UpdateUserID uint64          `json:"updateUserID"`
+}
+
 type UserTag struct {
 	// id
 	ID           uint64    `json:"id"`
@@ -600,6 +1670,140 @@ type UserWhitelistInput struct {
 
 type UserWhitelistUpdateInput struct {
 	IPAddress *string `json:"ipAddress,omitempty"`
+}
+
+type UserWithdrawInfo struct {
+	ID              uint64    `json:"id"`
+	UserID          uint64    `json:"userID"`
+	BankName        string    `json:"bankName"`
+	BankBranch      string    `json:"bankBranch"`
+	BankAccount     string    `json:"bankAccount"`
+	BankAccountName string    `json:"bankAccountName"`
+	CreatedAt       time.Time `json:"createdAt"`
+	UpdatedAt       time.Time `json:"updatedAt"`
+	CreateUserID    uint64    `json:"createUserID"`
+	UpdateUserID    uint64    `json:"updateUserID"`
+}
+
+type VipClaimLog struct {
+	// 領取日誌ID
+	ID uint64 `json:"id"`
+	// 用戶ID
+	UserID uint64 `json:"userID"`
+	// VIP等級ID
+	VipLevelID uint64 `json:"vipLevelID"`
+	// 領取時間
+	ClaimAt time.Time `json:"claimAt"`
+	// 創建時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+type VipClaimLogFilterInput struct {
+	// 領取日誌
+	VipClaimLog *VipClaimLogInput `json:"vipClaimLog,omitempty"`
+	BaseFilter  *BaseFilterInput  `json:"baseFilter,omitempty"`
+}
+
+type VipClaimLogInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 用戶ID
+	UserID *uint64 `json:"userID,omitempty"`
+	// VIP等級
+	VipLevel *uint64 `json:"vipLevel,omitempty"`
+	// 領取時間
+	ClaimTime *time.Time `json:"claimTime,omitempty"`
+}
+
+type VipLevel struct {
+	// VIP等級ID
+	ID uint64 `json:"id"`
+	// VIP等級名稱
+	Name string `json:"name"`
+	// VIP等級描述
+	Description string `json:"description"`
+	// VIP等級圖標
+	Icon *string `json:"icon,omitempty"`
+	// VIP等級排序
+	Sort *uint64 `json:"sort,omitempty"`
+	// 創建時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+type VipLevelCreateInput struct {
+	// VIP等級
+	Level uint64 `json:"level"`
+	// VIP等級名稱
+	Name string `json:"name"`
+	// VIP等級描述
+	Description *string `json:"description,omitempty"`
+	// VIP等級圖標
+	Icon *string `json:"icon,omitempty"`
+	// VIP等級排序
+	Sort *uint64 `json:"sort,omitempty"`
+}
+
+type VipLevelFilterInput struct {
+	// VIP等級
+	VipLevel   *VipLevelInput   `json:"vipLevel,omitempty"`
+	BaseFilter *BaseFilterInput `json:"baseFilter,omitempty"`
+}
+
+type VipLevelInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// VIP等級
+	Level *uint64 `json:"level,omitempty"`
+	// VIP等級名稱
+	Name *string `json:"name,omitempty"`
+}
+
+type VipLevelUpdateInput struct {
+	// VIP等級
+	Level *uint64 `json:"level,omitempty"`
+	// VIP等級名稱
+	Name *string `json:"name,omitempty"`
+	// VIP等級描述
+	Description *string `json:"description,omitempty"`
+	// VIP等級圖標
+	Icon *string `json:"icon,omitempty"`
+	// VIP等級排序
+	Sort *uint64 `json:"sort,omitempty"`
+}
+
+type VipUpgradeLog struct {
+	// 升級日誌ID
+	ID uint64 `json:"id"`
+	// 用戶ID
+	UserID uint64 `json:"userID"`
+	// VIP等級ID
+	VipLevelID uint64 `json:"vipLevelID"`
+	// 升級時間
+	UpgradeAt time.Time `json:"upgradeAt"`
+	// 創建時間
+	CreatedAt time.Time `json:"createdAt"`
+	// 更新時間
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+type VipUpgradeLogFilterInput struct {
+	// 升級日誌
+	VipUpgradeLog *VipUpgradeLogInput `json:"vipUpgradeLog,omitempty"`
+	BaseFilter    *BaseFilterInput    `json:"baseFilter,omitempty"`
+}
+
+type VipUpgradeLogInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 用戶ID
+	UserID *uint64 `json:"userID,omitempty"`
+	// 升級前VIP等級
+	VipLevelFrom *uint64 `json:"vipLevelFrom,omitempty"`
+	// 升級後VIP等級
+	VipLevelTo *uint64 `json:"vipLevelTo,omitempty"`
+	// 升級時間
+	UpgradeTime *time.Time `json:"upgradeTime,omitempty"`
 }
 
 type AccountType string
@@ -713,6 +1917,7 @@ func (e DeviceOs) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+// 更多資訊類型
 type MoreInformationType string
 
 const (

@@ -1,9 +1,33 @@
 extend type Query {
-
 	"""黑名單IP"""
 	getHostsDeny(filter: HostsDenyFilterInput!): HostsDeny!
 	"""黑名單IP清單"""
 	listHostsDeny(filter: HostsDenyFilterInput, pagination:PaginationInput): ListHostsDenyResp!
+
+	"""模板列表"""
+	listTemplate(filter: TemplateFilterInput!, pagination: PaginationInput): ListTemplateResp!
+
+	"""審計日誌"""
+	listAuditLog(filter: AuditLogFilterInput!, pagination: PaginationInput): ListAuditLogResp!
+
+	"""標籤"""
+	getTag(filter: TagFilterInput!): Tag!
+	"""標籤列表"""
+	listTag(filter: TagFilterInput!, pagination: PaginationInput): ListTagResp!
+
+	"""安全事件列表"""
+    listSecurityEvent(filter: SecurityEventFilterInput!, pagination: PaginationInput): ListSecurityEventResp!
+
+	""""短信管理"""
+	getSmsConfig: SmsConfig!
+
+	"""短信發送紀錄"""
+	listSmsRecord(filter: SmsRecordFilterInput!, pagination: PaginationInput): ListSmsRecordResp!
+
+	"""Email管理"""
+	getEmailConfig: EmailConfig!
+	"""Email發送紀錄"""
+	listEmailRecord(filter: EmailRecordFilterInput!, pagination: PaginationInput): ListEmailRecordResp!
 }
 
 extend type Mutation {
@@ -13,4 +37,31 @@ extend type Mutation {
 	updateHostsDeny(filter: HostsDenyFilterInput!, in: HostsDenyUpdateInput!): HostsDeny!
 	"""刪除黑名單IP"""
 	deleteHostsDeny(filter: HostsDenyFilterInput!): Uint64!
+
+	"""短信設置"""
+	configSms(in: SmsConfigInput!): Uint64!
+
+	"""Email設置"""
+	configEmail(in: EmailConfigInput!): Uint64!
+
+	"""新增模板"""
+	createTemplate(in: TemplateCreateInput!): Uint64!
+	"""更新模板"""
+	updateTemplate(filter: TemplateFilterInput!, in: TemplateUpdateInput!): Uint64!
+	"""刪除模板"""
+	deleteTemplate(filter: TemplateFilterInput!): Uint64!
+
+	"""新增標籤"""
+	createTag(in: TagCreateInput!): Uint64!
+	"""更新標籤"""
+	updateTag(filter: TagFilterInput!, in: TagUpdateInput!): Uint64!
+	"""刪除標籤"""
+	deleteTag(filter: TagFilterInput!): Uint64!
+
+	"""新增安全事件"""
+    createSecurityEvent(in: SecurityEventCreateInput!): Uint64!
+    """更新安全事件"""
+    updateSecurityEvent(filter: SecurityEventFilterInput!, in: SecurityEventUpdateInput!): Uint64!
+    """刪除安全事件"""
+    deleteSecurityEvent(filter: SecurityEventFilterInput!): Uint64!
 }

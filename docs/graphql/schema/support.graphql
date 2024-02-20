@@ -1,3 +1,29 @@
+# 檔案
+"""檔案資訊"""
+type FileInfo {
+	fileName: String!
+	uploadURL: String!
+}
+
+type CreateUploadURLResp {
+	files: [FileInfo]!
+}
+
+"""更多資訊類型"""
+enum MoreInformationType {
+	Unknown
+	HTML
+	URL
+}
+
+# 黑名單
+
+"""黑名單列表"""
+type ListHostsDenyResp {
+	hostsDenys: [HostsDeny!]!
+	meta: Meta!
+}
+
 """黑名單系統"""
 type HostsDeny {
 	"""id"""
@@ -16,4 +42,173 @@ type HostsDeny {
 	updatedAt: Timestamp!
 	"""更新者"""
 	updateUserID: Uint64!
+}
+
+
+# 審計日誌
+"""審計日誌查詢"""
+type ListAuditLogResp {
+	auditLogs: [AuditLog!]!
+	meta: Meta!
+}
+"""審計日誌"""
+type AuditLog {
+	id: Uint64!
+	userID: Uint64!
+	method: String!
+	requestInput: String!
+	createdAt: Timestamp!
+}
+
+# 標籤
+"""標籤列表"""
+type ListTagResp {
+	tags: [Tag!]!
+	meta: Meta!
+}
+
+"""標籤"""
+type Tag {
+	"""id"""
+	id: Uint64!
+	name: String!
+	"""色碼 # 000000 """
+	RGBHex: String!
+	"""是否啟用"""
+	isEnable: YesNo!
+	createdAt: Timestamp!
+	updatedAt: Timestamp!
+	createUserID: Uint64!
+	updateUserID: Uint64!
+}
+
+
+
+"""模板列表"""
+type ListTemplateResp {
+	templates: [Template!]!
+	meta: Meta!
+}
+
+"""模板"""
+type Template {
+	id: Uint64!
+	"""模板名稱"""
+	name: String!
+	"""模板內容"""
+	content: String!
+	"""建立時間"""
+	createdAt: Timestamp!
+	"""更新時間"""
+	updatedAt: Timestamp!
+}
+
+# 安全
+"""安全設定列表"""
+type ListSecurityEventResp {
+	securityEvents: [SecurityEvent!]!
+	meta: Meta!
+}
+
+"""安全設定"""
+type SecurityEvent {
+	"""id"""
+	id: Uint64!
+	"""事件名稱"""
+	name: String!
+	"""事件描述"""
+	description: String!
+	"""是否啟用"""
+	isEnable: YesNo!
+	"""建立時間"""
+	createdAt: Timestamp!
+	"""更新時間"""
+	updatedAt: Timestamp!
+	"""建立者"""
+	createUserID: Uint64!
+	"""更新者"""
+	updateUserID: Uint64!
+}
+
+# config 
+type SmsConfig {
+	"""短信發送帳號"""
+	account: String!
+	"""短信發送網址"""
+	url: String!
+}
+
+type EmailConfig {
+	"""SMTP Server"""
+	smtpServer: String!
+	"""SMTP Port"""
+	smtpPort: Int64!
+	"""SMTP User"""
+	smtpUser: String!
+	"""SMTP From"""
+	smtpFrom: String!
+	"""SMTP From Name"""
+	smtpFromName: String!
+	"""SMTP SSL"""
+	smtpSSL: YesNo!
+}
+
+type ListSmsRecordResp {
+	smsRecords: [SmsRecord!]!
+	meta: Meta!
+}
+
+type SmsRecord {
+	"""id"""
+	id: Uint64!
+	"""短信收信電話"""
+	phoneNumber: String!
+	"""短信內容"""
+	content: String!
+	"""短信發送時間"""
+	sendTime: Timestamp!
+	# """短信發送狀態"""
+	# status: SmsRecordStatus!
+	"""短信發送帳號"""
+	account: String!
+	"""短信發送網址"""
+	url: String!
+	"""建立時間"""
+	createdAt: Timestamp!
+	"""建立者"""
+	createUserID: Uint64!
+}
+
+type ListEmailRecordResp {
+	emailRecords: [EmailRecord!]!
+	meta: Meta!
+}
+
+type EmailRecord {
+	"""id"""
+	id: Uint64!
+	"""Email收信地址"""
+	email: String!
+	"""Email主旨"""
+	subject: String!
+	"""Email內容"""
+	content: String!
+	"""Email發送時間"""
+	sendTime: Timestamp!
+	"""SMTP Server"""
+	smtpServer: String!
+	"""SMTP Port"""
+	smtpPort: Int64!
+	"""SMTP User"""
+	smtpUser: String!
+	"""SMTP From"""
+	smtpFrom: String!
+	"""SMTP From Name"""
+	smtpFromName: String!
+	"""SMTP SSL"""
+	smtpSSL: YesNo!
+	"""建立時間"""
+	createdAt: Timestamp!
+	"""建立者"""
+	createUserID: Uint64!
 }

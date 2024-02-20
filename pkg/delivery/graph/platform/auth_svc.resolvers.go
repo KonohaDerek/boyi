@@ -66,14 +66,6 @@ func (r *mutationResolver) Logout(ctx context.Context) (uint64, error) {
 	return 1, nil
 }
 
-// FlushAllCache is the resolver for the FlushAllCache field.
-func (r *mutationResolver) FlushAllCache(ctx context.Context) (uint64, error) {
-	if err := r.authSvc.FlushAllCache(ctx); err != nil {
-		return 0, err
-	}
-	return 1, nil
-}
-
 // RefreshToken is the resolver for the RefreshToken field.
 func (r *mutationResolver) RefreshToken(ctx context.Context) (*view.RefreshTokenResp, error) {
 	var (

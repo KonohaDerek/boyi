@@ -9,10 +9,11 @@ import (
 	"boyi/pkg/Infra/qqzeng_ip"
 	"boyi/pkg/Infra/redis"
 	"boyi/pkg/Infra/storage"
+	graphApp "boyi/pkg/delivery/graph/app"
 	graphPlatform "boyi/pkg/delivery/graph/platform"
 	"boyi/pkg/delivery/redis_worker"
 	"boyi/pkg/delivery/restful"
-	restfulPlatform "boyi/pkg/delivery/restful/backend"
+	restfulPlatform "boyi/pkg/delivery/restful/platform"
 	"boyi/pkg/hub"
 	"boyi/pkg/model/dto"
 	"boyi/pkg/repository"
@@ -65,10 +66,13 @@ var RepositoryModule = fx.Options(
 )
 
 var (
+	platform   bool // 後台
+	app        bool // 前台
 	migrateSQL bool
 )
 
 func init() {
+	ServerCmd.PersistentFlags().BoolVar(&app, "app", false, "for app stage")
 	ServerCmd.PersistentFlags().BoolVar(&migrateSQL, "migrate_sql", false, "migrate with sql file")
 }
 
@@ -91,7 +95,11 @@ func run(_ *cobra.Command, _ []string) {
 		hub.Module,
 	)
 
-	fxOption = append(fxOption, restfulPlatform.Module, graphPlatform.Module)
+	if app {
+		fxOption = append(fxOption, graphApp.Module)
+	} else {
+		fxOption = append(fxOption, restfulPlatform.Module, graphPlatform.Module)
+	}
 
 	app := fx.New(
 		fxOption...,

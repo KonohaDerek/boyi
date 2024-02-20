@@ -1,0 +1,23 @@
+type Event {
+    """活動ID"""
+    id: Uint64!
+    """活動名稱"""
+    name: String!
+    """活動描述"""
+    description: String!
+    # """活動類型"""
+    # type: EventType!
+    # """活動狀態"""
+    # status: EventStatus!
+    """活動開始時間"""
+    startTime: Timestamp!
+    """活動結束時間"""
+    endTime: Timestamp!
+    """活動備註"""
+    remark: String
+}
+
+type ListEventResp {
+    events: [Event!]!
+    meta: Meta!
+}

@@ -1,4 +1,4 @@
-package backend
+package platform
 
 import (
 	internalGin "boyi/pkg/Infra/gin"

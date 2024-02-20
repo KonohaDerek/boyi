@@ -1,4 +1,4 @@
-package backend
+package platform
 
 import (
 	"boyi/pkg/Infra/errors"

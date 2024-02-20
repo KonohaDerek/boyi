@@ -1,0 +1,16 @@
+extend type Query {
+    """活動列表"""
+    listEvent(filter: EventFilterInput!, pagination: PaginationInput): ListEventResp!
+
+    """歷史活動列表"""
+    listHistoryEvent(filter: EventFilterInput!, pagination: PaginationInput): ListEventResp!
+}
+
+extend type Mutation {
+    """新增活動"""
+    createEvent(in: EventCreateInput!): Uint64!
+    """更新活動"""
+    updateEvent(filter: EventFilterInput!, in: EventUpdateInput!): Uint64!
+    """刪除活動"""
+    deleteEvent(filter: EventFilterInput!): Uint64!
+}

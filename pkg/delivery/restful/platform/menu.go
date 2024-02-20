@@ -1,4 +1,4 @@
-package backend
+package platform
 
 import (
 	"boyi/internal/claims"

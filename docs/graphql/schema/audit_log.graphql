@@ -1,7 +1,0 @@
-type AuditLog {
-	id: Uint64!
-	userID: Uint64!
-	method: String!
-	requestInput: String!
-	createdAt: Timestamp!
-}

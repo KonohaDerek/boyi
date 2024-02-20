@@ -20,8 +20,3 @@ input RoleFilterInput {
 	role: RoleInput
 	baseFilter: BaseFilterInput
 }
-
-type ListRoleResp {
-	roles: [Role!]!
-	meta: Meta!
-}

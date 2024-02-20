@@ -1,0 +1,41 @@
+input GamePlayerFilterInput {
+    """遊戲玩家"""
+    gamePlayer: GamePlayerInput
+    """基本過濾條件"""
+    baseFilter: BaseFilterInput
+}
+
+input GamePlayerInput {
+    id: Uint64
+    """遊戲玩家名稱"""
+    name: String
+    """遊戲玩家帳號"""
+    account: String
+    """遊戲玩家備註"""
+    remark: String
+}
+
+input GameTransferRecordFilterInput {
+    """遊戲轉帳記錄"""
+    gameTransferRecord: GameTransferRecordInput
+    """基本過濾條件"""
+    baseFilter: BaseFilterInput
+}
+
+input GameTransferRecordInput {
+    id: Uint64
+    """遊戲玩家ID"""
+    gamePlayerId: Uint64
+    """遊戲ID"""
+    gameId: Uint64
+    """遊戲名稱"""
+    gameName: String
+    # """遊戲轉帳類型"""
+    # type: GameTransferType
+    # """遊戲轉帳狀態"""
+    # status: GameTransferStatus
+    """遊戲轉帳金額"""
+    amount: Decimal
+    """遊戲轉帳備註"""
+    remark: String
+}
