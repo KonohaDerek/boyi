@@ -10,6 +10,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt"
 )
 
 type IService interface {
@@ -34,6 +35,8 @@ type IAuthService interface {
 	RefreshToken(ctx context.Context, claims *claims.Claims) error
 	// GetToken 取得 Token
 	GetToken(ctx context.Context, token string) (string, error)
+	// 驗證 Token
+	JwtValidate(ctx context.Context, token string) (*jwt.Token, error)
 }
 
 type IUserService interface {

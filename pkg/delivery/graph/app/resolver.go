@@ -115,6 +115,9 @@ func SetResolver(logCfg *zlog.Config, engine *gin.Engine, cfg generated.Config, 
 	gqlSvc.AroundResponses(auditLogSvc.RecordAuditLogForGraphql)
 	gqlSvc.SetErrorPresenter(errors.GQLErrorPresenter)
 	gqlSvc.SetRecoverFunc(graph.GQLRecoverFunc)
+
+	// 加入jwt middleware
+	gqlSvc.Use(middleware.JWTMiddleware(authSvc))
 	// 加入封鎖IP判斷
 	gqlSvc.Use(middleware.HostDenyMiddleware(authSvc))
 	gqlSvc.Use(middleware.IPRecordMiddleware(redis))

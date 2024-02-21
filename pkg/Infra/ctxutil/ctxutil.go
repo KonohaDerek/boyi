@@ -103,3 +103,16 @@ func GetOriginFromContext(ctx context.Context) string {
 func ContextWithXOrigin(ctx context.Context, origin string) context.Context {
 	return context.WithValue(ctx, XOrigin, origin)
 }
+
+// ContextWithXRealIP returns a context.Context with given trace-id value.
+func ContextWithToken(ctx context.Context, token string) context.Context {
+	return context.WithValue(ctx, "Authorization", token)
+}
+
+func GetTokenFromContext(ctx context.Context) string {
+	v, ok := ctx.Value("Authorization").(string)
+	if !ok {
+		return ""
+	}
+	return v
+}

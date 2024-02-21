@@ -8,6 +8,7 @@ import (
 	"boyi/pkg/model/vo"
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/url"
 	"reflect"
 	"strings"
@@ -256,4 +257,13 @@ func (s *service) GetToken(ctx context.Context, token string) (string, error) {
 	}
 
 	return res, nil
+}
+
+func (s *service) JwtValidate(ctx context.Context, token string) (*jwt.Token, error) {
+	return jwt.ParseWithClaims(token, &authClaims{}, func(t *jwt.Token) (interface{}, error) {
+		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("there's a problem with the signing method")
+		}
+		return s.jwtConfig.SignKey, nil
+	})
 }

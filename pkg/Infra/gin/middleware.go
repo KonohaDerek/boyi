@@ -63,12 +63,13 @@ func NewRequestIDMiddleware() gin.HandlerFunc {
 		logger := log.With().Str("trace_id", traceID).Logger()
 		realIP := c.GetHeader(string(ctxutil.XRealIP))
 		realIPSplit := strings.Split(realIP, ",")
-
 		deviceID := c.GetHeader(DeviceID)
+		token := c.GetHeader("Authorization")
 
 		ctx := ctxutil.ContextWithXTraceID(c.Request.Context(), traceID)
 		ctx = ctxutil.ContextWithXUserAgent(ctx, c.Request.UserAgent())
 		ctx = ctxutil.ContextWithXDeviceID(ctx, deviceID)
+		ctx = ctxutil.ContextWithToken(ctx, token)
 		if len(realIPSplit) != 0 {
 			ctx = ctxutil.ContextWithXRealIP(ctx, realIPSplit[0])
 		}
