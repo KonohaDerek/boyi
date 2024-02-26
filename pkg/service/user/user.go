@@ -252,6 +252,7 @@ func (s *service) UpsertUserLoginInfo(ctx context.Context, userID uint64) error 
 	history := dto.UserLoginHistory{
 		UserID:    userID,
 		IPAddress: ctxutil.GetRealIPFromContext(ctx),
+		UserAgent: ctxutil.GetUserAgentFromContext(ctx),
 	}
 	if history.IPAddress != "" {
 		parser := s.ipRepo.Get(history.IPAddress)

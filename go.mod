@@ -7,6 +7,7 @@ require (
 	github.com/gorilla/websocket v1.5.0
 	github.com/jinzhu/now v1.1.5
 	github.com/mailru/easyjson v0.7.7
+	github.com/mileusna/useragent v1.3.4
 	github.com/redis/go-redis/v9 v9.4.0
 	github.com/shopspring/decimal v1.3.1
 	github.com/swaggo/files v1.0.1

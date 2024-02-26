@@ -10,6 +10,7 @@ import (
 	"context"
 
 	"boyi/pkg/infra/errors"
+	"boyi/pkg/infra/utils/hash"
 
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"gorm.io/gorm"
@@ -57,22 +58,20 @@ func InitAdmin(repo iface.IRepository, config *configuration.App) error {
 	if config == nil {
 		return nil
 	}
-	if err := repo.CreateOrUpdate(context.Background(),
+	pwd, _ := hash.HashPassword([]byte("admin"))
+	if err := repo.CreateIfNotExists(context.Background(),
 		nil,
 		&dto.User{
-			ID:          1,
-			AccountType: types.AccountType__System,
-			Username:    "test",
+			AccountType:     types.AccountType__Admin,
+			Username:        "admin",
+			Password:        string(pwd),
+			IsNeedChangePwd: common.YesNo__YES,
 		},
 		&option.UserWhereOption{
 			User: dto.User{
-				ID: 1,
+				Username: "admin",
 			},
-		},
-		&option.UserUpdateColumn{
-			AccountType: types.AccountType__System,
-			Username:    "test_update",
-		}); err != nil {
+		}); err != nil && !errors.Is(err, errors.ErrResourceAlreadyExists) {
 		return err
 	}
 	return nil
@@ -100,7 +99,7 @@ func InitDefaultRole(repo iface.IRepository, app *configuration.App) error {
 		},
 		&option.RoleWhereOption{
 			Role: dto.Role{
-				ID: dto.DefaultManagerRoleID,
+				Name: "预设管理员权限",
 			},
 		}); err != nil && !errors.Is(err, errors.ErrResourceAlreadyExists) {
 		return err
@@ -116,7 +115,7 @@ func InitDefaultRole(repo iface.IRepository, app *configuration.App) error {
 		},
 		&option.RoleWhereOption{
 			Role: dto.Role{
-				ID: dto.DefaultCSRoleID,
+				Name: "预设客服权限",
 			},
 		}); err != nil && !errors.Is(err, errors.ErrResourceAlreadyExists) {
 		return err

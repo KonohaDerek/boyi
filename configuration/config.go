@@ -96,8 +96,9 @@ type SchedulerConfig struct {
 }
 
 type Jwt struct {
-	Issuer         string `mapstructure:"issuer"`
-	Audience       string `mapstructure:"audience"`
-	SignKey        string `mapstructure:"sign_key"`
-	ExpiresMinutes int16  `mapstructure:"expires_minutes"`
+	Issuer        string `mapstructure:"issuer"`
+	Audience      string `mapstructure:"audience"`
+	Secret        string `mapstructure:"secret"`
+	Expire        int16  `mapstructure:"expire"`
+	RefreshExpire int16  `mapstructure:"refresh_expire"`
 }

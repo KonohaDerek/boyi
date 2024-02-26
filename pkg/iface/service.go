@@ -34,7 +34,7 @@ type IAuthService interface {
 	// RefreshToken 刷新 Token
 	RefreshToken(ctx context.Context, claims *claims.Claims) error
 	// GetToken 取得 Token
-	GetToken(ctx context.Context, token string) (string, error)
+	GetToken(ctx context.Context, token string, claims *claims.Claims) error
 	// 驗證 Token
 	JwtValidate(ctx context.Context, token string) (*jwt.Token, error)
 }

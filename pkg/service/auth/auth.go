@@ -7,7 +7,6 @@ import (
 	"boyi/pkg/model/option/common"
 	"boyi/pkg/model/vo"
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/url"
 	"reflect"
@@ -72,7 +71,7 @@ func (s *service) Login(ctx context.Context, in vo.LoginReq) (claims.Claims, err
 	var (
 		user      dto.User
 		queryUser option.UserWhereOption
-		claims    claims.Claims
+		_claims   claims.Claims
 		err       error
 	)
 
@@ -80,32 +79,39 @@ func (s *service) Login(ctx context.Context, in vo.LoginReq) (claims.Claims, err
 	queryUser.LoadRoles = true
 	queryUser.LoadRolesMenu = true
 	if user, err = s.userSvc.GetUser(ctx, &queryUser); err != nil && !errors.Is(err, errors.ErrResourceNotFound) {
-		return claims, err
+		return _claims, err
 	}
 
 	if errors.Is(err, errors.ErrResourceNotFound) {
-		return claims, errors.WithStack(errors.ErrUsernameOrPasswordUnavailable)
+		return _claims, errors.WithStack(errors.ErrUsernameOrPasswordUnavailable)
 	}
 
 	if err := hash.CheckPasswordHash([]byte(user.Password), []byte(in.Password)); err != nil {
-		return claims, errors.WithStack(errors.ErrUsernameOrPasswordUnavailable)
+		return _claims, errors.WithStack(errors.ErrUsernameOrPasswordUnavailable)
 	}
 
 	err = s.userSvc.UpsertUserLoginInfo(ctx, user.ID)
 	if err != nil {
-		return claims, err
+		return _claims, err
+	}
+
+	_claims = claims.Claims{
+		Id:          user.ID,
+		AccountType: uint64(user.AccountType),
+		Username:    user.Username,
+		AliasName:   user.AliasName,
 	}
 
 	// 產生 jwt
-	if err := s.RefreshToken(ctx, &claims); err != nil {
-		return claims, err
+	if err := s.RefreshToken(ctx, &_claims); err != nil {
+		return _claims, err
 	}
-	return claims, nil
+	return _claims, nil
 }
 
 func (s *service) CreateClaimsCache(ctx context.Context, cert *claims.Claims, token string) error {
 	// set jwt to cache
-	if err := s.cacheRepo.SetEX(ctx, token, cert, time.Duration(s.jwtConfig.ExpiresMinutes)*time.Minute); err != nil {
+	if err := s.cacheRepo.SetEX(ctx, token, cert.Marshal(), time.Duration(s.jwtConfig.Expire)*time.Minute); err != nil {
 		return errors.ConvertRedisError(err)
 	}
 	return nil
@@ -142,15 +148,8 @@ func (s *service) SetClaims() gin.HandlerFunc {
 			return
 		}
 
-		resp, err := s.GetToken(ctx, tmp[1])
-		if err != nil {
-			c.Next()
-			return
-		}
-
 		var _claims claims.Claims
-
-		if err := json.Unmarshal([]byte(resp), &c); err != nil {
+		if err := s.GetToken(ctx, tmp[1], &_claims); err != nil {
 			c.Next()
 			return
 		}
@@ -184,15 +183,10 @@ func (s *service) GetClaimsByToken(ctx context.Context, token string) (claims.Cl
 	var (
 		c claims.Claims
 	)
-	resp, err := s.GetToken(ctx, token)
-	if err != nil {
+
+	if err := s.GetToken(ctx, token, &c); err != nil {
 		return c, err
 	}
-
-	if err := json.Unmarshal([]byte(resp), &c); err != nil {
-		return c, errors.WithStack(errors.ErrInternalError)
-	}
-
 	return c, nil
 }
 
@@ -210,7 +204,7 @@ func (s *service) RefreshToken(ctx context.Context, claims *claims.Claims) error
 
 	// 使用 golang-jwt 重新產生 token
 	// 重新產生 jwt
-	expiresAt := time.Now().Add(time.Duration(s.jwtConfig.ExpiresMinutes) * time.Minute).Unix()
+	expiresAt := time.Now().Add(time.Duration(s.jwtConfig.Expire) * time.Minute).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS512, authClaims{
 		StandardClaims: jwt.StandardClaims{
 			Subject:   claims.Username,
@@ -218,7 +212,7 @@ func (s *service) RefreshToken(ctx context.Context, claims *claims.Claims) error
 		},
 		UserID: claims.Id,
 	})
-	tokenString, err := token.SignedString(s.jwtConfig.SignKey)
+	tokenString, err := token.SignedString([]byte(s.jwtConfig.Secret))
 	if err != nil {
 		return err
 	}
@@ -247,16 +241,16 @@ func (s *service) ValidateHostDeny(ctx context.Context) error {
 	return nil
 }
 
-func (s *service) GetToken(ctx context.Context, token string) (string, error) {
+func (s *service) GetToken(ctx context.Context, token string, _claims *claims.Claims) error {
 	res, err := s.cacheRepo.Get(ctx, token)
 	if err != nil && !errors.Is(err, redis.Nil) {
-		return "", errors.ConvertRedisError(err)
+		return errors.ConvertRedisError(err)
 	}
 	if errors.Is(err, redis.Nil) {
-		return "", errors.Wrapf(errors.ErrTokenUnavailable, "not found key")
+		return errors.Wrapf(errors.ErrTokenUnavailable, "not found key")
 	}
 
-	return res, nil
+	return _claims.Unmarshal(res)
 }
 
 func (s *service) JwtValidate(ctx context.Context, token string) (*jwt.Token, error) {
@@ -264,6 +258,6 @@ func (s *service) JwtValidate(ctx context.Context, token string) (*jwt.Token, er
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("there's a problem with the signing method")
 		}
-		return s.jwtConfig.SignKey, nil
+		return s.jwtConfig.Secret, nil
 	})
 }

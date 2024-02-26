@@ -2,7 +2,10 @@ package ctxutil
 
 import (
 	"context"
+	"fmt"
+	"strings"
 
+	"github.com/mileusna/useragent"
 	"github.com/rs/xid"
 )
 
@@ -115,4 +118,20 @@ func GetTokenFromContext(ctx context.Context) string {
 		return ""
 	}
 	return v
+}
+
+func GetDeviceOSFronContext(ctx context.Context) string {
+	userAgent := GetUserAgentFromContext(ctx)
+	if userAgent == "" {
+		return ""
+	}
+
+	ua := useragent.Parse(userAgent)
+	fmt.Println()
+	fmt.Println(ua.String)
+	fmt.Println(strings.Repeat("=", len(ua.String)))
+	fmt.Println("Name:", ua.Name, "v", ua.Version)
+	fmt.Println("OS:", ua.OS, "v", ua.OSVersion)
+	fmt.Println("Device:", ua.Device)
+	return fmt.Sprintf("%s %s, %s", ua.OS, ua.OSVersion, ua.Device)
 }

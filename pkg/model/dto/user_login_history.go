@@ -16,6 +16,7 @@ type UserLoginHistory struct {
 	LogoutAt           *time.Time      `gorm:"type:TIMESTAMP"`
 	DeviceUID          string          `gorm:"type:varchar(100)"`
 	Token              string          `gorm:"type:varchar(500)"`
+	UserAgent          string          `gorm:"type:varchar(500)"`
 }
 
 func (UserLoginHistory) TableName() string {

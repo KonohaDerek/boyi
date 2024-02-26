@@ -7,6 +7,7 @@ package platform
 import (
 	"boyi/internal/claims"
 	"boyi/pkg/delivery/graph/view"
+	"boyi/pkg/infra/ctxutil"
 	"boyi/pkg/infra/storage"
 	"boyi/pkg/model/dto"
 	"boyi/pkg/model/option"
@@ -47,7 +48,9 @@ func (r *mutationResolver) Login(ctx context.Context, in view.LoginReqInput) (*v
 		return nil, err
 	}
 	resp = view.LoginResp{
-		Token: result.Token,
+		Token:     result.Token,
+		UserAgent: ctxutil.GetUserAgentFromContext(ctx),
+		DeviceUID: ctxutil.GetDeviceOSFronContext(ctx),
 	}
 	return resp.FromClaims(result), nil
 }

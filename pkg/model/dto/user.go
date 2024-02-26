@@ -3,6 +3,7 @@ package dto
 import (
 	"boyi/internal/claims"
 	"boyi/pkg/model/enums/types"
+	"boyi/pkg/model/option/common"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -21,29 +22,30 @@ const (
 
 // User admin 管理员
 type User struct {
-	ID           uint64                `gorm:"autoIncrement;primary_key"`                                  // id
-	AccountType  types.AccountType     `gorm:"type:tinyint(4);DEFAULT:0;NOT NULL;idx_users_account_type"`  // 帳號類型
-	Status       types.UserStatus      `gorm:"type:tinyint(4);DEFAULT:1;NOT NULL;"`                        // 狀態
-	Username     string                `gorm:"type:varchar(100);DEFAULT:'';NOT NULL;uniqueIndex:udx_name"` // 用户名
-	AliasName    string                `gorm:"type:varchar(100);DEFAULT:''"`                               // 別名（聊天室顯示用）
-	Email        string                `gorm:"type:varchar(255);DEFAULT:''"`                               // 電子郵件
-	Area         string                `gorm:"type:varchar(100);DEFAULT:''"`                               // 居住地區
-	Notes        string                `gorm:"type:varchar(100);DEFAULT:''"`                               // 備註
-	AvatarKey    FileKey               `gorm:"type:varchar(255);NOT NULL"`                                 // 頭像 s3 的 key
-	LastLoginAt  time.Time             `gorm:"type:TIMESTAMP;DEFAULT:current_timestamp"`                   // 最後登陸時間
-	LastLoginIP  string                `gorm:"type:varchar(40);"`                                          // 最後登陸 IP
-	CreatedAt    time.Time             `gorm:"type:TIMESTAMP;NOT NULL;"`                                   // 创建时间
-	UpdatedAt    time.Time             `gorm:"type:TIMESTAMP;NOT NULL;"`                                   // 更新时间
-	DeletedAt    soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name"`
-	UpdateUserID uint64                `gorm:""`             // 更新人
-	CreateUserID uint64                `gorm:"type:int(11)"` // 建立者ID
+	ID              uint64                `gorm:"autoIncrement;primary_key"`                                   // id
+	AccountType     types.AccountType     `gorm:"type:tinyint(4);DEFAULT:0;NOT NULL;idx_users_account_type"`   // 帳號類型
+	Status          types.UserStatus      `gorm:"type:tinyint(4);DEFAULT:1;NOT NULL;"`                         // 狀態
+	Username        string                `gorm:"type:nvarchar(100);DEFAULT:'';NOT NULL;uniqueIndex:udx_name"` // 用户名
+	Password        string                `gorm:"type:nvarchar(255);NOT NULL"`                                 // 密碼
+	AliasName       string                `gorm:"type:nvarchar(100);DEFAULT:''"`                               // 別名（聊天室顯示用）
+	Email           string                `gorm:"type:nvarchar(255);DEFAULT:''"`                               // 電子郵件
+	Area            string                `gorm:"type:nvarchar(100);DEFAULT:''"`                               // 居住地區
+	Notes           string                `gorm:"type:nvarchar(100);DEFAULT:''"`                               // 備註
+	IsNeedChangePwd common.YesNo          `gorm:"type:tinyint;NOT NULL;DEFAULT:2"`                             // 是否需要修改密碼
+	AvatarKey       FileKey               `gorm:"type:nvarchar(255);NOT NULL"`                                 // 頭像 s3 的 key
+	LastLoginAt     time.Time             `gorm:"type:TIMESTAMP;DEFAULT:current_timestamp"`                    // 最後登陸時間
+	LastLoginIP     string                `gorm:"type:varchar(40);"`                                           // 最後登陸 IP
+	CreatedAt       time.Time             `gorm:"type:TIMESTAMP;NOT NULL;"`                                    // 创建时间
+	UpdatedAt       time.Time             `gorm:"type:TIMESTAMP;NOT NULL;"`                                    // 更新时间
+	DeletedAt       soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name"`
+	UpdateUserID    uint64                `gorm:""`             // 更新人
+	CreateUserID    uint64                `gorm:"type:int(11)"` // 建立者ID
 
 	Roles      []UserRole      `gorm:"PRELOAD:false;foreignKey:UserID"`
 	Whitelists []UserWhitelist `gorm:"PRELOAD:false;foreignKey:UserID"`
 	Tags       []UserTag       `gorm:"PRELOAD:false;foreignKey:UserID" msgpack:"-"`
 
-	Password string    `gorm:"-" msgpack:"-"`
-	Menu     Authority `gorm:"-" msgpack:"-"` // 該 User 擁有的 menu tree
+	Menu Authority `gorm:"-" msgpack:"-"` // 該 User 擁有的 menu tree
 }
 
 // TableName return database table name

@@ -4,6 +4,8 @@ import (
 	"boyi/pkg/infra/errors"
 	"boyi/pkg/model/enums/types"
 	"context"
+
+	"gopkg.in/vmihailenco/msgpack.v2"
 )
 
 // Claims
@@ -52,4 +54,16 @@ func (c Claims) VerifyRole(keys ...string) error {
 	}
 
 	return errors.NewWithMessagef(errors.ErrNotAllowed, "role not allowed, role: %+v", keys)
+}
+
+func (c Claims) Marshal() []byte {
+	b, _ := msgpack.Marshal(c)
+	return b
+}
+
+func (c *Claims) Unmarshal(s string) error {
+	if err := msgpack.Unmarshal([]byte(s), &c); err != nil {
+		return err
+	}
+	return nil
 }
