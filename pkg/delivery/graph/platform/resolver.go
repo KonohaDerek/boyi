@@ -37,8 +37,8 @@ type Resolver struct {
 	authSvc     iface.IAuthService
 	auditLogSvc iface.IAuditLogService
 	supportSvc  iface.ISupportService
-
-	cacheRepo iface.ICacheRepository
+	merchantSvc iface.IMercahntService
+	cacheRepo   iface.ICacheRepository
 
 	hub *hub.Hub
 }
@@ -53,6 +53,7 @@ type Params struct {
 	AuthSvc     iface.IAuthService
 	AuditLogSvc iface.IAuditLogService
 	SupportSvc  iface.ISupportService
+	MerchantSvc iface.IMercahntService
 
 	CacheRepo iface.ICacheRepository
 
@@ -80,6 +81,7 @@ func NewResolver(p Params) *Resolver {
 		hub:         p.HubSvc,
 		supportSvc:  p.SupportSvc,
 		cacheRepo:   p.CacheRepo,
+		merchantSvc: p.MerchantSvc,
 	}
 }
 
@@ -126,7 +128,7 @@ func SetResolver(logCfg *zlog.Config, engine *gin.Engine, cfg generated.Config, 
 	gqlSvc.SetRecoverFunc(graph.GQLRecoverFunc)
 	// 加入jwt middleware
 	gqlSvc.Use(middleware.JWTMiddleware(authSvc))
-	
+
 	// 加入封鎖IP判斷
 	gqlSvc.Use(middleware.HostDenyMiddleware(authSvc))
 	gqlSvc.Use(middleware.IPRecordMiddleware(redis))

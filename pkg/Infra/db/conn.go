@@ -137,3 +137,58 @@ func SetupDatabase(database *Database) (*gorm.DB, error) {
 
 	return conn, nil
 }
+
+func SetupDatabaseConnectionString(dsn string, databaseType DatabaseType) (*gorm.DB, error) {
+	bo := backoff.NewExponentialBackOff()
+	bo.MaxElapsedTime = time.Duration(180) * time.Second
+	var dialector gorm.Dialector
+	switch databaseType {
+	case MySQL:
+		dialector = mysql.Open(dsn)
+	case Postgres:
+		dialector = postgres.Open(dsn)
+	case SQLite:
+		dialector = sqlite.Open(dsn)
+	default:
+		return nil, errors.Wrapf(errors.ErrInternalError, "not support db type")
+	}
+	log.Debug().Msgf("main: database connection string: %s", dsn)
+	colorful := false
+	logLevel := logger.Silent
+
+	newLogger := NewLogger(logger.Config{
+		SlowThreshold: time.Second, // Slow SQL threshold
+		LogLevel:      logLevel,    // Log level
+		Colorful:      colorful,    // Disable color
+	})
+
+	var conn *gorm.DB
+	err := backoff.Retry(func() error {
+		db, err := gorm.Open(dialector, &gorm.Config{
+			Logger:      newLogger,
+			PrepareStmt: true,
+		})
+		if err != nil {
+			log.Error().Msgf("Fail to open conn, err: %+v", err)
+			return err
+		}
+		conn = db
+
+		sqlDB, err := conn.DB()
+		if err != nil {
+			log.Error().Msgf("Fail to get DB, err: %+v", err)
+			return err
+		}
+
+		err = sqlDB.Ping()
+		return err
+	}, bo)
+
+	if err != nil {
+		log.Error().Msgf("main: database connect err: %s", err.Error())
+		return nil, err
+	}
+	log.Info().Msgf("database ping success")
+
+	return conn, nil
+}

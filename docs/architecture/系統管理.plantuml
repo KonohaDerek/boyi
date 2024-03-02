@@ -1,0 +1,56 @@
+@startuml 系統管理
+participant 用户
+box "server"
+
+participant endpoint
+participant service
+participant middleware
+participant mysql
+participant redis
+participant handler
+end box
+
+activate handler #FFBBBB
+用户 -> endpoint : 請求註冊 (POST /register)
+endpoint -> middleware : 驗證請求 (authMiddleware)
+middleware -> service : 註冊 (authService.register)
+service -> mysql: 新增用戶 (INSERT INTO users)
+mysql -> service: 新增成功 (INSERT INTO users Completed)
+service -> endpoint -> 用户: 註冊成功並登入 (201 Created)
+service -> handler: 通知新註冊 (onRegistered Event)
+handler -> redis: 紀錄今日註冊及更新會員總數 (SET today_registered, SET total_registered)
+deactivate handler
+
+activate handler #FFBBBB
+用戶 -> endpoint : 請求充值 (POST /deposit)
+endpoint -> middleware: 驗證請求 (depositMiddleware)
+middleware -> service: 充值 (depositService.deposit)
+service -> mysql: 更新用戶餘額 (UPDATE users SET balance)
+mysql -> service: 更新成功 (UPDATE users Completed)
+service -> endpoint -> 用戶: 充值成功 (200 Created)
+service -> handler: 通知充值 (onDeposited Event)
+handler -> redis: 紀錄今日充值及更新總充值 (SET today_deposit, SET total_deposit)
+deactivate handler
+
+activate handler #FFBBBB
+用戶 -> endpoint : 請求提現 (POST /withdraw)
+endpoint -> middleware: 驗證請求 (withdrawMiddleware)
+middleware -> service: 提現 (withdrawService.withdraw)
+service -> mysql: 更新用戶餘額 (UPDATE users SET balance)
+mysql -> service: 更新成功 (UPDATE users Completed)
+service -> endpoint -> 用戶: 提現成功 (200 Created)
+service -> handler: 通知提現 (onWithdrawn Event)
+handler -> redis: 紀錄今日提現及更新總提現 (SET today_withdraw, SET total_withdraw)
+deactivate handler
+
+activate handler #FFBBBB
+用戶 -> endpoint : 請求投注 (POST /bet)
+endpoint -> middleware: 驗證請求 (betMiddleware)
+middleware -> service: 投注 (betService.bet)
+service -> mysql: 更新用戶餘額 (UPDATE users SET balance)
+mysql -> service: 更新成功 (UPDATE users Completed)
+service -> endpoint -> 用戶: 投注成功 (200 Created)
+service -> handler: 通知投注 (onBet Event)
+handler -> redis: 紀錄今日投注及更新總投注 (SET today_bet, SET total_bet)
+deactivate handler
+@enduml

@@ -8,7 +8,10 @@ import (
 	"boyi/pkg/model/option"
 	"boyi/pkg/model/option/common"
 	"context"
+	"fmt"
+	"time"
 
+	"boyi/pkg/infra/db"
 	"boyi/pkg/infra/errors"
 	"boyi/pkg/infra/utils/hash"
 
@@ -36,6 +39,8 @@ func Migration(repo iface.IRepository) error {
 		&dto.UserLoginHistory{},
 		&dto.AuditLog{},
 		&dto.HostsDeny{},
+		&dto.Merchant{},
+		&dto.MerchantOrigin{},
 	)
 	if err != nil {
 		return err
@@ -123,9 +128,124 @@ func InitDefaultRole(repo iface.IRepository, app *configuration.App) error {
 	return nil
 }
 
+func InitMerchant(repo iface.IRepository) error {
+	seed := []dto.Merchant{
+		{
+			Name:         "demo_merchant_1",
+			DatabaseType: db.MySQL,
+			DatabaseDSN:  "user:user@tcp(boyi-mysql:3306)/merchant_1",
+			IsEnable:     common.YesNo__YES,
+			Remark:       "",
+			Extra:        db.JSON(""),
+			CreatedAt:    time.Now(),
+		},
+		{
+			Name:         "demo_merchant_2",
+			DatabaseType: db.MySQL,
+			DatabaseDSN:  "user:user@tcp(boyi-mysql:3306)/merchant_2",
+			IsEnable:     common.YesNo__YES,
+			Remark:       "",
+			Extra:        db.JSON(""),
+			CreatedAt:    time.Now(),
+		},
+	}
+	for _, merchant := range seed {
+		if err := repo.CreateIfNotExists(context.Background(),
+			nil,
+			&merchant,
+			&option.MerchantWhereOption{
+				Merchant: dto.Merchant{
+					Name: merchant.Name,
+				},
+			}); err != nil && !errors.Is(err, errors.ErrResourceAlreadyExists) {
+			return err
+		}
+		if err := InitMerchantOrigin(repo, merchant); err != nil && !errors.Is(err, errors.ErrResourceAlreadyExists) {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func InitMerchantOrigin(repo iface.IRepository, merchant dto.Merchant) error {
+	if err := repo.CreateIfNotExists(context.Background(),
+		nil,
+		&dto.MerchantOrigin{
+			Origin:       fmt.Sprintf("localhost.merchant.%d", merchant.ID),
+			MerchantID:   merchant.ID,
+			MerchantName: merchant.Name,
+			IsEnable:     common.YesNo__YES,
+			Extra:        db.JSON(""),
+			Remark:       "",
+			CreatedAt:    time.Now(),
+		},
+		&option.MerchantOriginWhereOption{
+			MerchantOrigin: dto.MerchantOrigin{
+				Origin: fmt.Sprintf("localhost.merchant.%d", merchant.ID),
+			},
+		}); err != nil && !errors.Is(err, errors.ErrResourceAlreadyExists) {
+		return err
+	}
+	return nil
+}
+
 func checkAppOrigin(config *configuration.App) bool {
 	if config.Origin.Name == "" || config.Origin.Host == "" {
 		return false
 	}
 	return true
+}
+
+// # merchant
+func MigrationMerchant(repo iface.IRepository) error {
+	conns, err := repo.GetALLMerchantDB(context.Background())
+	if err != nil {
+		return err
+	}
+	for _, conn := range conns {
+		conn.DisableForeignKeyConstraintWhenMigrating = true
+		_conn := conn.Session(
+			&gorm.Session{
+				Logger: logger.Default.LogMode(logger.Warn),
+			},
+		)
+		// Migrate 商戶資料庫
+		err := _conn.AutoMigrate(
+			&dto.MerchantAccount{},
+		)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func InitDefaultMerchantAccount(repo iface.IRepository) error {
+	ctx := context.Background()
+	conns, err := repo.GetALLMerchantDB(ctx)
+	if err != nil {
+		return err
+	}
+	for key, conn := range conns {
+		conn = conn.WithContext(ctx)
+		if err = repo.CreateIfNotExists(ctx,
+			conn,
+			&dto.MerchantAccount{
+				Username:  "admin",
+				Password:  db.Crypto("admin"),
+				AliasName: fmt.Sprintf("admin_%d", key),
+				IsEnable:  common.YesNo__YES,
+				Extra:     db.JSON(""),
+				CreatedAt: time.Now(),
+			},
+			&option.MerchantAccountWhereOption{
+				MerchantAccount: dto.MerchantAccount{
+					Username: "admin",
+				},
+			}); err != nil && !errors.Is(err, errors.ErrResourceAlreadyExists) {
+			return err
+		}
+	}
+	return nil
 }

@@ -9,8 +9,6 @@ input MerchantInput {
     name: String
     # """商戶狀態"""
     # status: MerchantStatus
-    """商戶備註"""
-    remark: String
 }
 
 input MerchantWithdrawMethodFilterInput {
@@ -102,19 +100,31 @@ input MerchantLoginHistoryInput {
 input MerchantCreateInput {
     """商戶名稱"""
     name: String!
-    # """商戶狀態"""
-    # status: MerchantStatus!
-    """商戶備註"""
+    """資料庫類型"""
+    databaseType: String!
+    """資料庫連線資訊"""
+    databaseDSN: String!
+    """是否啟用"""
+    isEnabled: YesNo!
+    """額外資訊"""
+    extra: String
+    """備註"""
     remark: String
 }
 
 
 input MerchantUpdateInput {
     """商戶名稱"""
-    name: String
-    # """商戶狀態"""
-    # status: MerchantStatus
-    """商戶備註"""
+    name: String!
+    """資料庫類型"""
+    databaseType: String!
+    """資料庫連線資訊"""
+    databaseDSN: String!
+    """是否啟用"""
+    isEnabled: YesNo!
+    """額外資訊"""
+    extra: String
+    """備註"""
     remark: String
 }
 
@@ -191,4 +201,33 @@ input MerchantBalanceAuditInput {
     # result: MerchantBalanceAuditResult!
     """商戶餘額異動審核意見"""
     opinion: String
+}
+
+input MerchantOriginFilterInput {
+    MerchantOrigin: MerchantOriginInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantOriginInput {
+    id: Uint64
+    """商戶ID"""
+    merchantId: Uint64
+    """域名"""
+    origin: String
+}
+
+input MerchantOriginCreateInput {
+     """商戶ID"""
+    merchantId: Uint64!
+    """域名"""
+    origin: String!
+    """是否啟用"""
+    isEnabled: YesNo!
+}
+
+input MerchantOriginUpdateInput {
+    """域名"""
+    origin: String!
+    """是否啟用"""
+    isEnabled: YesNo!
 }

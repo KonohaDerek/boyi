@@ -15,6 +15,7 @@ import (
 
 	graphql "github.com/99designs/gqlgen/graphql"
 	gin "github.com/gin-gonic/gin"
+	jwt "github.com/golang-jwt/jwt"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -130,48 +131,47 @@ func (mr *MockIAuthServiceMockRecorder) FlushAllCache(ctx interface{}) *gomock.C
 }
 
 // GetClaimsByToken mocks base method.
-func (m *MockIAuthService) GetClaimsByToken(ctx context.Context, token, deviceUID string) (claims.Claims, error) {
+func (m *MockIAuthService) GetClaimsByToken(ctx context.Context, token string) (claims.Claims, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetClaimsByToken", ctx, token, deviceUID)
+	ret := m.ctrl.Call(m, "GetClaimsByToken", ctx, token)
 	ret0, _ := ret[0].(claims.Claims)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetClaimsByToken indicates an expected call of GetClaimsByToken.
-func (mr *MockIAuthServiceMockRecorder) GetClaimsByToken(ctx, token, deviceUID interface{}) *gomock.Call {
+func (mr *MockIAuthServiceMockRecorder) GetClaimsByToken(ctx, token interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClaimsByToken", reflect.TypeOf((*MockIAuthService)(nil).GetClaimsByToken), ctx, token, deviceUID)
-}
-
-// GetClaimsWithTokenAndDevice mocks base method.
-func (m *MockIAuthService) GetClaimsWithTokenAndDevice(ctx context.Context, token, deviceID string) (claims.Claims, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetClaimsWithTokenAndDevice", ctx, token, deviceID)
-	ret0, _ := ret[0].(claims.Claims)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetClaimsWithTokenAndDevice indicates an expected call of GetClaimsWithTokenAndDevice.
-func (mr *MockIAuthServiceMockRecorder) GetClaimsWithTokenAndDevice(ctx, token, deviceID interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClaimsWithTokenAndDevice", reflect.TypeOf((*MockIAuthService)(nil).GetClaimsWithTokenAndDevice), ctx, token, deviceID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClaimsByToken", reflect.TypeOf((*MockIAuthService)(nil).GetClaimsByToken), ctx, token)
 }
 
 // GetToken mocks base method.
-func (m *MockIAuthService) GetToken(ctx context.Context, token string) (string, error) {
+func (m *MockIAuthService) GetToken(ctx context.Context, token string, claims *claims.Claims) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetToken", ctx, token)
-	ret0, _ := ret[0].(string)
+	ret := m.ctrl.Call(m, "GetToken", ctx, token, claims)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// GetToken indicates an expected call of GetToken.
+func (mr *MockIAuthServiceMockRecorder) GetToken(ctx, token, claims interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetToken", reflect.TypeOf((*MockIAuthService)(nil).GetToken), ctx, token, claims)
+}
+
+// JwtValidate mocks base method.
+func (m *MockIAuthService) JwtValidate(ctx context.Context, token string) (*jwt.Token, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "JwtValidate", ctx, token)
+	ret0, _ := ret[0].(*jwt.Token)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetToken indicates an expected call of GetToken.
-func (mr *MockIAuthServiceMockRecorder) GetToken(ctx, token interface{}) *gomock.Call {
+// JwtValidate indicates an expected call of JwtValidate.
+func (mr *MockIAuthServiceMockRecorder) JwtValidate(ctx, token interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetToken", reflect.TypeOf((*MockIAuthService)(nil).GetToken), ctx, token)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "JwtValidate", reflect.TypeOf((*MockIAuthService)(nil).JwtValidate), ctx, token)
 }
 
 // Login mocks base method.
@@ -204,17 +204,17 @@ func (mr *MockIAuthServiceMockRecorder) Logout(ctx, c interface{}) *gomock.Call 
 }
 
 // RefreshToken mocks base method.
-func (m *MockIAuthService) RefreshToken(ctx context.Context, c claims.Claims, ttlSec int64) error {
+func (m *MockIAuthService) RefreshToken(ctx context.Context, claims *claims.Claims) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RefreshToken", ctx, c, ttlSec)
+	ret := m.ctrl.Call(m, "RefreshToken", ctx, claims)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // RefreshToken indicates an expected call of RefreshToken.
-func (mr *MockIAuthServiceMockRecorder) RefreshToken(ctx, c, ttlSec interface{}) *gomock.Call {
+func (mr *MockIAuthServiceMockRecorder) RefreshToken(ctx, claims interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RefreshToken", reflect.TypeOf((*MockIAuthService)(nil).RefreshToken), ctx, c, ttlSec)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RefreshToken", reflect.TypeOf((*MockIAuthService)(nil).RefreshToken), ctx, claims)
 }
 
 // Register mocks base method.
@@ -993,6 +993,145 @@ func (m *MockIAuditLogService) UpdateAuditLog(ctx context.Context, opt *option.A
 func (mr *MockIAuditLogServiceMockRecorder) UpdateAuditLog(ctx, opt, col interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAuditLog", reflect.TypeOf((*MockIAuditLogService)(nil).UpdateAuditLog), ctx, opt, col)
+}
+
+// MockIMercahntService is a mock of IMercahntService interface.
+type MockIMercahntService struct {
+	ctrl     *gomock.Controller
+	recorder *MockIMercahntServiceMockRecorder
+}
+
+// MockIMercahntServiceMockRecorder is the mock recorder for MockIMercahntService.
+type MockIMercahntServiceMockRecorder struct {
+	mock *MockIMercahntService
+}
+
+// NewMockIMercahntService creates a new mock instance.
+func NewMockIMercahntService(ctrl *gomock.Controller) *MockIMercahntService {
+	mock := &MockIMercahntService{ctrl: ctrl}
+	mock.recorder = &MockIMercahntServiceMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockIMercahntService) EXPECT() *MockIMercahntServiceMockRecorder {
+	return m.recorder
+}
+
+// CreateMerchant mocks base method.
+func (m *MockIMercahntService) CreateMerchant(ctx context.Context, data *dto.Merchant) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateMerchant", ctx, data)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateMerchant indicates an expected call of CreateMerchant.
+func (mr *MockIMercahntServiceMockRecorder) CreateMerchant(ctx, data interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateMerchant", reflect.TypeOf((*MockIMercahntService)(nil).CreateMerchant), ctx, data)
+}
+
+// CreateMerchantOrigin mocks base method.
+func (m *MockIMercahntService) CreateMerchantOrigin(ctx context.Context, data *dto.MerchantOrigin) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateMerchantOrigin", ctx, data)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateMerchantOrigin indicates an expected call of CreateMerchantOrigin.
+func (mr *MockIMercahntServiceMockRecorder) CreateMerchantOrigin(ctx, data interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateMerchantOrigin", reflect.TypeOf((*MockIMercahntService)(nil).CreateMerchantOrigin), ctx, data)
+}
+
+// DeleteMerchant mocks base method.
+func (m *MockIMercahntService) DeleteMerchant(ctx context.Context, opt *option.MerchantWhereOption) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteMerchant", ctx, opt)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteMerchant indicates an expected call of DeleteMerchant.
+func (mr *MockIMercahntServiceMockRecorder) DeleteMerchant(ctx, opt interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMerchant", reflect.TypeOf((*MockIMercahntService)(nil).DeleteMerchant), ctx, opt)
+}
+
+// DeleteMerchantOrigin mocks base method.
+func (m *MockIMercahntService) DeleteMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteMerchantOrigin", ctx, opt)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteMerchantOrigin indicates an expected call of DeleteMerchantOrigin.
+func (mr *MockIMercahntServiceMockRecorder) DeleteMerchantOrigin(ctx, opt interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMerchantOrigin", reflect.TypeOf((*MockIMercahntService)(nil).DeleteMerchantOrigin), ctx, opt)
+}
+
+// ListMerchantOrigin mocks base method.
+func (m *MockIMercahntService) ListMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption) ([]dto.MerchantOrigin, int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListMerchantOrigin", ctx, opt)
+	ret0, _ := ret[0].([]dto.MerchantOrigin)
+	ret1, _ := ret[1].(int64)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListMerchantOrigin indicates an expected call of ListMerchantOrigin.
+func (mr *MockIMercahntServiceMockRecorder) ListMerchantOrigin(ctx, opt interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListMerchantOrigin", reflect.TypeOf((*MockIMercahntService)(nil).ListMerchantOrigin), ctx, opt)
+}
+
+// ListMerchants mocks base method.
+func (m *MockIMercahntService) ListMerchants(ctx context.Context, opt *option.MerchantWhereOption) ([]dto.Merchant, int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListMerchants", ctx, opt)
+	ret0, _ := ret[0].([]dto.Merchant)
+	ret1, _ := ret[1].(int64)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListMerchants indicates an expected call of ListMerchants.
+func (mr *MockIMercahntServiceMockRecorder) ListMerchants(ctx, opt interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListMerchants", reflect.TypeOf((*MockIMercahntService)(nil).ListMerchants), ctx, opt)
+}
+
+// UpdateMerchant mocks base method.
+func (m *MockIMercahntService) UpdateMerchant(ctx context.Context, opt *option.MerchantWhereOption, col *option.MerchantUpdateColumn) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateMerchant", ctx, opt, col)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateMerchant indicates an expected call of UpdateMerchant.
+func (mr *MockIMercahntServiceMockRecorder) UpdateMerchant(ctx, opt, col interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateMerchant", reflect.TypeOf((*MockIMercahntService)(nil).UpdateMerchant), ctx, opt, col)
+}
+
+// UpdateMerchantOrigin mocks base method.
+func (m *MockIMercahntService) UpdateMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption, col *option.MerchantOriginUpdateColumn) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateMerchantOrigin", ctx, opt, col)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateMerchantOrigin indicates an expected call of UpdateMerchantOrigin.
+func (mr *MockIMercahntServiceMockRecorder) UpdateMerchantOrigin(ctx, opt, col interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateMerchantOrigin", reflect.TypeOf((*MockIMercahntService)(nil).UpdateMerchantOrigin), ctx, opt, col)
 }
 
 // MockISupportService is a mock of ISupportService interface.

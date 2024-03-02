@@ -1,6 +1,7 @@
 package iface
 
 import (
+	"boyi/pkg/infra/db"
 	"boyi/pkg/model/dto"
 	"boyi/pkg/model/option"
 	"context"
@@ -27,10 +28,23 @@ type IRepository interface {
 	CreateIfNotExists(ctx context.Context, tx *gorm.DB, data Model, opt WhereOption, scopes ...func(*gorm.DB) *gorm.DB) error
 	CreateOrUpdate(ctx context.Context, tx *gorm.DB, data Model, opt WhereOption, updateCol UpdateColumns) error
 
-	UserRepository
+	IMerchantRepository
+
+	IUserRepository
 }
 
-type UserRepository interface {
+type IMerchantBaseRepository interface {
+	
+}
+
+type IMerchantRepository interface {
+	GetALLMerchantDB(ctx context.Context) (map[uint64]*gorm.DB, error)
+	GetMerchantDB(ctx context.Context, merchantId uint64) (*gorm.DB, error)
+	SetMerchantDB(ctx context.Context, merchantId uint64, connectStr string, databaseType db.DatabaseType) error
+	DeleteMerchantDB(ctx context.Context, merchantId uint64) error
+}
+
+type IUserRepository interface {
 	GetUserByID(ctx context.Context, userID uint64) (dto.User, error)
 	GetUserIDs(ctx context.Context, opt *option.UserWhereOption) ([]uint64, error)
 }

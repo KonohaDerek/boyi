@@ -1,0 +1,21 @@
+@startuml 系統管理
+participant 商戶
+box "server"
+
+participant endpoint
+participant service
+participant middleware
+participant mysql
+participant redis
+participant handler
+end box
+
+activate handler #FFBBBB
+商戶 -> endpoint : 請求登入 (POST /Login)
+endpoint -> middleware : 驗證域名 (VerifyOrigin)
+middleware -> service : 登入 (authService.LoginMerchant)
+service -> mysql: 依據域名取用不同的mysql連線字串 (query merchant db users)
+mysql -> service: 登入成功 (merchant users login Completed)
+service -> endpoint -> 商戶: 登入成功 (Login Success 200)
+deactivate handler
+@enduml

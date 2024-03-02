@@ -4,6 +4,7 @@ import (
 	"boyi/pkg/service/audit_log"
 	"boyi/pkg/service/auth"
 	"boyi/pkg/service/menu"
+	"boyi/pkg/service/merchant"
 	"boyi/pkg/service/role"
 	"boyi/pkg/service/support"
 	"boyi/pkg/service/tag"
@@ -20,4 +21,5 @@ var Module = fx.Options(
 	tag.Module,
 	audit_log.Module,
 	support.Module,
+	merchant.Module,
 )

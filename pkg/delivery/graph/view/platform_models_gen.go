@@ -668,7 +668,7 @@ type ListGameResp struct {
 	// 遊戲列表
 	List []*Game `json:"list"`
 	// 總數
-	Total uint64 `json:"total"`
+	Meta *Meta `json:"meta"`
 }
 
 type ListGameTransferRecordResp struct {
@@ -691,53 +691,58 @@ type ListLineRateHistoryResp struct {
 	// 線路費率歷史列表
 	List []*LineRateHistory `json:"list"`
 	// 總數
-	Total uint64 `json:"total"`
+	Meta *Meta `json:"meta"`
 }
 
 type ListLineRateResp struct {
 	// 線路費率列表
 	List []*LineRate `json:"list"`
 	// 總數
-	Total uint64 `json:"total"`
+	Meta *Meta `json:"meta"`
 }
 
 type ListLineRentResp struct {
 	// 線路租借列表
 	List []*LineRent `json:"list"`
 	// 總數
-	Total uint64 `json:"total"`
+	Meta *Meta `json:"meta"`
 }
 
 type ListMerchantBalanceLogResp struct {
-	List  []*MerchantBalanceLog `json:"list"`
-	Total uint64                `json:"total"`
+	List []*MerchantBalanceLog `json:"list"`
+	Meta *Meta                 `json:"meta"`
 }
 
 type ListMerchantDepositLogResp struct {
-	List  []*MerchantDepositLog `json:"list"`
-	Total uint64                `json:"total"`
+	List []*MerchantDepositLog `json:"list"`
+	Meta *Meta                 `json:"meta"`
 }
 
 type ListMerchantDepositMethodResp struct {
-	List  []*MerchantDepositMethod `json:"list"`
-	Total uint64                   `json:"total"`
+	List []*MerchantDepositMethod `json:"list"`
+	Meta *Meta                    `json:"meta"`
 }
 
 type ListMerchantFeeModeResp struct {
-	List  []*MerchantFeeMode `json:"list"`
-	Total uint64             `json:"total"`
+	List []*MerchantFeeMode `json:"list"`
+	Meta *Meta              `json:"meta"`
 }
 
 type ListMerchantLineResp struct {
 	// 商戶線路列表
 	List []*MerchantLine `json:"list"`
 	// 總數
-	Total uint64 `json:"total"`
+	Meta *Meta `json:"meta"`
 }
 
 type ListMerchantLoginHistoryResp struct {
-	List  []*MerchantLoginHistory `json:"list"`
-	Total uint64                  `json:"total"`
+	List []*MerchantLoginHistory `json:"list"`
+	Meta *Meta                   `json:"meta"`
+}
+
+type ListMerchantOriginResp struct {
+	List []*MerchantOrigin `json:"list"`
+	Meta *Meta             `json:"meta"`
 }
 
 type ListMerchantResp struct {
@@ -748,13 +753,13 @@ type ListMerchantResp struct {
 }
 
 type ListMerchantWithdrawLogResp struct {
-	List  []*MerchantWithdrawLog `json:"list"`
-	Total uint64                 `json:"total"`
+	List []*MerchantWithdrawLog `json:"list"`
+	Meta *Meta                  `json:"meta"`
 }
 
 type ListMerchantWithdrawMethodResp struct {
-	List  []*MerchantWithdrawMethod `json:"list"`
-	Total uint64                    `json:"total"`
+	List []*MerchantWithdrawMethod `json:"list"`
+	Meta *Meta                     `json:"meta"`
 }
 
 type ListMetadata struct {
@@ -781,7 +786,7 @@ type ListSystemLineResp struct {
 	// 系統線路列表
 	List []*SystemLine `json:"list"`
 	// 總數
-	Total uint64 `json:"total"`
+	Meta *Meta `json:"meta"`
 }
 
 // 標籤列表
@@ -920,7 +925,15 @@ type MerchantBalanceLogInput struct {
 type MerchantCreateInput struct {
 	// 商戶名稱
 	Name string `json:"name"`
-	// 商戶備註
+	// 資料庫類型
+	DatabaseType string `json:"databaseType"`
+	// 資料庫連線資訊
+	DatabaseDsn string `json:"databaseDSN"`
+	// 是否啟用
+	IsEnabled YesNo `json:"isEnabled"`
+	// 額外資訊
+	Extra *string `json:"extra,omitempty"`
+	// 備註
 	Remark *string `json:"remark,omitempty"`
 }
 
@@ -1021,8 +1034,6 @@ type MerchantInput struct {
 	ID *uint64 `json:"id,omitempty"`
 	// 商戶名稱
 	Name *string `json:"name,omitempty"`
-	// 商戶備註
-	Remark *string `json:"remark,omitempty"`
 }
 
 type MerchantLine struct {
@@ -1084,10 +1095,58 @@ type MerchantLoginHistoryInput struct {
 	ID *uint64 `json:"id,omitempty"`
 }
 
+type MerchantOrigin struct {
+	ID            uint64    `json:"id"`
+	MerchantID    uint64    `json:"merchantId"`
+	Origin        string    `json:"origin"`
+	IsEnabled     YesNo     `json:"isEnabled"`
+	CreatedAt     time.Time `json:"createdAt"`
+	CreatedUserID uint64    `json:"createdUserId"`
+	UpdatedAt     time.Time `json:"updatedAt"`
+	UpdatedUserID uint64    `json:"updatedUserId"`
+}
+
+type MerchantOriginCreateInput struct {
+	// 商戶ID
+	MerchantID uint64 `json:"merchantId"`
+	// 域名
+	Origin string `json:"origin"`
+	// 是否啟用
+	IsEnabled YesNo `json:"isEnabled"`
+}
+
+type MerchantOriginFilterInput struct {
+	MerchantOrigin *MerchantOriginInput `json:"MerchantOrigin,omitempty"`
+	BaseFilter     *BaseFilterInput     `json:"baseFilter,omitempty"`
+}
+
+type MerchantOriginInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 商戶ID
+	MerchantID *uint64 `json:"merchantId,omitempty"`
+	// 域名
+	Origin *string `json:"origin,omitempty"`
+}
+
+type MerchantOriginUpdateInput struct {
+	// 域名
+	Origin string `json:"origin"`
+	// 是否啟用
+	IsEnabled YesNo `json:"isEnabled"`
+}
+
 type MerchantUpdateInput struct {
 	// 商戶名稱
-	Name *string `json:"name,omitempty"`
-	// 商戶備註
+	Name string `json:"name"`
+	// 資料庫類型
+	DatabaseType string `json:"databaseType"`
+	// 資料庫連線資訊
+	DatabaseDsn string `json:"databaseDSN"`
+	// 是否啟用
+	IsEnabled YesNo `json:"isEnabled"`
+	// 額外資訊
+	Extra *string `json:"extra,omitempty"`
+	// 備註
 	Remark *string `json:"remark,omitempty"`
 }
 

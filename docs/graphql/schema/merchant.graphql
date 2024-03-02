@@ -20,7 +20,7 @@ type Merchant {
 
 type ListMerchantWithdrawMethodResp {
     list: [MerchantWithdrawMethod!]!
-    total: Uint64!
+     meta: Meta!
 }
 
 type MerchantWithdrawMethod {
@@ -33,7 +33,7 @@ type MerchantWithdrawMethod {
 
 type ListMerchantDepositMethodResp {
     list: [MerchantDepositMethod!]!
-    total: Uint64!
+    meta: Meta!
 }
 
 type MerchantDepositMethod {
@@ -46,7 +46,7 @@ type MerchantDepositMethod {
 
 type ListMerchantFeeModeResp {
     list: [MerchantFeeMode!]!
-    total: Uint64!
+    meta: Meta!
 }
 
 type MerchantFeeMode {
@@ -59,7 +59,7 @@ type MerchantFeeMode {
 
 type ListMerchantBalanceLogResp {
     list: [MerchantBalanceLog!]!
-    total: Uint64!
+    meta: Meta!
 }
 
 type MerchantBalanceLog {
@@ -74,7 +74,7 @@ type MerchantBalanceLog {
 
 type ListMerchantWithdrawLogResp {
     list: [MerchantWithdrawLog!]!
-    total: Uint64!
+     meta: Meta!
 }
 
 type MerchantWithdrawLog {
@@ -88,7 +88,7 @@ type MerchantWithdrawLog {
 
 type ListMerchantDepositLogResp {
     list: [MerchantDepositLog!]!
-    total: Uint64!
+     meta: Meta!
 }
 
 type MerchantDepositLog {
@@ -102,7 +102,7 @@ type MerchantDepositLog {
 
 type ListMerchantLoginHistoryResp {
     list: [MerchantLoginHistory!]!
-    total: Uint64!
+    meta: Meta!
 }
 
 type MerchantLoginHistory {
@@ -113,3 +113,20 @@ type MerchantLoginHistory {
     updatedAt: Timestamp!
 }
 
+
+
+type ListMerchantOriginResp {
+    list: [MerchantOrigin!]!
+    meta: Meta!
+}
+
+type MerchantOrigin {
+    id: Uint64!
+    merchantId: Uint64!
+    origin: String!
+    isEnabled: YesNo!
+    createdAt: Timestamp!
+    createdUserId: Uint64!
+    updatedAt: Timestamp!
+    updatedUserId: Uint64!
+}

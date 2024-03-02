@@ -17,6 +17,9 @@ extend type Query  {
     listMerchantDepositLog(filter: MerchantDepositLogFilterInput, pagination: PaginationInput): ListMerchantDepositLogResp!
     """商家登錄歷史列表"""
     listMerchantLoginHistory(filter: MerchantLoginHistoryFilterInput, pagination: PaginationInput): ListMerchantLoginHistoryResp!
+
+    """商家域名列表"""
+    listMerchantOrigin(filter: MerchantOriginFilterInput, pagination: PaginationInput): ListMerchantOriginResp!
 }
 
 extend type Mutation {
@@ -48,9 +51,16 @@ extend type Mutation {
     """刪除商家費率模式"""
     deleteMerchantFeeMode(filter: MerchantFeeModeFilterInput!): Uint64!
 
-
     """商家餘額異動申請"""
     applyMerchantBalance(in: MerchantBalanceApplyInput!): Uint64!
     """商家餘額異動審核"""
     auditMerchantBalance(filter: MerchantBalanceFilterInput!, in: MerchantBalanceAuditInput!): Uint64!
+
+
+    """新增商家域名"""
+    createMerchantOrigin(in: MerchantOriginCreateInput!): MerchantOrigin!
+    """更新商家域名"""
+    updateMerchantOrigin(filter: MerchantOriginFilterInput, in: MerchantOriginUpdateInput!): MerchantOrigin!
+    """刪除商家域名"""
+    deleteMerchantOrigin(filter: MerchantFeeModeFilterInput!): Uint64!
 }

@@ -2,7 +2,7 @@ type ListSystemLineResp {
     """系統線路列表"""
     list: [SystemLine!]!
     """總數"""
-    total: Uint64!
+     meta: Meta!
 }
 
 type SystemLine {
@@ -24,7 +24,7 @@ type ListMerchantLineResp {
     """商戶線路列表"""
     list: [MerchantLine!]!
     """總數"""
-    total: Uint64!
+     meta: Meta!
 }
 
 type MerchantLine {
@@ -44,7 +44,7 @@ type ListLineRentResp {
     """線路租借列表"""
     list: [LineRent!]!
     """總數"""
-    total: Uint64!
+     meta: Meta!
 }
 
 type LineRent {
@@ -64,7 +64,7 @@ type ListLineRateResp {
     """線路費率列表"""
     list: [LineRate!]!
     """總數"""
-    total: Uint64!
+     meta: Meta!
 }
 
 
@@ -87,7 +87,7 @@ type ListLineRateHistoryResp {
     """線路費率歷史列表"""
     list: [LineRateHistory!]!
     """總數"""
-    total: Uint64!
+    meta: Meta!
 }
 
 type LineRateHistory {
@@ -109,7 +109,7 @@ type ListGameResp {
     """遊戲列表"""
     list: [Game!]!
     """總數"""
-    total: Uint64!
+    meta: Meta!
 }
 
 type Game {

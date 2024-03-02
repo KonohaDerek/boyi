@@ -14,7 +14,8 @@ type repository struct {
 	readDB  *gorm.DB
 	writeDB *gorm.DB
 
-	cacheRepo iface.ICacheRepository
+	merchantDBs map[uint64]*gorm.DB
+	cacheRepo   iface.ICacheRepository
 }
 
 var Module = fx.Options(
@@ -25,6 +26,14 @@ var Module = fx.Options(
 		Migration,
 		InitAdmin,
 		InitDefaultRole,
+		InitMerchant,
+	),
+)
+
+var MercahntModule = fx.Options(
+	fx.Invoke(
+		MigrationMerchant,
+		InitDefaultMerchantAccount,
 	),
 )
 

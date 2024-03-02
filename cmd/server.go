@@ -63,16 +63,16 @@ var Module = fx.Options(
 var RepositoryModule = fx.Options(
 	repository.Module,
 	cache.Module,
+	repository.MercahntModule,
 )
 
 var (
-	platform   bool // 後台
-	app        bool // 前台
+	platform   string // 平台
 	migrateSQL bool
 )
 
 func init() {
-	ServerCmd.PersistentFlags().BoolVar(&app, "app", false, "for app stage")
+	ServerCmd.PersistentFlags().StringVar(&platform, "platform", "platform", "platform with app or platform or agent or merchant")
 	ServerCmd.PersistentFlags().BoolVar(&migrateSQL, "migrate_sql", false, "migrate with sql file")
 }
 
@@ -95,9 +95,16 @@ func run(_ *cobra.Command, _ []string) {
 		hub.Module,
 	)
 
-	if app {
+	switch platform {
+	case "app":
 		fxOption = append(fxOption, graphApp.Module)
-	} else {
+	case "platform":
+		fxOption = append(fxOption, restfulPlatform.Module, graphPlatform.Module)
+	case "agent":
+		fxOption = append(fxOption, restfulPlatform.Module, graphPlatform.Module)
+	case "merchant":
+		fxOption = append(fxOption, restfulPlatform.Module, graphPlatform.Module)
+	default:
 		fxOption = append(fxOption, restfulPlatform.Module, graphPlatform.Module)
 	}
 

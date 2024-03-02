@@ -6,6 +6,7 @@ package mock
 
 import (
 	iface "boyi/pkg/iface"
+	db "boyi/pkg/infra/db"
 	dto "boyi/pkg/model/dto"
 	option "boyi/pkg/model/option"
 	context "context"
@@ -141,6 +142,20 @@ func (mr *MockIRepositoryMockRecorder) Delete(ctx, tx, model, opt interface{}, s
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockIRepository)(nil).Delete), varargs...)
 }
 
+// DeleteMerchantDB mocks base method.
+func (m *MockIRepository) DeleteMerchantDB(ctx context.Context, merchantId uint64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteMerchantDB", ctx, merchantId)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteMerchantDB indicates an expected call of DeleteMerchantDB.
+func (mr *MockIRepositoryMockRecorder) DeleteMerchantDB(ctx, merchantId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMerchantDB", reflect.TypeOf((*MockIRepository)(nil).DeleteMerchantDB), ctx, merchantId)
+}
+
 // Get mocks base method.
 func (m *MockIRepository) Get(ctx context.Context, tx *gorm.DB, model iface.Model, opt iface.WhereOption, scopes ...func(*gorm.DB) *gorm.DB) error {
 	m.ctrl.T.Helper()
@@ -158,6 +173,21 @@ func (mr *MockIRepositoryMockRecorder) Get(ctx, tx, model, opt interface{}, scop
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, tx, model, opt}, scopes...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockIRepository)(nil).Get), varargs...)
+}
+
+// GetALLMerchantDB mocks base method.
+func (m *MockIRepository) GetALLMerchantDB(ctx context.Context) (map[uint64]*gorm.DB, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetALLMerchantDB", ctx)
+	ret0, _ := ret[0].(map[uint64]*gorm.DB)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetALLMerchantDB indicates an expected call of GetALLMerchantDB.
+func (mr *MockIRepositoryMockRecorder) GetALLMerchantDB(ctx interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetALLMerchantDB", reflect.TypeOf((*MockIRepository)(nil).GetALLMerchantDB), ctx)
 }
 
 // GetDB mocks base method.
@@ -191,6 +221,21 @@ func (mr *MockIRepositoryMockRecorder) GetLast(ctx, tx, model, opt interface{}, 
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, tx, model, opt}, scopes...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLast", reflect.TypeOf((*MockIRepository)(nil).GetLast), varargs...)
+}
+
+// GetMerchantDB mocks base method.
+func (m *MockIRepository) GetMerchantDB(ctx context.Context, merchantId uint64) (*gorm.DB, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetMerchantDB", ctx, merchantId)
+	ret0, _ := ret[0].(*gorm.DB)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetMerchantDB indicates an expected call of GetMerchantDB.
+func (mr *MockIRepositoryMockRecorder) GetMerchantDB(ctx, merchantId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMerchantDB", reflect.TypeOf((*MockIRepository)(nil).GetMerchantDB), ctx, merchantId)
 }
 
 // GetUserByID mocks base method.
@@ -243,6 +288,20 @@ func (mr *MockIRepositoryMockRecorder) List(ctx, tx, data, opt interface{}, scop
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockIRepository)(nil).List), varargs...)
 }
 
+// SetMerchantDB mocks base method.
+func (m *MockIRepository) SetMerchantDB(ctx context.Context, merchantId uint64, connectStr string, databaseType db.DatabaseType) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetMerchantDB", ctx, merchantId, connectStr, databaseType)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SetMerchantDB indicates an expected call of SetMerchantDB.
+func (mr *MockIRepositoryMockRecorder) SetMerchantDB(ctx, merchantId, connectStr, databaseType interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetMerchantDB", reflect.TypeOf((*MockIRepository)(nil).SetMerchantDB), ctx, merchantId, connectStr, databaseType)
+}
+
 // Transaction mocks base method.
 func (m *MockIRepository) Transaction(ctx context.Context, fc func(*gorm.DB) error, opts ...*sql.TxOptions) error {
 	m.ctrl.T.Helper()
@@ -281,31 +340,135 @@ func (mr *MockIRepositoryMockRecorder) Update(ctx, tx, opt, col interface{}, sco
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockIRepository)(nil).Update), varargs...)
 }
 
-// MockUserRepository is a mock of UserRepository interface.
-type MockUserRepository struct {
+// MockIMerchantBaseRepository is a mock of IMerchantBaseRepository interface.
+type MockIMerchantBaseRepository struct {
 	ctrl     *gomock.Controller
-	recorder *MockUserRepositoryMockRecorder
+	recorder *MockIMerchantBaseRepositoryMockRecorder
 }
 
-// MockUserRepositoryMockRecorder is the mock recorder for MockUserRepository.
-type MockUserRepositoryMockRecorder struct {
-	mock *MockUserRepository
+// MockIMerchantBaseRepositoryMockRecorder is the mock recorder for MockIMerchantBaseRepository.
+type MockIMerchantBaseRepositoryMockRecorder struct {
+	mock *MockIMerchantBaseRepository
 }
 
-// NewMockUserRepository creates a new mock instance.
-func NewMockUserRepository(ctrl *gomock.Controller) *MockUserRepository {
-	mock := &MockUserRepository{ctrl: ctrl}
-	mock.recorder = &MockUserRepositoryMockRecorder{mock}
+// NewMockIMerchantBaseRepository creates a new mock instance.
+func NewMockIMerchantBaseRepository(ctrl *gomock.Controller) *MockIMerchantBaseRepository {
+	mock := &MockIMerchantBaseRepository{ctrl: ctrl}
+	mock.recorder = &MockIMerchantBaseRepositoryMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockUserRepository) EXPECT() *MockUserRepositoryMockRecorder {
+func (m *MockIMerchantBaseRepository) EXPECT() *MockIMerchantBaseRepositoryMockRecorder {
+	return m.recorder
+}
+
+// MockIMerchantRepository is a mock of IMerchantRepository interface.
+type MockIMerchantRepository struct {
+	ctrl     *gomock.Controller
+	recorder *MockIMerchantRepositoryMockRecorder
+}
+
+// MockIMerchantRepositoryMockRecorder is the mock recorder for MockIMerchantRepository.
+type MockIMerchantRepositoryMockRecorder struct {
+	mock *MockIMerchantRepository
+}
+
+// NewMockIMerchantRepository creates a new mock instance.
+func NewMockIMerchantRepository(ctrl *gomock.Controller) *MockIMerchantRepository {
+	mock := &MockIMerchantRepository{ctrl: ctrl}
+	mock.recorder = &MockIMerchantRepositoryMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockIMerchantRepository) EXPECT() *MockIMerchantRepositoryMockRecorder {
+	return m.recorder
+}
+
+// DeleteMerchantDB mocks base method.
+func (m *MockIMerchantRepository) DeleteMerchantDB(ctx context.Context, merchantId uint64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteMerchantDB", ctx, merchantId)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteMerchantDB indicates an expected call of DeleteMerchantDB.
+func (mr *MockIMerchantRepositoryMockRecorder) DeleteMerchantDB(ctx, merchantId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMerchantDB", reflect.TypeOf((*MockIMerchantRepository)(nil).DeleteMerchantDB), ctx, merchantId)
+}
+
+// GetALLMerchantDB mocks base method.
+func (m *MockIMerchantRepository) GetALLMerchantDB(ctx context.Context) (map[uint64]*gorm.DB, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetALLMerchantDB", ctx)
+	ret0, _ := ret[0].(map[uint64]*gorm.DB)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetALLMerchantDB indicates an expected call of GetALLMerchantDB.
+func (mr *MockIMerchantRepositoryMockRecorder) GetALLMerchantDB(ctx interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetALLMerchantDB", reflect.TypeOf((*MockIMerchantRepository)(nil).GetALLMerchantDB), ctx)
+}
+
+// GetMerchantDB mocks base method.
+func (m *MockIMerchantRepository) GetMerchantDB(ctx context.Context, merchantId uint64) (*gorm.DB, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetMerchantDB", ctx, merchantId)
+	ret0, _ := ret[0].(*gorm.DB)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetMerchantDB indicates an expected call of GetMerchantDB.
+func (mr *MockIMerchantRepositoryMockRecorder) GetMerchantDB(ctx, merchantId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMerchantDB", reflect.TypeOf((*MockIMerchantRepository)(nil).GetMerchantDB), ctx, merchantId)
+}
+
+// SetMerchantDB mocks base method.
+func (m *MockIMerchantRepository) SetMerchantDB(ctx context.Context, merchantId uint64, connectStr string, databaseType db.DatabaseType) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetMerchantDB", ctx, merchantId, connectStr, databaseType)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SetMerchantDB indicates an expected call of SetMerchantDB.
+func (mr *MockIMerchantRepositoryMockRecorder) SetMerchantDB(ctx, merchantId, connectStr, databaseType interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetMerchantDB", reflect.TypeOf((*MockIMerchantRepository)(nil).SetMerchantDB), ctx, merchantId, connectStr, databaseType)
+}
+
+// MockIUserRepository is a mock of IUserRepository interface.
+type MockIUserRepository struct {
+	ctrl     *gomock.Controller
+	recorder *MockIUserRepositoryMockRecorder
+}
+
+// MockIUserRepositoryMockRecorder is the mock recorder for MockIUserRepository.
+type MockIUserRepositoryMockRecorder struct {
+	mock *MockIUserRepository
+}
+
+// NewMockIUserRepository creates a new mock instance.
+func NewMockIUserRepository(ctrl *gomock.Controller) *MockIUserRepository {
+	mock := &MockIUserRepository{ctrl: ctrl}
+	mock.recorder = &MockIUserRepositoryMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockIUserRepository) EXPECT() *MockIUserRepositoryMockRecorder {
 	return m.recorder
 }
 
 // GetUserByID mocks base method.
-func (m *MockUserRepository) GetUserByID(ctx context.Context, userID uint64) (dto.User, error) {
+func (m *MockIUserRepository) GetUserByID(ctx context.Context, userID uint64) (dto.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserByID", ctx, userID)
 	ret0, _ := ret[0].(dto.User)
@@ -314,13 +477,13 @@ func (m *MockUserRepository) GetUserByID(ctx context.Context, userID uint64) (dt
 }
 
 // GetUserByID indicates an expected call of GetUserByID.
-func (mr *MockUserRepositoryMockRecorder) GetUserByID(ctx, userID interface{}) *gomock.Call {
+func (mr *MockIUserRepositoryMockRecorder) GetUserByID(ctx, userID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByID", reflect.TypeOf((*MockUserRepository)(nil).GetUserByID), ctx, userID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByID", reflect.TypeOf((*MockIUserRepository)(nil).GetUserByID), ctx, userID)
 }
 
 // GetUserIDs mocks base method.
-func (m *MockUserRepository) GetUserIDs(ctx context.Context, opt *option.UserWhereOption) ([]uint64, error) {
+func (m *MockIUserRepository) GetUserIDs(ctx context.Context, opt *option.UserWhereOption) ([]uint64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserIDs", ctx, opt)
 	ret0, _ := ret[0].([]uint64)
@@ -329,9 +492,9 @@ func (m *MockUserRepository) GetUserIDs(ctx context.Context, opt *option.UserWhe
 }
 
 // GetUserIDs indicates an expected call of GetUserIDs.
-func (mr *MockUserRepositoryMockRecorder) GetUserIDs(ctx, opt interface{}) *gomock.Call {
+func (mr *MockIUserRepositoryMockRecorder) GetUserIDs(ctx, opt interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserIDs", reflect.TypeOf((*MockUserRepository)(nil).GetUserIDs), ctx, opt)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserIDs", reflect.TypeOf((*MockIUserRepository)(nil).GetUserIDs), ctx, opt)
 }
 
 // MockICacheRepository is a mock of ICacheRepository interface.
