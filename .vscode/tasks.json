@@ -1,0 +1,57 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "options": {
+        "env": {
+            "PROJ_DIR": "${workspaceFolder}",
+            "LOCAL_TEST": "1",
+            "CGO_ENABLED": "1",
+        }
+    },
+    "tasks": [
+        {
+            "label": "go build",
+            "type": "shell",
+            "command": "golangci-lint run -v --tests=false --skip-dirs vendor,tools --timeout 4m",
+            "problemMatcher": [
+                "$go"
+            ],
+            "presentation": {
+                "reveal": "silent",
+                "revealProblems": "onProblem",
+                "close": false,
+                "focus": true,
+                "showReuseMessage": true,
+                "echo": true,
+                "panel": "new"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "go test",
+            "type": "shell",
+            "command": "find ./ -iname 'sqlite.db' -print -exec rm -f '{}' \\; && go clean -testcache && go test core-server-iam/pkg/...  ",
+            "args": [
+                "$env:PROJ_DIR",
+                "$env:CGO_ENABLED",
+                "$env:LOCAL_TEST"
+            ],
+            "problemMatcher": [
+                "$go"
+            ],
+            "presentation": {
+                "reveal": "silent",
+                "revealProblems": "onProblem",
+                "close": true,
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true,
+            },
+        }
+    ]
+}
