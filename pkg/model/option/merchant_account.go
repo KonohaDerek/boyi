@@ -1,7 +1,6 @@
 package option
 
 import (
-	"boyi/pkg/infra/db"
 	"boyi/pkg/model/dto"
 	"boyi/pkg/model/option/common"
 	"reflect"
@@ -17,7 +16,7 @@ type MerchantAccountWhereOption struct {
 }
 
 type MerchantAccountUpdateColumn struct {
-	Password  db.Crypto    // 密碼
+	Password  string       // 密碼
 	AliasName string       // 別名（顯示用)
 	IsEnable  common.YesNo // 是否開啟
 	Extra     string       // 額外項目

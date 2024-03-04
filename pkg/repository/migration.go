@@ -133,7 +133,7 @@ func InitMerchant(repo iface.IRepository) error {
 		{
 			Name:         "demo_merchant_1",
 			DatabaseType: db.MySQL,
-			DatabaseDSN:  "user:user@tcp(boyi-mysql:3306)/merchant_1",
+			DatabaseDSN:  "user:user@tcp(boyi-mysql:3306)/merchant_1?charset=utf8mb4&multiStatements=true&parseTime=true",
 			IsEnable:     common.YesNo__YES,
 			Remark:       "",
 			Extra:        db.JSON(""),
@@ -142,11 +142,10 @@ func InitMerchant(repo iface.IRepository) error {
 		{
 			Name:         "demo_merchant_2",
 			DatabaseType: db.MySQL,
-			DatabaseDSN:  "user:user@tcp(boyi-mysql:3306)/merchant_2",
+			DatabaseDSN:  "user:user@tcp(boyi-mysql:3306)/merchant_2?charset=utf8mb4&multiStatements=true&parseTime=true",
 			IsEnable:     common.YesNo__YES,
 			Remark:       "",
 			Extra:        db.JSON(""),
-			CreatedAt:    time.Now(),
 		},
 	}
 	for _, merchant := range seed {
@@ -178,7 +177,6 @@ func InitMerchantOrigin(repo iface.IRepository, merchant dto.Merchant) error {
 			IsEnable:     common.YesNo__YES,
 			Extra:        db.JSON(""),
 			Remark:       "",
-			CreatedAt:    time.Now(),
 		},
 		&option.MerchantOriginWhereOption{
 			MerchantOrigin: dto.MerchantOrigin{
@@ -223,21 +221,22 @@ func MigrationMerchant(repo iface.IRepository) error {
 
 func InitDefaultMerchantAccount(repo iface.IRepository) error {
 	ctx := context.Background()
+	pwd, _ := hash.HashPassword([]byte("admin"))
 	conns, err := repo.GetALLMerchantDB(ctx)
 	if err != nil {
 		return err
 	}
 	for key, conn := range conns {
 		conn = conn.WithContext(ctx)
+
 		if err = repo.CreateIfNotExists(ctx,
 			conn,
 			&dto.MerchantAccount{
 				Username:  "admin",
-				Password:  db.Crypto("admin"),
+				Password:  string(pwd),
 				AliasName: fmt.Sprintf("admin_%d", key),
 				IsEnable:  common.YesNo__YES,
 				Extra:     db.JSON(""),
-				CreatedAt: time.Now(),
 			},
 			&option.MerchantAccountWhereOption{
 				MerchantAccount: dto.MerchantAccount{

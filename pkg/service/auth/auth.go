@@ -3,6 +3,7 @@ package auth
 import (
 	"boyi/internal/claims"
 	"boyi/pkg/model/dto"
+	"boyi/pkg/model/enums/types"
 	"boyi/pkg/model/option"
 	"boyi/pkg/model/option/common"
 	"boyi/pkg/model/vo"
@@ -26,7 +27,8 @@ import (
 
 type authClaims struct {
 	jwt.StandardClaims
-	UserID uint64 `json:"userId"`
+	UserID uint64            `json:"userId"`
+	Extra  map[string]string `json:"extra"`
 }
 
 func (s *service) Register(ctx context.Context, in vo.RegisterReq) (dto.User, error) {
@@ -211,7 +213,9 @@ func (s *service) RefreshToken(ctx context.Context, claims *claims.Claims) error
 			ExpiresAt: expiresAt,
 		},
 		UserID: claims.Id,
+		Extra:  claims.Extra,
 	})
+
 	tokenString, err := token.SignedString([]byte(s.jwtConfig.Secret))
 	if err != nil {
 		return err
@@ -260,4 +264,44 @@ func (s *service) JwtValidate(ctx context.Context, token string) (*jwt.Token, er
 		}
 		return s.jwtConfig.Secret, nil
 	})
+}
+
+func (s *service) MerchantLogin(ctx context.Context, in vo.LoginReq) (claims.Claims, error) {
+	var (
+		account     dto.MerchantAccount
+		_claims     claims.Claims
+		merchant_id = ctxutil.GetMerchantIDFromContext(ctx)
+		err         error
+	)
+	tx, err := s.repo.GetMerchantDB(ctx, merchant_id)
+	if err != nil {
+		return _claims, err
+	}
+	if err := s.repo.Get(ctx, tx, &account, &option.MerchantAccountWhereOption{
+		MerchantAccount: dto.MerchantAccount{
+			Username: in.Username,
+		},
+	}); err != nil {
+		return _claims, errors.WithStack(errors.ErrUsernameOrPasswordUnavailable)
+	}
+
+	if err := hash.CheckPasswordHash([]byte(account.Password), []byte(in.Password)); err != nil {
+		return _claims, errors.WithStack(errors.ErrUsernameOrPasswordUnavailable)
+	}
+
+	extra := make(map[string]string, 0)
+	extra["merchant_id"] = fmt.Sprintf("%d", merchant_id)
+	_claims = claims.Claims{
+		Id:          account.ID,
+		AccountType: uint64(types.AccountType__Merchant),
+		Username:    account.Username,
+		AliasName:   account.AliasName,
+		Extra:       extra,
+	}
+
+	// 產生 jwt
+	if err := s.RefreshToken(ctx, &_claims); err != nil {
+		return _claims, err
+	}
+	return _claims, nil
 }

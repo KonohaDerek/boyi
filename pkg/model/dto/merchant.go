@@ -17,9 +17,9 @@ type Merchant struct {
 	IsEnable     common.YesNo          `gorm:"NOT NULL;DEFAULT:1"`                                          // 是否開啟
 	Remark       string                `gorm:"type:nvarchar(500);"`                                         // 備註
 	Extra        db.JSON               `gorm:"type:json"`                                                   // 額外項目
-	CreatedAt    time.Time             `gorm:"NOT NULL"`                                                    // 創建時間
+	CreatedAt    time.Time             `gorm:"type:TIMESTAMP;NOT NULL;"`                                    // 創建時間
 	CreateUserID uint64                `gorm:"type:int(11) NOT NULL"`                                       // 創建人
-	UpdatedAt    time.Time             `gorm:"NOT NULL"`                                                    // 更新时间
+	UpdatedAt    time.Time             `gorm:"type:TIMESTAMP;NOT NULL;"`                                    // 更新时间
 	UpdateUserID uint64                `gorm:"type:int(11) NOT NULL"`                                       // 更新人
 	DeletedAt    soft_delete.DeletedAt `gorm:"uniqueIndex:udx_merchant_name;uniqueIndex:udx_merchant_dsn;"` // 刪除時間
 	DeleteUserID uint64                `gorm:"type:int(11) NOT NULL"`                                       // 更新人
@@ -38,9 +38,9 @@ type MerchantOrigin struct {
 	IsEnable     common.YesNo          `gorm:"NOT NULL;DEFAULT:1"`                                          // 是否開啟
 	Extra        db.JSON               `gorm:"type:json"`                                                   // 額外項目
 	Remark       string                `gorm:"type:nvarchar(500);"`                                         // 備註
-	CreatedAt    time.Time             `gorm:"NOT NULL"`                                                    // 創建時間
+	CreatedAt    time.Time             `gorm:"type:TIMESTAMP;NOT NULL;"`                                    // 創建時間
 	CreateUserID uint64                `gorm:"type:int(11) NOT NULL"`                                       // 創建人
-	UpdatedAt    time.Time             `gorm:"NOT NULL"`                                                    // 更新时间
+	UpdatedAt    time.Time             `gorm:"type:TIMESTAMP;NOT NULL;"`                                    // 更新时间
 	UpdateUserID uint64                `gorm:"type:int(11) NOT NULL"`                                       // 更新人
 	DeletedAt    soft_delete.DeletedAt `gorm:"uniqueIndex:udx_merchant_origin"`                             // 刪除時間
 	DeleteUserID uint64                `gorm:"type:int(11) NOT NULL"`                                       // 刪除人員

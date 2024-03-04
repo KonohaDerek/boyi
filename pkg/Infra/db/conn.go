@@ -190,5 +190,14 @@ func SetupDatabaseConnectionString(dsn string, databaseType DatabaseType) (*gorm
 	}
 	log.Info().Msgf("database ping success")
 
+	sqlDB, err := conn.DB()
+	if err != nil {
+		return nil, err
+	}
+
+	sqlDB.SetMaxIdleConns(2)
+	sqlDB.SetMaxOpenConns(5)
+	sqlDB.SetConnMaxLifetime(14400 * time.Second)
+
 	return conn, nil
 }

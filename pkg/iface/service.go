@@ -37,6 +37,9 @@ type IAuthService interface {
 	GetToken(ctx context.Context, token string, claims *claims.Claims) error
 	// 驗證 Token
 	JwtValidate(ctx context.Context, token string) (*jwt.Token, error)
+
+	// Merchant
+	MerchantLogin(ctx context.Context, in vo.LoginReq) (claims.Claims, error)
 }
 
 type IUserService interface {
@@ -111,6 +114,9 @@ type IMercahntService interface {
 	CreateMerchantOrigin(ctx context.Context, data *dto.MerchantOrigin) error
 	UpdateMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption, col *option.MerchantOriginUpdateColumn) error
 	DeleteMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption) error
+
+	// 取得商戶域名設置
+	GetMerchantOriginFromCtx(ctx context.Context) (dto.MerchantOrigin, error)
 }
 
 // ISupportService 一些雜項服務 FAQ ,Platform Setting

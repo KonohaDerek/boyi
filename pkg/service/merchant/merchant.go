@@ -1,6 +1,8 @@
 package merchant
 
 import (
+	"boyi/pkg/infra/ctxutil"
+	"boyi/pkg/infra/errors"
 	"boyi/pkg/model/dto"
 	"boyi/pkg/model/option"
 	"context"
@@ -30,4 +32,22 @@ func (s *service) UpdateMerchantOrigin(ctx context.Context, opt *option.Merchant
 }
 func (s *service) DeleteMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption) error {
 	return nil
+}
+
+func (s *service) GetMerchantOriginFromCtx(ctx context.Context) (dto.MerchantOrigin, error) {
+	merchantOrigin := dto.MerchantOrigin{}
+	origin := ctxutil.GetOriginFromContext(ctx)
+	if len(origin) <= 0 {
+		return merchantOrigin, errors.ErrResourceNotFound
+	}
+
+	err := s.repo.Get(ctx, nil, &merchantOrigin, &option.MerchantOriginWhereOption{
+		MerchantOrigin: dto.MerchantOrigin{
+			Origin: origin,
+		},
+	})
+	if err != nil {
+		return merchantOrigin, errors.ErrResourceNotFound
+	}
+	return merchantOrigin, nil
 }

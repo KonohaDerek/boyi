@@ -13,6 +13,7 @@ type service struct {
 	userSvc    iface.IUserService
 	supportSvc iface.ISupportService
 
+	repo      iface.IRepository
 	cacheRepo iface.ICacheRepository
 }
 
@@ -22,6 +23,7 @@ type Params struct {
 	JwtConfig  *configuration.Jwt
 	UserSvc    iface.IUserService
 	SupportSvc iface.ISupportService
+	Repo       iface.IRepository
 	CacheRepo  iface.ICacheRepository
 }
 
@@ -38,6 +40,7 @@ func New(p Params) iface.IAuthService {
 		jwtConfig:  p.JwtConfig,
 		userSvc:    p.UserSvc,
 		supportSvc: p.SupportSvc,
+		repo:       p.Repo,
 		cacheRepo:  p.CacheRepo,
 	}
 }

@@ -10,14 +10,15 @@ import (
 
 // Claims
 type Claims struct {
-	Id          uint64          `json:"id,omitempty"`
-	AccountType uint64          `json:"account_type,omitempty"`
-	Competences map[string]bool `json:"competences,omitempty"`
-	Username    string          `json:"username,omitempty"`
-	AliasName   string          `json:"alias_name,omitempty"`
-	Token       string          `json:"token,omitempty"`
-	DeviceUid   string          `json:"device_uid,omitempty"`
-	ExpiredAt   int64           `json:"expired_at,omitempty"`
+	Id          uint64            `json:"id,omitempty"`
+	AccountType uint64            `json:"account_type,omitempty"`
+	Competences map[string]bool   `json:"competences,omitempty"`
+	Username    string            `json:"username,omitempty"`
+	AliasName   string            `json:"alias_name,omitempty"`
+	Token       string            `json:"token,omitempty"`
+	DeviceUid   string            `json:"device_uid,omitempty"`
+	ExpiredAt   int64             `json:"expired_at,omitempty"`
+	Extra       map[string]string `json:"extra,omitempty"`
 }
 
 // claimsKey ...

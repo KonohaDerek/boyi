@@ -4,6 +4,7 @@ import (
 	"boyi/configuration"
 	"boyi/internal/lock"
 	graphApp "boyi/pkg/delivery/graph/app"
+	graphMerchant "boyi/pkg/delivery/graph/merchant"
 	graphPlatform "boyi/pkg/delivery/graph/platform"
 	"boyi/pkg/delivery/redis_worker"
 	"boyi/pkg/delivery/restful"
@@ -99,7 +100,7 @@ func run(_ *cobra.Command, _ []string) {
 	case "app":
 		fxOption = append(fxOption, graphApp.Module)
 	case "platform":
-		fxOption = append(fxOption, restfulPlatform.Module, graphPlatform.Module)
+		fxOption = append(fxOption, restfulPlatform.Module, graphPlatform.Module, graphMerchant.Module)
 	case "agent":
 		fxOption = append(fxOption, restfulPlatform.Module, graphPlatform.Module)
 	case "merchant":

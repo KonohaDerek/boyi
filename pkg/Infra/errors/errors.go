@@ -11,19 +11,12 @@ import (
 
 // 自定义的 errors
 var (
-	ErrBadRequest                 = &_error{Code: "400000", Message: http.StatusText(http.StatusBadRequest), Status: http.StatusBadRequest}
-	ErrInvalidInput               = &_error{Code: "400001", Message: "One of the request inputs is not valid.", Status: http.StatusBadRequest}
-	ErrResultBeenBound            = &_error{Code: "400002", Message: "The result already been bound, Need to check which resource has been used", Status: http.StatusBadRequest}
-	ErrAccountAlreadyRegistered   = &_error{Code: "400003", Message: "The username Already Registered.", Status: http.StatusBadRequest}
-	ErrRoomAlreadyDeactivated     = &_error{Code: "400004", Message: "The consulting room already deactivated.", Status: http.StatusBadRequest}
-	ErrSpinachAllowed             = &_error{Code: "400005", Message: "The request from Spinach has been refused or access is not allowed.", Status: http.StatusBadRequest}
-	ErrInsufficientBalance        = &_error{Code: "400100", Message: "balance is insufficient", Status: http.StatusBadRequest}
-	ErrRedEnvelopIsTimeout        = &_error{Code: "400101", Message: "red envelop is timeout", Status: http.StatusBadRequest}
-	ErrRedEnvelopIsReceived       = &_error{Code: "400102", Message: "red envelop is received", Status: http.StatusBadRequest}
-	ErrRedEnvelopNotAllowReceived = &_error{Code: "400103", Message: "red envelop is not for you", Status: http.StatusBadRequest}
-	ErrRedEnvelopNotSamePlatform  = &_error{Code: "400104", Message: "此红包所属不同平台", Status: http.StatusBadRequest}
-	ErrNotSamePlatform            = &_error{Code: "400105", Message: "所属不同平台", Status: http.StatusBadRequest}
-	ErrUserIsOffline              = &_error{Code: "400106", Message: "spinach user is offline", Status: http.StatusBadRequest}
+	ErrBadRequest               = &_error{Code: "400000", Message: http.StatusText(http.StatusBadRequest), Status: http.StatusBadRequest}
+	ErrInvalidInput             = &_error{Code: "400001", Message: "One of the request inputs is not valid.", Status: http.StatusBadRequest}
+	ErrResultBeenBound          = &_error{Code: "400002", Message: "The result already been bound, Need to check which resource has been used", Status: http.StatusBadRequest}
+	ErrAccountAlreadyRegistered = &_error{Code: "400003", Message: "The username Already Registered.", Status: http.StatusBadRequest}
+	ErrRoomAlreadyDeactivated   = &_error{Code: "400004", Message: "The consulting room already deactivated.", Status: http.StatusBadRequest}
+	ErrSpinachAllowed           = &_error{Code: "400005", Message: "The request from Spinach has been refused or access is not allowed.", Status: http.StatusBadRequest}
 
 	ErrUnauthorized                  = &_error{Code: "401001", Message: http.StatusText(http.StatusUnauthorized), Status: http.StatusUnauthorized}
 	ErrTokenUnavailable              = &_error{Code: "401002", Message: "token not found", Status: http.StatusUnauthorized}
@@ -43,6 +36,7 @@ var (
 	// ErrNotFound         =  &_error{Code: "404000", Message: http.StatusText(http.StatusNotFound), Status: http.StatusNotFound}
 	ErrResourceNotFound       = &_error{Code: "404001", Message: "The specified resource does not exist.", Status: http.StatusNotFound}
 	ErrResourceHasBeenDeleted = &_error{Code: "404002", Message: "The specified resource has been deleted.", Status: http.StatusNotFound}
+	ErrMerchantOriginNotFound = &_error{Code: "404101", Message: "该域名尚未绑定商户", Status: http.StatusNotFound}
 
 	ErrMethodNotAllowed = &_error{Code: "405001", Message: "Server has received and recognized the request, but has rejected the specific HTTP method it’s using.", Status: http.StatusMethodNotAllowed}
 

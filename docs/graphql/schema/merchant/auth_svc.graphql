@@ -1,0 +1,8 @@
+extend type Query {
+	Me: Claims!
+}
+
+extend type Mutation {
+	Login(in: LoginReqInput!): LoginResp!
+	Logout: Uint64!
+}

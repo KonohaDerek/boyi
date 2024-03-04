@@ -36,11 +36,13 @@ gen.swagger:
 gen.graphql:
 	-gqlgen generate --verbose --config $(CURDIR)/platform_gqlgen.yml
 	-gqlgen generate --verbose --config $(CURDIR)/app_gqlgen.yml
+	-gqlgen generate --verbose --config $(CURDIR)/merchant_gqlgen.yml
 	make gen.graphql.format
 	
 gen.graphql.format:
 	go fmt $(CURDIR)/pkg/delivery/graph/platform/*.go
 	go fmt $(CURDIR)/pkg/delivery/graph/app/*.go
+	go fmt $(CURDIR)/pkg/delivery/graph/merchant/*.go
 
 gen.mock:
 	mockgen -source pkg/iface/repository.go -destination internal/mock/repository_mock.go -package mock

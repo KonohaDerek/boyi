@@ -135,3 +135,15 @@ func GetDeviceOSFronContext(ctx context.Context) string {
 	fmt.Println("Device:", ua.Device)
 	return fmt.Sprintf("%s %s, %s", ua.OS, ua.OSVersion, ua.Device)
 }
+
+func ContextWithMerchantID(ctx context.Context, merchantID uint64) context.Context {
+	return context.WithValue(ctx, "MerchantID", merchantID)
+}
+
+func GetMerchantIDFromContext(ctx context.Context) uint64 {
+	v, ok := ctx.Value("MerchantID").(uint64)
+	if !ok {
+		return 0
+	}
+	return v
+}
