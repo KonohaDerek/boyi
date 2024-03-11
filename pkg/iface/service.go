@@ -106,11 +106,13 @@ type IAuditLogService interface {
 // 商戶服務
 type IMercahntService interface {
 	ListMerchants(ctx context.Context, opt *option.MerchantWhereOption) ([]dto.Merchant, int64, error)
+	GetMerchant(ctx context.Context, opt *option.MerchantWhereOption) (dto.Merchant, error)
 	CreateMerchant(ctx context.Context, data *dto.Merchant) error
 	UpdateMerchant(ctx context.Context, opt *option.MerchantWhereOption, col *option.MerchantUpdateColumn) error
 	DeleteMerchant(ctx context.Context, opt *option.MerchantWhereOption) error
 
 	ListMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption) ([]dto.MerchantOrigin, int64, error)
+	GetMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption) (dto.MerchantOrigin, error)
 	CreateMerchantOrigin(ctx context.Context, data *dto.MerchantOrigin) error
 	UpdateMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption, col *option.MerchantOriginUpdateColumn) error
 	DeleteMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption) error

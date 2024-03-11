@@ -141,6 +141,7 @@ func SetupDatabase(database *Database) (*gorm.DB, error) {
 func SetupDatabaseConnectionString(dsn string, databaseType DatabaseType) (*gorm.DB, error) {
 	bo := backoff.NewExponentialBackOff()
 	bo.MaxElapsedTime = time.Duration(180) * time.Second
+
 	var dialector gorm.Dialector
 	switch databaseType {
 	case MySQL:
@@ -170,18 +171,18 @@ func SetupDatabaseConnectionString(dsn string, databaseType DatabaseType) (*gorm
 		})
 		if err != nil {
 			log.Error().Msgf("Fail to open conn, err: %+v", err)
-			return err
+			return backoff.Permanent(err)
 		}
 		conn = db
 
 		sqlDB, err := conn.DB()
 		if err != nil {
 			log.Error().Msgf("Fail to get DB, err: %+v", err)
-			return err
+			return backoff.Permanent(err)
 		}
 
 		err = sqlDB.Ping()
-		return err
+		return backoff.Permanent(err)
 	}, bo)
 
 	if err != nil {

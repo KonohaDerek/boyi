@@ -152,3 +152,17 @@ subscription websocket
       token: <token>
       device_id: <deviceID>
     ```
+
+### 額外工具
+1. Insomnia : 類似PostMan
+2. OrbStack : 取代 docker desktop
+
+### 新增資料庫
+```sql
+   1. mysql -u root -p
+   2. root
+   2. CREATE DATABASE `merchant_1`  DEFAULT CHARACTER SET = 'utf8mb4';
+   3. GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES  ON `merchant_1`.* TO 'user'@'%';
+   4. GRANT ALL PRIVILEGES ON *.* TO 'user'@'%';
+   5. FLUSH PRIVILEGES;
+```

@@ -88,11 +88,6 @@ func Initialize(fxOption ...fx.Option) error {
 
 	conns.WriteDB = conns.ReadDB // sqlite 好像會有lock table 的問題
 
-	// config.Databases.MigratePath = path.Join(os.Getenv("PROJ_DIR"),"deployment/database")
-	// if err := db.Migrate(config.Databases); err != nil {
-	// 	return err
-	// }
-
 	base = append(base, fxOption...)
 
 	app := fx.New(

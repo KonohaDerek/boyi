@@ -21,6 +21,8 @@ type MerchantUpdateColumn struct {
 	DatabaseType db.DatabaseType // 資料庫類型
 	DatabaseDSN  string          // 資料庫連線資訊
 	IsEnable     common.YesNo    // 是否開啟
+	Remark       string          // 備註
+	Extra        db.JSON         // 額外項目
 }
 
 func (col *MerchantUpdateColumn) Columns() interface{} {
@@ -69,6 +71,8 @@ type MerchantOriginUpdateColumn struct {
 	MerchantID   uint64       // 商戶ID
 	MerchantName string       // 商戶名稱
 	IsEnable     common.YesNo // 是否開啟
+	Remark       string       // 備註
+	Extra        db.JSON      // 額外項目
 }
 
 func (col *MerchantOriginUpdateColumn) Columns() interface{} {
