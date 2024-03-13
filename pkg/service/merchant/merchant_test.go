@@ -268,3 +268,54 @@ func Test_service_CreateMerchantOrigin(t *testing.T) {
 		})
 	}
 }
+
+func Test_service_UpdateMerchantOrigin(t *testing.T) {
+	type args struct {
+		ctx context.Context
+		opt *option.MerchantOriginWhereOption
+		col *option.MerchantOriginUpdateColumn
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "normal test case",
+			args: args{
+				ctx: context.Background(),
+				opt: &option.MerchantOriginWhereOption{
+					MerchantOrigin: dto.MerchantOrigin{
+						Origin: "merchant_3.host",
+					},
+				},
+				col: &option.MerchantOriginUpdateColumn{
+					Origin:   "merchant_3.host.com",
+					IsEnable: common.YesNo__NO,
+					Remark:   "remark",
+					Extra:    db.JSON("{\"key\":\"value2\"}"),
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			s := suite.svc
+			if err := s.UpdateMerchantOrigin(tt.args.ctx, tt.args.opt, tt.args.col); (err != nil) != tt.wantErr {
+				t.Errorf("service.UpdateMerchantOrigin() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			merchantOrigin, err := s.GetMerchantOrigin(tt.args.ctx, &option.MerchantOriginWhereOption{MerchantOrigin: dto.MerchantOrigin{Origin: tt.args.col.Origin}})
+			if (err != nil) != tt.wantErr {
+				t.Errorf("service.GetMerchantOrigin() error = %v, wantErr %v", err, tt.wantErr)
+			}
+			assert.Equal(t, merchantOrigin.Origin, tt.args.col.Origin)
+			assert.Equal(t, merchantOrigin.MerchantID, uint64(3))
+			assert.Equal(t, merchantOrigin.MerchantName, "test merchant")
+			assert.Equal(t, merchantOrigin.IsEnable, tt.args.col.IsEnable)
+			assert.Equal(t, merchantOrigin.Remark, tt.args.col.Remark)
+			assert.Equal(t, merchantOrigin.Extra, tt.args.col.Extra)
+		})
+	}
+}
