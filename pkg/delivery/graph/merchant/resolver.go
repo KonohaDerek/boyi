@@ -1,4 +1,4 @@
-package mnerchant
+package merchant
 
 import (
 	"boyi/internal/graph/merchant/generated"

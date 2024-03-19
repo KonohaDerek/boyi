@@ -33,7 +33,7 @@ var Module = fx.Options(
 var MercahntModule = fx.Options(
 	fx.Invoke(
 		MigrationMerchant,
-		InitDefaultMerchantAccount,
+		InitDefaultMerchantUser,
 	),
 )
 

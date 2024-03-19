@@ -10,12 +10,21 @@ type Merchant {
     id: Uint64!
     """商家名稱"""
     name: String!
-    """商家描述"""
-    description: String!
+    """資料庫類型"""
+    databaseType: String!
+    """資料庫連線資訊"""
+    databaseDSN: String!
+    """是否啟用"""
+    isEnabled: YesNo!
+    """額外資訊"""
+    extra: String!
+    """備註"""
+    remark: String!
     """創建時間"""
     createdAt: Timestamp!
     """"更新時間"""
     updatedAt: Timestamp!
+   
 }
 
 type ListMerchantWithdrawMethodResp {
@@ -125,8 +134,25 @@ type MerchantOrigin {
     merchantId: Uint64!
     origin: String!
     isEnabled: YesNo!
+    extra: String!
     createdAt: Timestamp!
     createdUserId: Uint64!
     updatedAt: Timestamp!
     updatedUserId: Uint64!
+}
+
+type ListMerchantUserResp {
+    list: [MerchantUser!]!
+    meta: Meta!
+}
+
+type MerchantUser {
+    id: Uint64!
+    merchantId: Uint64!
+    username: String!
+    aliasName: String!
+    isEnabled: YesNo!
+    extra: String!
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
 }

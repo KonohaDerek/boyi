@@ -1,0 +1,9 @@
+extend type Query {
+	ListMerchantUser(filter: MerchantUserFilterInput, pagination: PaginationInput): ListMerchantUserResp!
+}
+
+extend type Mutation {
+	CreateMerchantUser(in: MerchantUserCreateInput!): MerchantUser!
+    UpdateMerchantUser(filter: MerchantUserFilterInput, in: MerchantUserUpdateInput!): MerchantUser!
+    DeleteMerchantUser(filter: MerchantUserFilterInput): Uint64!
+}

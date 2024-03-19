@@ -8,42 +8,65 @@ import (
 	"boyi/internal/claims"
 	"boyi/pkg/delivery/graph/view"
 	"boyi/pkg/model/dto"
+	"boyi/pkg/model/option"
 	"context"
 	"fmt"
 )
 
 // CreateMerchant is the resolver for the createMerchant field.
-func (r *mutationResolver) CreateMerchant(ctx context.Context, in view.MerchantCreateInput) (uint64, error) {
+func (r *mutationResolver) CreateMerchant(ctx context.Context, in view.MerchantCreateInput) (*view.Merchant, error) {
 	var (
-		merchant dto.Merchant
+		resp *view.Merchant
 	)
-	claims, err := claims.GetClaims(ctx)
+	claims, err := claims.VerifyRole(ctx, dto.API_Merchant_Create.String())
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 
-	if err := claims.VerifyRole(
-		dto.API_Merchant_Create.String()); err != nil {
-		return 0, err
-	}
-
-	merchant = in.ConvertToDTO()
+	merchant := in.ConvertToDTO()
 	merchant.CreateUserID = claims.Id
 	if err := r.merchantSvc.CreateMerchant(ctx, &merchant); err != nil {
-		return 0, err
+		return nil, err
 	}
 
-	return merchant.ID, nil
+	return resp.FromDTO(merchant), nil
 }
 
 // UpdateMerchant is the resolver for the updateMerchant field.
-func (r *mutationResolver) UpdateMerchant(ctx context.Context, filter view.MerchantFilterInput, in view.MerchantUpdateInput) (uint64, error) {
-	panic(fmt.Errorf("not implemented: UpdateMerchant - updateMerchant"))
+func (r *mutationResolver) UpdateMerchant(ctx context.Context, filter view.MerchantFilterInput, in view.MerchantUpdateInput) (*view.Merchant, error) {
+	var (
+		opt  option.MerchantWhereOption
+		cols option.MerchantUpdateColumn
+		resp view.Merchant
+	)
+	claims, err := claims.VerifyRole(ctx, dto.API_Merchant_Update.String())
+	if err != nil {
+		return nil, err
+	}
+
+	opt = filter.ConvertToOption()
+	cols = in.ConvertToOption(&claims)
+
+	result, err := r.merchantSvc.UpdateMerchant(ctx, &opt, &cols)
+	if err != nil {
+		return nil, err
+	}
+	return resp.FromDTO(result), nil
 }
 
 // DeleteMerchant is the resolver for the deleteMerchant field.
 func (r *mutationResolver) DeleteMerchant(ctx context.Context, filter view.MerchantFilterInput) (uint64, error) {
-	panic(fmt.Errorf("not implemented: DeleteMerchant - deleteMerchant"))
+	_, err := claims.VerifyRole(ctx, dto.API_Merchant_Delete.String())
+	if err != nil {
+		return 0, err
+	}
+
+	var opt = filter.ConvertToOption()
+	if err := r.merchantSvc.DeleteMerchant(ctx, &opt); err != nil {
+		return 0, err
+	}
+
+	return 1, nil
 }
 
 // CreateMerchantWithdrawMethod is the resolver for the createMerchantWithdrawMethod field.

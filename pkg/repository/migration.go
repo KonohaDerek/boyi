@@ -210,7 +210,7 @@ func MigrationMerchant(repo iface.IRepository) error {
 		)
 		// Migrate 商戶資料庫
 		err := _conn.AutoMigrate(
-			&dto.MerchantAccount{},
+			&dto.MerchantUser{},
 		)
 		if err != nil {
 			return err
@@ -219,7 +219,7 @@ func MigrationMerchant(repo iface.IRepository) error {
 	return nil
 }
 
-func InitDefaultMerchantAccount(repo iface.IRepository) error {
+func InitDefaultMerchantUser(repo iface.IRepository) error {
 	ctx := context.Background()
 	pwd, _ := hash.HashPassword([]byte("admin"))
 	conns, err := repo.GetALLMerchantDB(ctx)
@@ -231,15 +231,15 @@ func InitDefaultMerchantAccount(repo iface.IRepository) error {
 
 		if err = repo.CreateIfNotExists(ctx,
 			conn,
-			&dto.MerchantAccount{
+			&dto.MerchantUser{
 				Username:  "admin",
 				Password:  string(pwd),
 				AliasName: fmt.Sprintf("admin_%d", key),
 				IsEnable:  common.YesNo__YES,
 				Extra:     db.JSON(""),
 			},
-			&option.MerchantAccountWhereOption{
-				MerchantAccount: dto.MerchantAccount{
+			&option.MerchantUserWhereOption{
+				MerchantUser: dto.MerchantUser{
 					Username: "admin",
 				},
 			}); err != nil && !errors.Is(err, errors.ErrResourceAlreadyExists) {

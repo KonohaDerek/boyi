@@ -19,12 +19,8 @@ func (r *mutationResolver) CreateHostsDeny(ctx context.Context, in view.HostsDen
 		result dto.HostsDeny
 		resp   view.HostsDeny
 	)
-	claims, err := claims.GetClaims(ctx)
+	claims, err := claims.VerifyRole(ctx, dto.API_HostsDeny_Create.String())
 	if err != nil {
-		return nil, err
-	}
-
-	if err := claims.VerifyRole(dto.API_HostsDeny_Create.String()); err != nil {
 		return nil, err
 	}
 
@@ -46,12 +42,8 @@ func (r *mutationResolver) UpdateHostsDeny(ctx context.Context, filter view.Host
 		resp view.HostsDeny
 	)
 
-	claims, err := claims.GetClaims(ctx)
+	claims, err := claims.VerifyRole(ctx, dto.API_HostsDeny_Update.String())
 	if err != nil {
-		return nil, err
-	}
-
-	if err := claims.VerifyRole(dto.API_HostsDeny_Update.String()); err != nil {
 		return nil, err
 	}
 
@@ -67,12 +59,8 @@ func (r *mutationResolver) UpdateHostsDeny(ctx context.Context, filter view.Host
 
 // DeleteHostsDeny is the resolver for the deleteHostsDeny field.
 func (r *mutationResolver) DeleteHostsDeny(ctx context.Context, filter view.HostsDenyFilterInput) (uint64, error) {
-	claims, err := claims.GetClaims(ctx)
+	_, err := claims.VerifyRole(ctx, dto.API_HostsDeny_Delete.String())
 	if err != nil {
-		return 0, err
-	}
-
-	if err := claims.VerifyRole(dto.API_HostsDeny_Delete.String()); err != nil {
 		return 0, err
 	}
 
@@ -188,12 +176,8 @@ func (r *queryResolver) GetHostsDeny(ctx context.Context, filter view.HostsDenyF
 		resp view.HostsDeny
 	)
 
-	claims, err := claims.GetClaims(ctx)
+	_, err := claims.VerifyRole(ctx, dto.API_HostsDeny_Get.String())
 	if err != nil {
-		return nil, err
-	}
-
-	if err := claims.VerifyRole(dto.API_HostsDeny_Get.String()); err != nil {
 		return nil, err
 	}
 
@@ -214,12 +198,8 @@ func (r *queryResolver) ListHostsDeny(ctx context.Context, filter *view.HostsDen
 		resp view.ListHostsDenyResp
 	)
 
-	claims, err := claims.GetClaims(ctx)
+	_, err := claims.VerifyRole(ctx, dto.API_HostsDeny_Get.String())
 	if err != nil {
-		return nil, err
-	}
-
-	if err := claims.VerifyRole(dto.API_HostsDeny_Get.String()); err != nil {
 		return nil, err
 	}
 

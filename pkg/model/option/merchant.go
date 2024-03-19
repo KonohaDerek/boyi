@@ -23,6 +23,7 @@ type MerchantUpdateColumn struct {
 	IsEnable     common.YesNo    // 是否開啟
 	Remark       string          // 備註
 	Extra        db.JSON         // 額外項目
+	UpdateUserID uint64          // 更新人
 }
 
 func (col *MerchantUpdateColumn) Columns() interface{} {

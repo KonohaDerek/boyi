@@ -17,13 +17,8 @@ func (r *mutationResolver) CreateRole(ctx context.Context, in view.RoleCreateInp
 	var (
 		role dto.Role
 	)
-	claims, err := claims.GetClaims(ctx)
+	claims, err := claims.VerifyRole(ctx, dto.API_Manager_Role_Create.String())
 	if err != nil {
-		return 0, err
-	}
-
-	if err := claims.VerifyRole(
-		dto.API_Manager_Role_Create.String()); err != nil {
 		return 0, err
 	}
 
@@ -43,13 +38,8 @@ func (r *mutationResolver) UpdateRole(ctx context.Context, filter view.RoleFilte
 		cols option.RoleUpdateColumn
 	)
 
-	claims, err := claims.GetClaims(ctx)
+	claims, err := claims.VerifyRole(ctx, dto.API_Manager_Role_Update.String())
 	if err != nil {
-		return 0, err
-	}
-
-	if err := claims.VerifyRole(
-		dto.API_Manager_Role_Update.String()); err != nil {
 		return 0, err
 	}
 
@@ -66,13 +56,8 @@ func (r *mutationResolver) UpdateRole(ctx context.Context, filter view.RoleFilte
 
 // DeleteRole is the resolver for the deleteRole field.
 func (r *mutationResolver) DeleteRole(ctx context.Context, filter view.RoleFilterInput) (uint64, error) {
-	claims, err := claims.GetClaims(ctx)
+	_, err := claims.VerifyRole(ctx, dto.API_Manager_Role_Delete.String())
 	if err != nil {
-		return 0, err
-	}
-
-	if err := claims.VerifyRole(
-		dto.API_Manager_Role_Delete.String()); err != nil {
 		return 0, err
 	}
 

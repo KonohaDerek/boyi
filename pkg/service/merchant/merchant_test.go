@@ -147,13 +147,10 @@ func Test_service_UpdateMerchant(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			s := suite.svc
-			if err := s.UpdateMerchant(tt.args.ctx, tt.args.opt, tt.args.col); (err != nil) != tt.wantErr {
-				t.Errorf("service.UpdateMerchant() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			merchant, err := s.GetMerchant(tt.args.ctx, &option.MerchantWhereOption{Merchant: dto.Merchant{Name: tt.args.col.Name}})
+			merchant, err := s.UpdateMerchant(tt.args.ctx, tt.args.opt, tt.args.col)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("service.UpdateMerchant() error = %v, wantErr %v", err, tt.wantErr)
+				return
 			}
 			assert.Equal(t, merchant.DatabaseType, tt.args.col.DatabaseType)
 			assert.Equal(t, merchant.DatabaseDSN, tt.args.col.DatabaseDSN)
@@ -302,13 +299,10 @@ func Test_service_UpdateMerchantOrigin(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			s := suite.svc
-			if err := s.UpdateMerchantOrigin(tt.args.ctx, tt.args.opt, tt.args.col); (err != nil) != tt.wantErr {
+			merchantOrigin, err := s.UpdateMerchantOrigin(tt.args.ctx, tt.args.opt, tt.args.col)
+			if (err != nil) != tt.wantErr {
 				t.Errorf("service.UpdateMerchantOrigin() error = %v, wantErr %v", err, tt.wantErr)
 				return
-			}
-			merchantOrigin, err := s.GetMerchantOrigin(tt.args.ctx, &option.MerchantOriginWhereOption{MerchantOrigin: dto.MerchantOrigin{Origin: tt.args.col.Origin}})
-			if (err != nil) != tt.wantErr {
-				t.Errorf("service.GetMerchantOrigin() error = %v, wantErr %v", err, tt.wantErr)
 			}
 			assert.Equal(t, merchantOrigin.Origin, tt.args.col.Origin)
 			assert.Equal(t, merchantOrigin.MerchantID, uint64(3))

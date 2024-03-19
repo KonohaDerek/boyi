@@ -38,6 +38,17 @@ func GetClaims(ctx context.Context) (Claims, error) {
 	return claims, nil
 }
 
+func VerifyRole(ctx context.Context, keys ...string) (Claims, error) {
+	c, err := GetClaims(ctx)
+	if err != nil {
+		return c, err
+	}
+	if err := c.VerifyRole(keys...); err != nil {
+		return c, err
+	}
+	return c, nil
+}
+
 // SetClaims ...
 func SetClaimsToContext(ctx context.Context, c Claims) context.Context {
 	return context.WithValue(ctx, claimsKey{}, c)

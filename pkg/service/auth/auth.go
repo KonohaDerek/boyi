@@ -268,7 +268,7 @@ func (s *service) JwtValidate(ctx context.Context, token string) (*jwt.Token, er
 
 func (s *service) MerchantLogin(ctx context.Context, in vo.LoginReq) (claims.Claims, error) {
 	var (
-		account     dto.MerchantAccount
+		user        dto.MerchantUser
 		_claims     claims.Claims
 		merchant_id = ctxutil.GetMerchantIDFromContext(ctx)
 		err         error
@@ -277,25 +277,25 @@ func (s *service) MerchantLogin(ctx context.Context, in vo.LoginReq) (claims.Cla
 	if err != nil {
 		return _claims, err
 	}
-	if err := s.repo.Get(ctx, tx, &account, &option.MerchantAccountWhereOption{
-		MerchantAccount: dto.MerchantAccount{
+	if err := s.repo.Get(ctx, tx, &user, &option.MerchantUserWhereOption{
+		MerchantUser: dto.MerchantUser{
 			Username: in.Username,
 		},
 	}); err != nil {
 		return _claims, errors.WithStack(errors.ErrUsernameOrPasswordUnavailable)
 	}
 
-	if err := hash.CheckPasswordHash([]byte(account.Password), []byte(in.Password)); err != nil {
+	if err := hash.CheckPasswordHash([]byte(user.Password), []byte(in.Password)); err != nil {
 		return _claims, errors.WithStack(errors.ErrUsernameOrPasswordUnavailable)
 	}
 
 	extra := make(map[string]string, 0)
 	extra["merchant_id"] = fmt.Sprintf("%d", merchant_id)
 	_claims = claims.Claims{
-		Id:          account.ID,
+		Id:          user.ID,
 		AccountType: uint64(types.AccountType__Merchant),
-		Username:    account.Username,
-		AliasName:   account.AliasName,
+		Username:    user.Username,
+		AliasName:   user.AliasName,
 		Extra:       extra,
 	}
 

@@ -24,9 +24,9 @@ extend type Query  {
 
 extend type Mutation {
     """新增商家"""
-    createMerchant(in: MerchantCreateInput!): Uint64!
+    createMerchant(in: MerchantCreateInput!): Merchant!
     """更新商家"""
-    updateMerchant(filter: MerchantFilterInput!, in: MerchantUpdateInput!): Uint64!
+    updateMerchant(filter: MerchantFilterInput!, in: MerchantUpdateInput!): Merchant!
     """刪除商家"""
     deleteMerchant(filter: MerchantFilterInput!): Uint64!
 

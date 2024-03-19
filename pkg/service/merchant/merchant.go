@@ -38,12 +38,12 @@ func (s *service) CreateMerchant(ctx context.Context, data *dto.Merchant) error 
 }
 
 // 更新商戶
-func (s *service) UpdateMerchant(ctx context.Context, opt *option.MerchantWhereOption, col *option.MerchantUpdateColumn) error {
+func (s *service) UpdateMerchant(ctx context.Context, opt *option.MerchantWhereOption, col *option.MerchantUpdateColumn) (dto.Merchant, error) {
 	err := s.repo.Update(ctx, nil, opt, col)
 	if err != nil {
-		return err
+		return dto.Merchant{}, err
 	}
-	return nil
+	return s.GetMerchant(ctx, opt)
 }
 
 // 刪除商戶
@@ -81,12 +81,12 @@ func (s *service) CreateMerchantOrigin(ctx context.Context, data *dto.MerchantOr
 }
 
 // 更新商戶來源
-func (s *service) UpdateMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption, col *option.MerchantOriginUpdateColumn) error {
+func (s *service) UpdateMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption, col *option.MerchantOriginUpdateColumn) (dto.MerchantOrigin, error) {
 	err := s.repo.Update(ctx, nil, opt, col)
 	if err != nil {
-		return err
+		return dto.MerchantOrigin{}, err
 	}
-	return nil
+	return s.GetMerchantOrigin(ctx, opt)
 }
 
 // 刪除商戶來源

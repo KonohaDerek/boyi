@@ -752,6 +752,11 @@ type ListMerchantResp struct {
 	Total uint64 `json:"total"`
 }
 
+type ListMerchantUserResp struct {
+	List []*MerchantUser `json:"list"`
+	Meta *Meta           `json:"meta"`
+}
+
 type ListMerchantWithdrawLogResp struct {
 	List []*MerchantWithdrawLog `json:"list"`
 	Meta *Meta                  `json:"meta"`
@@ -875,8 +880,16 @@ type Merchant struct {
 	ID uint64 `json:"id"`
 	// 商家名稱
 	Name string `json:"name"`
-	// 商家描述
-	Description string `json:"description"`
+	// 資料庫類型
+	DatabaseType string `json:"databaseType"`
+	// 資料庫連線資訊
+	DatabaseDsn string `json:"databaseDSN"`
+	// 是否啟用
+	IsEnabled YesNo `json:"isEnabled"`
+	// 額外資訊
+	Extra string `json:"extra"`
+	// 備註
+	Remark string `json:"remark"`
 	// 創建時間
 	CreatedAt time.Time `json:"createdAt"`
 	// "更新時間
@@ -1100,6 +1113,7 @@ type MerchantOrigin struct {
 	MerchantID    uint64    `json:"merchantId"`
 	Origin        string    `json:"origin"`
 	IsEnabled     YesNo     `json:"isEnabled"`
+	Extra         string    `json:"extra"`
 	CreatedAt     time.Time `json:"createdAt"`
 	CreatedUserID uint64    `json:"createdUserId"`
 	UpdatedAt     time.Time `json:"updatedAt"`
@@ -1137,17 +1151,73 @@ type MerchantOriginUpdateInput struct {
 
 type MerchantUpdateInput struct {
 	// 商戶名稱
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// 資料庫類型
-	DatabaseType string `json:"databaseType"`
+	DatabaseType *string `json:"databaseType,omitempty"`
 	// 資料庫連線資訊
-	DatabaseDsn string `json:"databaseDSN"`
+	DatabaseDsn *string `json:"databaseDSN,omitempty"`
 	// 是否啟用
-	IsEnabled YesNo `json:"isEnabled"`
+	IsEnabled *YesNo `json:"isEnabled,omitempty"`
 	// 額外資訊
 	Extra *string `json:"extra,omitempty"`
 	// 備註
 	Remark *string `json:"remark,omitempty"`
+}
+
+type MerchantUser struct {
+	ID         uint64    `json:"id"`
+	MerchantID uint64    `json:"merchantId"`
+	Username   string    `json:"username"`
+	AliasName  string    `json:"aliasName"`
+	IsEnabled  YesNo     `json:"isEnabled"`
+	Extra      string    `json:"extra"`
+	CreatedAt  time.Time `json:"createdAt"`
+	UpdatedAt  time.Time `json:"updatedAt"`
+}
+
+type MerchantUserCreateInput struct {
+	// 商戶ID
+	MerchantID uint64 `json:"merchantId"`
+	// 帳號
+	Username string `json:"username"`
+	// 密碼
+	Password string `json:"password"`
+	// 用戶名稱
+	AliasName *string `json:"aliasName,omitempty"`
+	// 是否啟用
+	IsEnabled YesNo `json:"isEnabled"`
+	// Extra
+	Extra *string `json:"extra,omitempty"`
+}
+
+type MerchantUserFilterInput struct {
+	MerchantUser *MerchantUserInput `json:"merchantUser,omitempty"`
+	BaseFilter   *BaseFilterInput   `json:"baseFilter,omitempty"`
+}
+
+type MerchantUserInput struct {
+	ID *uint64 `json:"id,omitempty"`
+	// 商戶ID
+	MerchantID *uint64 `json:"merchantId,omitempty"`
+	// 帳號
+	Username *string `json:"username,omitempty"`
+	// 用戶名稱
+	AliasName *string `json:"aliasName,omitempty"`
+	// 是否啟用
+	IsEnabled *YesNo `json:"isEnabled,omitempty"`
+}
+
+type MerchantUserUpdateInput struct {
+	// 商戶ID
+	MerchantID uint64 `json:"merchantId"`
+	// 帳號
+	Username string `json:"username"`
+	// 用戶名稱
+	AliasName *string `json:"aliasName,omitempty"`
+	// 是否啟用
+	IsEnabled YesNo `json:"isEnabled"`
+	// Extra
+	Extra *string `json:"extra,omitempty"`
 }
 
 type MerchantWithdrawLog struct {

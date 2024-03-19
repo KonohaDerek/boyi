@@ -115,13 +115,13 @@ input MerchantCreateInput {
 
 input MerchantUpdateInput {
     """商戶名稱"""
-    name: String!
+    name: String
     """資料庫類型"""
-    databaseType: String!
+    databaseType: String
     """資料庫連線資訊"""
-    databaseDSN: String!
+    databaseDSN: String
     """是否啟用"""
-    isEnabled: YesNo!
+    isEnabled: YesNo
     """額外資訊"""
     extra: String
     """備註"""
@@ -230,4 +230,49 @@ input MerchantOriginUpdateInput {
     origin: String!
     """是否啟用"""
     isEnabled: YesNo!
+}
+
+input MerchantUserFilterInput {
+    merchantUser: MerchantUserInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantUserInput {
+    id: Uint64
+    """商戶ID"""
+    merchantId: Uint64
+    """帳號"""
+    username: String
+    """用戶名稱"""
+    aliasName: String
+     """是否啟用"""
+    isEnabled: YesNo
+}
+
+input MerchantUserCreateInput {
+    """商戶ID"""
+    merchantId: Uint64!
+    """帳號"""
+    username: String!
+    """密碼"""
+    password: String!
+    """用戶名稱"""
+    aliasName: String
+    """是否啟用"""
+    isEnabled: YesNo!
+    """Extra"""
+    extra: String
+}
+
+input MerchantUserUpdateInput {
+    """商戶ID"""
+    merchantId: Uint64!
+    """帳號"""
+    username: String!
+    """用戶名稱"""
+    aliasName: String
+    """是否啟用"""
+    isEnabled: YesNo!
+    """Extra"""
+    extra: String
 }

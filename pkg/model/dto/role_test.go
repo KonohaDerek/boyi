@@ -29,8 +29,8 @@ func TestRole_ConvertToSingleLayer(t *testing.T) {
 			name: "normal test",
 			fields: fields{
 				Authority: Authority{
-					Chatroom_System:       {},
-					MyChatroom_Management: {},
+					User_System:     {},
+					User_Management: {},
 				},
 			},
 		},

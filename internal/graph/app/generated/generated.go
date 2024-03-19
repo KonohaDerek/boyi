@@ -332,6 +332,11 @@ type ComplexityRoot struct {
 		Total func(childComplexity int) int
 	}
 
+	ListMerchantUserResp struct {
+		List func(childComplexity int) int
+		Meta func(childComplexity int) int
+	}
+
 	ListMerchantWithdrawLogResp struct {
 		List func(childComplexity int) int
 		Meta func(childComplexity int) int
@@ -430,11 +435,15 @@ type ComplexityRoot struct {
 	}
 
 	Merchant struct {
-		CreatedAt   func(childComplexity int) int
-		Description func(childComplexity int) int
-		ID          func(childComplexity int) int
-		Name        func(childComplexity int) int
-		UpdatedAt   func(childComplexity int) int
+		CreatedAt    func(childComplexity int) int
+		DatabaseDsn  func(childComplexity int) int
+		DatabaseType func(childComplexity int) int
+		Extra        func(childComplexity int) int
+		ID           func(childComplexity int) int
+		IsEnabled    func(childComplexity int) int
+		Name         func(childComplexity int) int
+		Remark       func(childComplexity int) int
+		UpdatedAt    func(childComplexity int) int
 	}
 
 	MerchantBalanceLog struct {
@@ -490,12 +499,24 @@ type ComplexityRoot struct {
 	MerchantOrigin struct {
 		CreatedAt     func(childComplexity int) int
 		CreatedUserID func(childComplexity int) int
+		Extra         func(childComplexity int) int
 		ID            func(childComplexity int) int
 		IsEnabled     func(childComplexity int) int
 		MerchantID    func(childComplexity int) int
 		Origin        func(childComplexity int) int
 		UpdatedAt     func(childComplexity int) int
 		UpdatedUserID func(childComplexity int) int
+	}
+
+	MerchantUser struct {
+		AliasName  func(childComplexity int) int
+		CreatedAt  func(childComplexity int) int
+		Extra      func(childComplexity int) int
+		ID         func(childComplexity int) int
+		IsEnabled  func(childComplexity int) int
+		MerchantID func(childComplexity int) int
+		UpdatedAt  func(childComplexity int) int
+		Username   func(childComplexity int) int
 	}
 
 	MerchantWithdrawLog struct {
@@ -1829,6 +1850,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ListMerchantResp.Total(childComplexity), true
 
+	case "ListMerchantUserResp.list":
+		if e.complexity.ListMerchantUserResp.List == nil {
+			break
+		}
+
+		return e.complexity.ListMerchantUserResp.List(childComplexity), true
+
+	case "ListMerchantUserResp.meta":
+		if e.complexity.ListMerchantUserResp.Meta == nil {
+			break
+		}
+
+		return e.complexity.ListMerchantUserResp.Meta(childComplexity), true
+
 	case "ListMerchantWithdrawLogResp.list":
 		if e.complexity.ListMerchantWithdrawLogResp.List == nil {
 			break
@@ -2116,12 +2151,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Merchant.CreatedAt(childComplexity), true
 
-	case "Merchant.description":
-		if e.complexity.Merchant.Description == nil {
+	case "Merchant.databaseDSN":
+		if e.complexity.Merchant.DatabaseDsn == nil {
 			break
 		}
 
-		return e.complexity.Merchant.Description(childComplexity), true
+		return e.complexity.Merchant.DatabaseDsn(childComplexity), true
+
+	case "Merchant.databaseType":
+		if e.complexity.Merchant.DatabaseType == nil {
+			break
+		}
+
+		return e.complexity.Merchant.DatabaseType(childComplexity), true
+
+	case "Merchant.extra":
+		if e.complexity.Merchant.Extra == nil {
+			break
+		}
+
+		return e.complexity.Merchant.Extra(childComplexity), true
 
 	case "Merchant.id":
 		if e.complexity.Merchant.ID == nil {
@@ -2130,12 +2179,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Merchant.ID(childComplexity), true
 
+	case "Merchant.isEnabled":
+		if e.complexity.Merchant.IsEnabled == nil {
+			break
+		}
+
+		return e.complexity.Merchant.IsEnabled(childComplexity), true
+
 	case "Merchant.name":
 		if e.complexity.Merchant.Name == nil {
 			break
 		}
 
 		return e.complexity.Merchant.Name(childComplexity), true
+
+	case "Merchant.remark":
+		if e.complexity.Merchant.Remark == nil {
+			break
+		}
+
+		return e.complexity.Merchant.Remark(childComplexity), true
 
 	case "Merchant.updatedAt":
 		if e.complexity.Merchant.UpdatedAt == nil {
@@ -2382,6 +2445,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.MerchantOrigin.CreatedUserID(childComplexity), true
 
+	case "MerchantOrigin.extra":
+		if e.complexity.MerchantOrigin.Extra == nil {
+			break
+		}
+
+		return e.complexity.MerchantOrigin.Extra(childComplexity), true
+
 	case "MerchantOrigin.id":
 		if e.complexity.MerchantOrigin.ID == nil {
 			break
@@ -2423,6 +2493,62 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.MerchantOrigin.UpdatedUserID(childComplexity), true
+
+	case "MerchantUser.aliasName":
+		if e.complexity.MerchantUser.AliasName == nil {
+			break
+		}
+
+		return e.complexity.MerchantUser.AliasName(childComplexity), true
+
+	case "MerchantUser.createdAt":
+		if e.complexity.MerchantUser.CreatedAt == nil {
+			break
+		}
+
+		return e.complexity.MerchantUser.CreatedAt(childComplexity), true
+
+	case "MerchantUser.extra":
+		if e.complexity.MerchantUser.Extra == nil {
+			break
+		}
+
+		return e.complexity.MerchantUser.Extra(childComplexity), true
+
+	case "MerchantUser.id":
+		if e.complexity.MerchantUser.ID == nil {
+			break
+		}
+
+		return e.complexity.MerchantUser.ID(childComplexity), true
+
+	case "MerchantUser.isEnabled":
+		if e.complexity.MerchantUser.IsEnabled == nil {
+			break
+		}
+
+		return e.complexity.MerchantUser.IsEnabled(childComplexity), true
+
+	case "MerchantUser.merchantId":
+		if e.complexity.MerchantUser.MerchantID == nil {
+			break
+		}
+
+		return e.complexity.MerchantUser.MerchantID(childComplexity), true
+
+	case "MerchantUser.updatedAt":
+		if e.complexity.MerchantUser.UpdatedAt == nil {
+			break
+		}
+
+		return e.complexity.MerchantUser.UpdatedAt(childComplexity), true
+
+	case "MerchantUser.username":
+		if e.complexity.MerchantUser.Username == nil {
+			break
+		}
+
+		return e.complexity.MerchantUser.Username(childComplexity), true
 
 	case "MerchantWithdrawLog.amount":
 		if e.complexity.MerchantWithdrawLog.Amount == nil {
@@ -3637,6 +3763,10 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputMerchantOriginInput,
 		ec.unmarshalInputMerchantOriginUpdateInput,
 		ec.unmarshalInputMerchantUpdateInput,
+		ec.unmarshalInputMerchantUserCreateInput,
+		ec.unmarshalInputMerchantUserFilterInput,
+		ec.unmarshalInputMerchantUserInput,
+		ec.unmarshalInputMerchantUserUpdateInput,
 		ec.unmarshalInputMerchantWithdrawLogFilterInput,
 		ec.unmarshalInputMerchantWithdrawLogInput,
 		ec.unmarshalInputMerchantWithdrawMethodCreateInput,
@@ -4583,12 +4713,21 @@ type Merchant {
     id: Uint64!
     """商家名稱"""
     name: String!
-    """商家描述"""
-    description: String!
+    """資料庫類型"""
+    databaseType: String!
+    """資料庫連線資訊"""
+    databaseDSN: String!
+    """是否啟用"""
+    isEnabled: YesNo!
+    """額外資訊"""
+    extra: String!
+    """備註"""
+    remark: String!
     """創建時間"""
     createdAt: Timestamp!
     """"更新時間"""
     updatedAt: Timestamp!
+   
 }
 
 type ListMerchantWithdrawMethodResp {
@@ -4698,10 +4837,27 @@ type MerchantOrigin {
     merchantId: Uint64!
     origin: String!
     isEnabled: YesNo!
+    extra: String!
     createdAt: Timestamp!
     createdUserId: Uint64!
     updatedAt: Timestamp!
     updatedUserId: Uint64!
+}
+
+type ListMerchantUserResp {
+    list: [MerchantUser!]!
+    meta: Meta!
+}
+
+type MerchantUser {
+    id: Uint64!
+    merchantId: Uint64!
+    username: String!
+    aliasName: String!
+    isEnabled: YesNo!
+    extra: String!
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
 }`, BuiltIn: false},
 	{Name: "../../../../docs/graphql/schema/merchant_input.graphql", Input: `input MerchantFilterInput {
     merchant: MerchantInput
@@ -4820,13 +4976,13 @@ input MerchantCreateInput {
 
 input MerchantUpdateInput {
     """商戶名稱"""
-    name: String!
+    name: String
     """資料庫類型"""
-    databaseType: String!
+    databaseType: String
     """資料庫連線資訊"""
-    databaseDSN: String!
+    databaseDSN: String
     """是否啟用"""
-    isEnabled: YesNo!
+    isEnabled: YesNo
     """額外資訊"""
     extra: String
     """備註"""
@@ -4935,6 +5091,51 @@ input MerchantOriginUpdateInput {
     origin: String!
     """是否啟用"""
     isEnabled: YesNo!
+}
+
+input MerchantUserFilterInput {
+    merchantUser: MerchantUserInput
+    baseFilter: BaseFilterInput
+}
+
+input MerchantUserInput {
+    id: Uint64
+    """商戶ID"""
+    merchantId: Uint64
+    """帳號"""
+    username: String
+    """用戶名稱"""
+    aliasName: String
+     """是否啟用"""
+    isEnabled: YesNo
+}
+
+input MerchantUserCreateInput {
+    """商戶ID"""
+    merchantId: Uint64!
+    """帳號"""
+    username: String!
+    """密碼"""
+    password: String!
+    """用戶名稱"""
+    aliasName: String
+    """是否啟用"""
+    isEnabled: YesNo!
+    """Extra"""
+    extra: String
+}
+
+input MerchantUserUpdateInput {
+    """商戶ID"""
+    merchantId: Uint64!
+    """帳號"""
+    username: String!
+    """用戶名稱"""
+    aliasName: String
+    """是否啟用"""
+    isEnabled: YesNo!
+    """Extra"""
+    extra: String
 }`, BuiltIn: false},
 	{Name: "../../../../docs/graphql/schema/role.graphql", Input: `type Role {
 	id: Uint64!
@@ -13136,6 +13337,8 @@ func (ec *executionContext) fieldContext_ListMerchantOriginResp_list(ctx context
 				return ec.fieldContext_MerchantOrigin_origin(ctx, field)
 			case "isEnabled":
 				return ec.fieldContext_MerchantOrigin_isEnabled(ctx, field)
+			case "extra":
+				return ec.fieldContext_MerchantOrigin_extra(ctx, field)
 			case "createdAt":
 				return ec.fieldContext_MerchantOrigin_createdAt(ctx, field)
 			case "createdUserId":
@@ -13248,8 +13451,16 @@ func (ec *executionContext) fieldContext_ListMerchantResp_list(ctx context.Conte
 				return ec.fieldContext_Merchant_id(ctx, field)
 			case "name":
 				return ec.fieldContext_Merchant_name(ctx, field)
-			case "description":
-				return ec.fieldContext_Merchant_description(ctx, field)
+			case "databaseType":
+				return ec.fieldContext_Merchant_databaseType(ctx, field)
+			case "databaseDSN":
+				return ec.fieldContext_Merchant_databaseDSN(ctx, field)
+			case "isEnabled":
+				return ec.fieldContext_Merchant_isEnabled(ctx, field)
+			case "extra":
+				return ec.fieldContext_Merchant_extra(ctx, field)
+			case "remark":
+				return ec.fieldContext_Merchant_remark(ctx, field)
 			case "createdAt":
 				return ec.fieldContext_Merchant_createdAt(ctx, field)
 			case "updatedAt":
@@ -13300,6 +13511,122 @@ func (ec *executionContext) fieldContext_ListMerchantResp_total(ctx context.Cont
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Uint64 does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ListMerchantUserResp_list(ctx context.Context, field graphql.CollectedField, obj *view.ListMerchantUserResp) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ListMerchantUserResp_list(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.List, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*view.MerchantUser)
+	fc.Result = res
+	return ec.marshalNMerchantUser2ᚕᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐMerchantUserᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ListMerchantUserResp_list(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ListMerchantUserResp",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_MerchantUser_id(ctx, field)
+			case "merchantId":
+				return ec.fieldContext_MerchantUser_merchantId(ctx, field)
+			case "username":
+				return ec.fieldContext_MerchantUser_username(ctx, field)
+			case "aliasName":
+				return ec.fieldContext_MerchantUser_aliasName(ctx, field)
+			case "isEnabled":
+				return ec.fieldContext_MerchantUser_isEnabled(ctx, field)
+			case "extra":
+				return ec.fieldContext_MerchantUser_extra(ctx, field)
+			case "createdAt":
+				return ec.fieldContext_MerchantUser_createdAt(ctx, field)
+			case "updatedAt":
+				return ec.fieldContext_MerchantUser_updatedAt(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type MerchantUser", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ListMerchantUserResp_meta(ctx context.Context, field graphql.CollectedField, obj *view.ListMerchantUserResp) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ListMerchantUserResp_meta(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Meta, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*view.Meta)
+	fc.Result = res
+	return ec.marshalNMeta2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐMeta(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ListMerchantUserResp_meta(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ListMerchantUserResp",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "total":
+				return ec.fieldContext_Meta_total(ctx, field)
+			case "page":
+				return ec.fieldContext_Meta_page(ctx, field)
+			case "perPage":
+				return ec.fieldContext_Meta_perPage(ctx, field)
+			case "totalPage":
+				return ec.fieldContext_Meta_totalPage(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Meta", field.Name)
 		},
 	}
 	return fc, nil
@@ -15555,8 +15882,8 @@ func (ec *executionContext) fieldContext_Merchant_name(ctx context.Context, fiel
 	return fc, nil
 }
 
-func (ec *executionContext) _Merchant_description(ctx context.Context, field graphql.CollectedField, obj *view.Merchant) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Merchant_description(ctx, field)
+func (ec *executionContext) _Merchant_databaseType(ctx context.Context, field graphql.CollectedField, obj *view.Merchant) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Merchant_databaseType(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15569,7 +15896,7 @@ func (ec *executionContext) _Merchant_description(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Description, nil
+		return obj.DatabaseType, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -15586,7 +15913,183 @@ func (ec *executionContext) _Merchant_description(ctx context.Context, field gra
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Merchant_description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Merchant_databaseType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Merchant",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Merchant_databaseDSN(ctx context.Context, field graphql.CollectedField, obj *view.Merchant) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Merchant_databaseDSN(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DatabaseDsn, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Merchant_databaseDSN(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Merchant",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Merchant_isEnabled(ctx context.Context, field graphql.CollectedField, obj *view.Merchant) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Merchant_isEnabled(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsEnabled, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(view.YesNo)
+	fc.Result = res
+	return ec.marshalNYesNo2boyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐYesNo(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Merchant_isEnabled(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Merchant",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type YesNo does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Merchant_extra(ctx context.Context, field graphql.CollectedField, obj *view.Merchant) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Merchant_extra(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Extra, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Merchant_extra(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Merchant",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Merchant_remark(ctx context.Context, field graphql.CollectedField, obj *view.Merchant) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Merchant_remark(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Remark, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Merchant_remark(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Merchant",
 		Field:      field,
@@ -17271,6 +17774,50 @@ func (ec *executionContext) fieldContext_MerchantOrigin_isEnabled(ctx context.Co
 	return fc, nil
 }
 
+func (ec *executionContext) _MerchantOrigin_extra(ctx context.Context, field graphql.CollectedField, obj *view.MerchantOrigin) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MerchantOrigin_extra(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Extra, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MerchantOrigin_extra(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MerchantOrigin",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _MerchantOrigin_createdAt(ctx context.Context, field graphql.CollectedField, obj *view.MerchantOrigin) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_MerchantOrigin_createdAt(ctx, field)
 	if err != nil {
@@ -17442,6 +17989,358 @@ func (ec *executionContext) fieldContext_MerchantOrigin_updatedUserId(ctx contex
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Uint64 does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MerchantUser_id(ctx context.Context, field graphql.CollectedField, obj *view.MerchantUser) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MerchantUser_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uint64)
+	fc.Result = res
+	return ec.marshalNUint642uint64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MerchantUser_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MerchantUser",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Uint64 does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MerchantUser_merchantId(ctx context.Context, field graphql.CollectedField, obj *view.MerchantUser) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MerchantUser_merchantId(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MerchantID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uint64)
+	fc.Result = res
+	return ec.marshalNUint642uint64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MerchantUser_merchantId(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MerchantUser",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Uint64 does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MerchantUser_username(ctx context.Context, field graphql.CollectedField, obj *view.MerchantUser) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MerchantUser_username(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Username, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MerchantUser_username(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MerchantUser",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MerchantUser_aliasName(ctx context.Context, field graphql.CollectedField, obj *view.MerchantUser) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MerchantUser_aliasName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AliasName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MerchantUser_aliasName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MerchantUser",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MerchantUser_isEnabled(ctx context.Context, field graphql.CollectedField, obj *view.MerchantUser) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MerchantUser_isEnabled(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsEnabled, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(view.YesNo)
+	fc.Result = res
+	return ec.marshalNYesNo2boyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐYesNo(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MerchantUser_isEnabled(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MerchantUser",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type YesNo does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MerchantUser_extra(ctx context.Context, field graphql.CollectedField, obj *view.MerchantUser) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MerchantUser_extra(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Extra, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MerchantUser_extra(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MerchantUser",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MerchantUser_createdAt(ctx context.Context, field graphql.CollectedField, obj *view.MerchantUser) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MerchantUser_createdAt(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTimestamp2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MerchantUser_createdAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MerchantUser",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Timestamp does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MerchantUser_updatedAt(ctx context.Context, field graphql.CollectedField, obj *view.MerchantUser) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MerchantUser_updatedAt(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UpdatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTimestamp2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MerchantUser_updatedAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MerchantUser",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Timestamp does not have child fields")
 		},
 	}
 	return fc, nil
@@ -29531,28 +30430,28 @@ func (ec *executionContext) unmarshalInputMerchantUpdateInput(ctx context.Contex
 		switch k {
 		case "name":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
 			it.Name = data
 		case "databaseType":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("databaseType"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
 			it.DatabaseType = data
 		case "databaseDSN":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("databaseDSN"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
 			it.DatabaseDsn = data
 		case "isEnabled":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isEnabled"))
-			data, err := ec.unmarshalNYesNo2boyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐYesNo(ctx, v)
+			data, err := ec.unmarshalOYesNo2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐYesNo(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -29571,6 +30470,212 @@ func (ec *executionContext) unmarshalInputMerchantUpdateInput(ctx context.Contex
 				return it, err
 			}
 			it.Remark = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputMerchantUserCreateInput(ctx context.Context, obj interface{}) (view.MerchantUserCreateInput, error) {
+	var it view.MerchantUserCreateInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"merchantId", "username", "password", "aliasName", "isEnabled", "extra"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "merchantId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("merchantId"))
+			data, err := ec.unmarshalNUint642uint64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MerchantID = data
+		case "username":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("username"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Username = data
+		case "password":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("password"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Password = data
+		case "aliasName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("aliasName"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AliasName = data
+		case "isEnabled":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isEnabled"))
+			data, err := ec.unmarshalNYesNo2boyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐYesNo(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IsEnabled = data
+		case "extra":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("extra"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Extra = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputMerchantUserFilterInput(ctx context.Context, obj interface{}) (view.MerchantUserFilterInput, error) {
+	var it view.MerchantUserFilterInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"merchantUser", "baseFilter"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "merchantUser":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("merchantUser"))
+			data, err := ec.unmarshalOMerchantUserInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐMerchantUserInput(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MerchantUser = data
+		case "baseFilter":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("baseFilter"))
+			data, err := ec.unmarshalOBaseFilterInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐBaseFilterInput(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.BaseFilter = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputMerchantUserInput(ctx context.Context, obj interface{}) (view.MerchantUserInput, error) {
+	var it view.MerchantUserInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"id", "merchantId", "username", "aliasName", "isEnabled"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "id":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+			data, err := ec.unmarshalOUint642ᚖuint64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ID = data
+		case "merchantId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("merchantId"))
+			data, err := ec.unmarshalOUint642ᚖuint64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MerchantID = data
+		case "username":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("username"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Username = data
+		case "aliasName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("aliasName"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AliasName = data
+		case "isEnabled":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isEnabled"))
+			data, err := ec.unmarshalOYesNo2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐYesNo(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IsEnabled = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputMerchantUserUpdateInput(ctx context.Context, obj interface{}) (view.MerchantUserUpdateInput, error) {
+	var it view.MerchantUserUpdateInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"merchantId", "username", "aliasName", "isEnabled", "extra"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "merchantId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("merchantId"))
+			data, err := ec.unmarshalNUint642uint64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MerchantID = data
+		case "username":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("username"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Username = data
+		case "aliasName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("aliasName"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AliasName = data
+		case "isEnabled":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isEnabled"))
+			data, err := ec.unmarshalNYesNo2boyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐYesNo(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IsEnabled = data
+		case "extra":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("extra"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Extra = data
 		}
 	}
 
@@ -34047,6 +35152,50 @@ func (ec *executionContext) _ListMerchantResp(ctx context.Context, sel ast.Selec
 	return out
 }
 
+var listMerchantUserRespImplementors = []string{"ListMerchantUserResp"}
+
+func (ec *executionContext) _ListMerchantUserResp(ctx context.Context, sel ast.SelectionSet, obj *view.ListMerchantUserResp) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, listMerchantUserRespImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ListMerchantUserResp")
+		case "list":
+			out.Values[i] = ec._ListMerchantUserResp_list(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "meta":
+			out.Values[i] = ec._ListMerchantUserResp_meta(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var listMerchantWithdrawLogRespImplementors = []string{"ListMerchantWithdrawLogResp"}
 
 func (ec *executionContext) _ListMerchantWithdrawLogResp(ctx context.Context, sel ast.SelectionSet, obj *view.ListMerchantWithdrawLogResp) graphql.Marshaler {
@@ -34908,8 +36057,28 @@ func (ec *executionContext) _Merchant(ctx context.Context, sel ast.SelectionSet,
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "description":
-			out.Values[i] = ec._Merchant_description(ctx, field, obj)
+		case "databaseType":
+			out.Values[i] = ec._Merchant_databaseType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "databaseDSN":
+			out.Values[i] = ec._Merchant_databaseDSN(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "isEnabled":
+			out.Values[i] = ec._Merchant_isEnabled(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "extra":
+			out.Values[i] = ec._Merchant_extra(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "remark":
+			out.Values[i] = ec._Merchant_remark(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -35341,6 +36510,11 @@ func (ec *executionContext) _MerchantOrigin(ctx context.Context, sel ast.Selecti
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "extra":
+			out.Values[i] = ec._MerchantOrigin_extra(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "createdAt":
 			out.Values[i] = ec._MerchantOrigin_createdAt(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -35358,6 +36532,80 @@ func (ec *executionContext) _MerchantOrigin(ctx context.Context, sel ast.Selecti
 			}
 		case "updatedUserId":
 			out.Values[i] = ec._MerchantOrigin_updatedUserId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var merchantUserImplementors = []string{"MerchantUser"}
+
+func (ec *executionContext) _MerchantUser(ctx context.Context, sel ast.SelectionSet, obj *view.MerchantUser) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, merchantUserImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("MerchantUser")
+		case "id":
+			out.Values[i] = ec._MerchantUser_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "merchantId":
+			out.Values[i] = ec._MerchantUser_merchantId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "username":
+			out.Values[i] = ec._MerchantUser_username(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "aliasName":
+			out.Values[i] = ec._MerchantUser_aliasName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "isEnabled":
+			out.Values[i] = ec._MerchantUser_isEnabled(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "extra":
+			out.Values[i] = ec._MerchantUser_extra(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createdAt":
+			out.Values[i] = ec._MerchantUser_createdAt(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatedAt":
+			out.Values[i] = ec._MerchantUser_updatedAt(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -38771,6 +40019,60 @@ func (ec *executionContext) marshalNMerchantOrigin2ᚖboyiᚋpkgᚋdeliveryᚋgr
 	return ec._MerchantOrigin(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNMerchantUser2ᚕᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐMerchantUserᚄ(ctx context.Context, sel ast.SelectionSet, v []*view.MerchantUser) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNMerchantUser2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐMerchantUser(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNMerchantUser2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐMerchantUser(ctx context.Context, sel ast.SelectionSet, v *view.MerchantUser) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._MerchantUser(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalNMerchantWithdrawLog2ᚕᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐMerchantWithdrawLogᚄ(ctx context.Context, sel ast.SelectionSet, v []*view.MerchantWithdrawLog) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -40276,6 +41578,14 @@ func (ec *executionContext) unmarshalOMerchantOriginInput2ᚖboyiᚋpkgᚋdelive
 		return nil, nil
 	}
 	res, err := ec.unmarshalInputMerchantOriginInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalOMerchantUserInput2ᚖboyiᚋpkgᚋdeliveryᚋgraphᚋviewᚐMerchantUserInput(ctx context.Context, v interface{}) (*view.MerchantUserInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputMerchantUserInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 

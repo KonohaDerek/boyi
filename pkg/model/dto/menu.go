@@ -70,121 +70,42 @@ const (
 	API_Manager_Role_Update ManagerMenuKey = "API_Manager_Role_Update"
 	API_Manager_Role_Delete ManagerMenuKey = "API_Manager_Role_Delete"
 
-	Member_System     ManagerMenuKey = "Member_System"
-	Member_Management ManagerMenuKey = "Member_Management"
-	API_Member_Get    ManagerMenuKey = "API_Member_Get"
-	API_Member_Update ManagerMenuKey = "API_Member_Update"
-	API_Member_Delete ManagerMenuKey = "API_Member_Delete"
+	// 會員系統
+	User_System     ManagerMenuKey = "User_System"
+	User_Management ManagerMenuKey = "User_Management"
+	API_User_Get    ManagerMenuKey = "API_User_Get"
+	API_User_Update ManagerMenuKey = "API_User_Update"
+	API_User_Delete ManagerMenuKey = "API_User_Delete"
 
-	Member_Role_Management ManagerMenuKey = "Member_Role_Management"
-	API_Member_Role_Create ManagerMenuKey = "API_Member_Role_Create"
-	API_Member_Role_Get    ManagerMenuKey = "API_Member_Role_Get"
-	API_Member_Role_Update ManagerMenuKey = "API_Member_Role_Update"
-	API_Member_Role_Delete ManagerMenuKey = "API_Member_Role_Delete"
+	User_Role_Management ManagerMenuKey = "User_Role_Management"
+	API_User_Role_Create ManagerMenuKey = "API_User_Role_Create"
+	API_User_Role_Get    ManagerMenuKey = "API_User_Role_Get"
+	API_User_Role_Update ManagerMenuKey = "API_User_Role_Update"
+	API_User_Role_Delete ManagerMenuKey = "API_User_Role_Delete"
 
-	Member_Tag_Management ManagerMenuKey = "Member_Tag_Management"
-	Member_Tag_Create     ManagerMenuKey = "Member_Tag_Create"
-	API_Member_Tag_Create ManagerMenuKey = "API_Member_Tag_Create"
-	API_Member_Tag_Get    ManagerMenuKey = "API_Member_Tag_Get"
-	API_Member_Tag_Update ManagerMenuKey = "API_Member_Tag_Update"
-	API_Member_Tag_Delete ManagerMenuKey = "API_Member_Tag_Delete"
+	User_Tag_Management ManagerMenuKey = "User_Tag_Management"
+	User_Tag_Create     ManagerMenuKey = "User_Tag_Create"
+	API_User_Tag_Create ManagerMenuKey = "API_User_Tag_Create"
+	API_User_Tag_Get    ManagerMenuKey = "API_User_Tag_Get"
+	API_User_Tag_Update ManagerMenuKey = "API_User_Tag_Update"
+	API_User_Tag_Delete ManagerMenuKey = "API_User_Tag_Delete"
 
-	Member_Room_Management ManagerMenuKey = "Member_Room_Management"
-	Member_Room_Get        ManagerMenuKey = "Member_Room_Get"
-	API_Member_Room_Get    ManagerMenuKey = "API_Member_Room_Get"
-	API_Member_Room_Delete ManagerMenuKey = "API_Member_Room_Delete"
-
-	Chatroom_System ManagerMenuKey = "Chatroom_System"
-
-	MyChatroom_Management ManagerMenuKey = "MyChatroom_Management"
-	API_MyChatroom_Get    ManagerMenuKey = "API_MyChatroom_Get"
-	API_MyChatroom        ManagerMenuKey = "API_MyChatroom"
-
-	// 客服系統
-	CustomerService_System ManagerMenuKey = "CustomerService_System"
-
-	ConsultationChat_Management ManagerMenuKey = "ConsultationChat_Management"
-	API_ConsultationChat_Get    ManagerMenuKey = "API_ConsultationChat_Get"
-	API_JoinConsultingRoom      ManagerMenuKey = "API_JoinConsultingRoom"
-	API_PullInConsultingRoom    ManagerMenuKey = "API_PullInConsultingRoom"
-	API_UpdateMessage           ManagerMenuKey = "API_UpdateMessage"
-	MothballConsultationChat    ManagerMenuKey = "MothballConsultationChat"
-
-	ContactCustomerService_Management ManagerMenuKey = "ContactCustomerService_Management"
-	API_ContactCustomerService_Get    ManagerMenuKey = "API_ContactCustomerService_Get"
-	API_ContactCustomerService_Update ManagerMenuKey = "API_ContactCustomerService_Update"
-	API_ContactCustomerService_Delete ManagerMenuKey = "API_ContactCustomerService_Delete"
-	API_ContactCustomerService_Create ManagerMenuKey = "API_ContactCustomerService_Create"
-
-	// 信息系統
-	Message_System ManagerMenuKey = "Message_System"
-
-	Push_Management ManagerMenuKey = "Push_Management"
-	API_Push_Get    ManagerMenuKey = "API_Push_Get"
-	API_Push_Create ManagerMenuKey = "API_Push_Create"
-
-	// 運營系統
-	Operating_System ManagerMenuKey = "Operating_System"
-
-	FAQ_Management ManagerMenuKey = "FAQ_Management"
-	API_FAQ_Get    ManagerMenuKey = "API_FAQ_Get"
-	API_FAQ_Create ManagerMenuKey = "API_FAQ_Create"
-
-	ConsultingRoomForm_Management ManagerMenuKey = "ConsultingRoomForm_Management"
-	API_ConsultingRoomForm_Get    ManagerMenuKey = "API_ConsultingRoomForm_Get"
-	API_ConsultingRoomForm_Create ManagerMenuKey = "API_ConsultingRoomForm_Create"
-	API_ConsultingRoomForm_Update ManagerMenuKey = "API_ConsultingRoomForm_Update"
-
-	CannedResponse_Management ManagerMenuKey = "CannedResponse_Management"
-	API_CannedResponse_Get    ManagerMenuKey = "API_CannedResponse_Get"
-	API_CannedResponse_Create ManagerMenuKey = "API_CannedResponse_Create"
-	API_CannedResponse_Update ManagerMenuKey = "API_CannedResponse_Update"
-
-	API_CannedResponseCategory_Get    ManagerMenuKey = "API_CannedResponseCategory_Get"
-	API_CannedResponseCategory_Create ManagerMenuKey = "API_CannedResponseCategory_Create"
-	API_CannedResponseCategory_Update ManagerMenuKey = "API_CannedResponseCategory_Update"
-
-	ConsultingGreeting_Management ManagerMenuKey = "ConsultingGreeting_Management"
-	API_ConsultingGreeting_Get    ManagerMenuKey = "API_ConsultingGreeting_Get"
-	API_ConsultingGreeting_Update ManagerMenuKey = "API_ConsultingGreeting_Update"
-
-	PlatformMoreInformation_Management ManagerMenuKey = "PlatformMoreInformation_Management"
-	API_PlatformMoreInformation_Get    ManagerMenuKey = "API_PlatformMoreInformation_Get"
-	API_PlatformMoreInformation_Update ManagerMenuKey = "API_PlatformMoreInformation_Update"
-
-	PlatformSetting_Management               ManagerMenuKey = "PlatformSetting_Management"
-	API_ConsultingRoomSetting_Beep           ManagerMenuKey = "API_ConsultingRoomSetting_Beep"
-	API_ConsultingRoomSetting_AutoDistribute ManagerMenuKey = "API_ConsultingRoomSetting_AutoDistribute"
-	API_ConsultingRoomSetting_RedirectVerify ManagerMenuKey = "API_ConsultingRoomSetting_RedirectVerify"
-
-	ConsultingRoomClient_Management        ManagerMenuKey = "ConsultingRoomClient_Management"
-	API_ConsultingRoomClientSetting_Get    ManagerMenuKey = "API_ConsultingRoomClientSetting_Get"
-	API_ConsultingRoomClientSetting_Create ManagerMenuKey = "API_ConsultingRoomClientSetting_Create"
-	API_ConsultingRoomClientSetting_Update ManagerMenuKey = "API_ConsultingRoomClientSetting_Update"
-	API_ConsultingRoomClientSetting_Delete ManagerMenuKey = "API_ConsultingRoomClientSetting_Delete"
-
-	ConsultingRoomOrigin_Management   ManagerMenuKey = "ConsultingRoomOrigin_Management"
-	API_SpinachPlatformSetting_ALL    ManagerMenuKey = "API_SpinachPlatformSetting_ALL"
-	API_SpinachPlatformSetting_Create ManagerMenuKey = "API_SpinachPlatformSetting_Create"
-	API_SpinachPlatformSetting_Update ManagerMenuKey = "API_SpinachPlatformSetting_Update"
-	API_SpinachPlatformSetting_Delete ManagerMenuKey = "API_SpinachPlatformSetting_Delete"
-	API_ConsultingRoomOrigin_ALL      ManagerMenuKey = "API_ConsultingRoomOrigin_ALL"
-	API_ConsultingRoomOrigin_Create   ManagerMenuKey = "API_ConsultingRoomOrigin_Create"
-	API_ConsultingRoomOrigin_Update   ManagerMenuKey = "API_ConsultingRoomOrigin_Update"
-	API_ConsultingRoomOrigin_Delete   ManagerMenuKey = "API_ConsultingRoomOrigin_Delete"
-
-	ConsultingRoomQuestion_Management ManagerMenuKey = "ConsultingRoomQuestion_Management"
-	API_ConsultingRoomQuestion_Get    ManagerMenuKey = "API_ConsultingRoomQuestion_Get"
-	API_ConsultingRoomQuestion_Create ManagerMenuKey = "API_ConsultingRoomQuestion_Create"
-	API_ConsultingRoomQuestion_Update ManagerMenuKey = "API_ConsultingRoomQuestion_Update"
-	API_ConsultingRoomQuestion_Delete ManagerMenuKey = "API_ConsultingRoomQuestion_Delete"
-
+	// 商戶系統
+	Merchant_System     ManagerMenuKey = "Merchant_System"
 	Merchant_Management ManagerMenuKey = "Merchant_Management"
 	API_Merchant_Get    ManagerMenuKey = "API_Merchant_Get"
 	API_Merchant_Create ManagerMenuKey = "API_Merchant_Create"
 	API_Merchant_Update ManagerMenuKey = "API_Merchant_Update"
 	API_Merchant_Delete ManagerMenuKey = "API_Merchant_Delete"
+	MercahntUser_Management ManagerMenuKey = "MercahntUser_Management"
+	API_MerchantUser_Get    ManagerMenuKey = "API_MerchantUser_Get"
+	API_MerchantUser_Create ManagerMenuKey = "API_MerchantUser_Create"
+	API_MerchantUser_Update ManagerMenuKey = "API_MerchantUser_Update"
+	API_MerchantUser_Delete ManagerMenuKey = "API_MerchantUser_Delete"
+	
 
+	// 維運系統
+	Operation_System     ManagerMenuKey = "Operation_System"
 	HostsDeny_Management ManagerMenuKey = "HostsDeny_Management"
 	API_HostsDeny_Get    ManagerMenuKey = "API_HostsDeny_Get"
 	API_HostsDeny_Create ManagerMenuKey = "API_HostsDeny_Create"
@@ -201,22 +122,27 @@ const (
 	CommonUserReport_Management      ManagerMenuKey = "CommonUserReport_Management"
 	CustomerServiceReport_Management ManagerMenuKey = "CustomerServiceReport_Management"
 	ConsultingRoomReport_Management  ManagerMenuKey = "ConsultingRoomReport_Management"
-
-	Surveillance_System     ManagerMenuKey = "Surveillance_System"
-	Surveillance_Management ManagerMenuKey = "Surveillance_Management"
-
-	Dashboard ManagerMenuKey = "Dashboard"
+	Dashboard                        ManagerMenuKey = "Dashboard"
 )
 
 // 員工系統
 // 	|------ 員工管理
 // 			角色管理
-//          客服管理
 // 會員系統
 // 	|------ 會員管理
 // 			角色管理
 // 			標籤管理
-//          聊天室管理
+// 商戶系統
+// 	|------ 商戶管理
+// 	|------ 商戶用戶管理
+// 	|------ 商戶角色管理
+
+// 維運系統
+// 	|------ HostsDeny管理
+// 	|------廣告追蹤管理
+// 報表系統
+// 	|------ 一般用戶報表
+// 	|------ 客服報表
 
 //後台Menu 基礎物件，基本上顯示順序與建立順序有關
 

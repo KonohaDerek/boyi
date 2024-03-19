@@ -67,8 +67,8 @@ func Test_repository_Create(t *testing.T) {
 				data: &dto.Role{
 					Name: "Test role",
 					Authority: dto.Authority{
-						dto.Chatroom_System:       struct{}{},
-						dto.MyChatroom_Management: struct{}{},
+						dto.User_System:     struct{}{},
+						dto.User_Management: struct{}{},
 					},
 				},
 			},

@@ -105,17 +105,26 @@ type IAuditLogService interface {
 
 // 商戶服務
 type IMercahntService interface {
+	// 商戶
 	ListMerchants(ctx context.Context, opt *option.MerchantWhereOption) ([]dto.Merchant, int64, error)
 	GetMerchant(ctx context.Context, opt *option.MerchantWhereOption) (dto.Merchant, error)
 	CreateMerchant(ctx context.Context, data *dto.Merchant) error
-	UpdateMerchant(ctx context.Context, opt *option.MerchantWhereOption, col *option.MerchantUpdateColumn) error
+	UpdateMerchant(ctx context.Context, opt *option.MerchantWhereOption, col *option.MerchantUpdateColumn) (dto.Merchant, error)
 	DeleteMerchant(ctx context.Context, opt *option.MerchantWhereOption) error
 
+	// 商戶域名
 	ListMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption) ([]dto.MerchantOrigin, int64, error)
 	GetMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption) (dto.MerchantOrigin, error)
 	CreateMerchantOrigin(ctx context.Context, data *dto.MerchantOrigin) error
-	UpdateMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption, col *option.MerchantOriginUpdateColumn) error
+	UpdateMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption, col *option.MerchantOriginUpdateColumn) (dto.MerchantOrigin, error)
 	DeleteMerchantOrigin(ctx context.Context, opt *option.MerchantOriginWhereOption) error
+
+	// 商戶使用者
+	ListUsers(ctx context.Context, opt *option.MerchantUserWhereOption) ([]dto.MerchantUser, int64, error)
+	GetUser(ctx context.Context, opt *option.MerchantUserWhereOption) (dto.MerchantUser, error)
+	CreateUser(ctx context.Context, data *dto.MerchantUser) error
+	UpdateUser(ctx context.Context, opt *option.MerchantUserWhereOption, col *option.MerchantUserUpdateColumn) (dto.MerchantUser, error)
+	DeleteUser(ctx context.Context, opt *option.MerchantUserWhereOption) error
 
 	// 取得商戶域名設置
 	GetMerchantOriginFromCtx(ctx context.Context) (dto.MerchantOrigin, error)
