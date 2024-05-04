@@ -28,7 +28,7 @@ const (
 
 // Menu 樹經評估不納入資料表內
 type Menu struct {
-	Name      string         //表單名稱
+	Name      string `gorm:""`         //表單名稱
 	Key       ManagerMenuKey //表單鍵值
 	SuperKey  ManagerMenuKey //父鍵值
 	Router    string         //Api路由

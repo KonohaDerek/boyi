@@ -211,6 +211,8 @@ func MigrationMerchant(repo iface.IRepository) error {
 		// Migrate 商戶資料庫
 		err := _conn.AutoMigrate(
 			&dto.MerchantUser{},
+			&dto.MerchantUserRole{},
+			&dto.Role{},
 		)
 		if err != nil {
 			return err

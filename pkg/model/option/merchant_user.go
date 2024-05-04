@@ -14,6 +14,8 @@ type MerchantUserWhereOption struct {
 	Pagination   common.Pagination `json:"pagination"`
 	BaseWhere    common.BaseWhere  `json:"base_where"`
 	Sorting      common.Sorting    `json:"sorting"`
+
+	IDs []uint64
 }
 
 type MerchantUserUpdateColumn struct {
@@ -38,6 +40,9 @@ func (where *MerchantUserWhereOption) Sort(db *gorm.DB) *gorm.DB {
 func (where *MerchantUserWhereOption) Where(db *gorm.DB) *gorm.DB {
 	db = db.Scopes(where.BaseWhere.Where)
 	db = db.Where(where.MerchantUser)
+	if len(where.IDs) != 0 {
+		db = db.Where("id IN (?)", where.IDs)
+	}
 
 	return db
 }
