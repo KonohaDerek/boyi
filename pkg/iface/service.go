@@ -128,6 +128,17 @@ type IMercahntService interface {
 
 	// 取得商戶域名設置
 	GetMerchantOriginFromCtx(ctx context.Context) (dto.MerchantOrigin, error)
+
+	// 商戶帳戶
+	ListMerchantAccts(ctx context.Context, opt *option.MerchantAcctWhereOption) ([]dto.MerchantAcct, int64, error)
+	GetMerchantAcct(ctx context.Context, opt *option.MerchantAcctWhereOption) (dto.MerchantAcct, error)
+	CreateMerchantAcct(ctx context.Context, data *dto.MerchantAcct) error
+	UpdateMerchantAcct(ctx context.Context, opt *option.MerchantAcctWhereOption, col *option.MerchantAcctUpdateColumn) (dto.MerchantAcct, error)
+	DeleteMerchantAcct(ctx context.Context, opt *option.MerchantAcctWhereOption) error
+	// 商戶帳戶異動申請
+	MerchantAcctChanges(ctx context.Context, opt *option.MerchantAcctWhereOption, col *option.MerchantAcctChangeColumn) (dto.MerchantAcct, error)
+	// 商戶帳戶異動紀錄
+	ListMerchantAcctLogs(ctx context.Context, opt *option.MerchantAcctLogWhereOption) ([]dto.MerchantAcctLog, int64, error)
 }
 
 // ISupportService 一些雜項服務 FAQ ,Platform Setting
