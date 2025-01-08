@@ -1,7 +1,7 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.191.0/containers/go/.devcontainer/base.Dockerfile
 
 # [Choice] Go version: 1, 1.16, 1.15
-FROM mcr.microsoft.com/devcontainers/go:1-1.21
+FROM mcr.microsoft.com/devcontainers/go:1-1.23
 
 RUN apt-get update
 RUN go env GOENV

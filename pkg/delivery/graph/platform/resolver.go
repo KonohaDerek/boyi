@@ -22,6 +22,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"github.com/rs/zerolog/log"
+	"github.com/vektah/gqlparser/v2/ast"
 	"go.uber.org/fx"
 )
 
@@ -99,9 +100,9 @@ func SetResolver(logCfg *zlog.Config, engine *gin.Engine, cfg generated.Config, 
 	gqlSvc := handler.New(generated.NewExecutableSchema(cfg))
 	gqlSvc.AroundResponses(graph.GQLResponseLog(&graph.Config{}))
 	gqlSvc.Use(extension.FixedComplexityLimit(3000))
-	gqlSvc.SetQueryCache(lru.New(1000))
+	gqlSvc.SetQueryCache(lru.New[*ast.QueryDocument](1000))
 	gqlSvc.Use(extension.AutomaticPersistedQuery{
-		Cache: lru.New(100),
+		Cache: lru.New[string](100),
 	})
 	gqlSvc.AddTransport(transport.POST{})
 	gqlSvc.AddTransport(transport.MultipartForm{})

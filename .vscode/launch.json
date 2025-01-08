@@ -20,7 +20,13 @@
                 "--migrate_sql",
                 "--platform=platform",
             ],
-            "showLog": true
+            "showLog": true,
         },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch my cool app",
+            "url": "http://localhost:8088/graph/playground"
+        }
     ]
 }

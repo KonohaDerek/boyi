@@ -5,7 +5,7 @@ gen:
 	go run $(CURDIR)/tools/gen_code/gen.go
 
 server:
-	go run main.go server --app --platform --migrate_sql
+	go run main.go server --platform --migrate_sql
 
 migrate:
 	go run main.go migrate

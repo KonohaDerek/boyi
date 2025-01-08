@@ -12,6 +12,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/lru"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/gorilla/websocket"
+	"github.com/vektah/gqlparser/v2/ast"
 )
 
 type Config struct {
@@ -32,13 +33,13 @@ func New(cfg *Config, es graphql.ExecutableSchema) *handler.Server {
 	if cfg.QueryCache == 0 {
 		cfg.QueryCache = 1000
 	}
-	gqlSvc.SetQueryCache(lru.New(cfg.QueryCache))
+	gqlSvc.SetQueryCache(lru.New[*ast.QueryDocument](cfg.QueryCache))
 
 	if cfg.AutomaticPersistedQuery == 0 {
 		cfg.AutomaticPersistedQuery = 100
 	}
 	gqlSvc.Use(extension.AutomaticPersistedQuery{
-		Cache: lru.New(cfg.AutomaticPersistedQuery),
+		Cache: lru.New[string](cfg.AutomaticPersistedQuery),
 	})
 	gqlSvc.AddTransport(transport.POST{})
 	gqlSvc.AddTransport(transport.MultipartForm{})
